@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>ULTRA GURU • Neural Interface</title>
   <meta name="theme-color" content="#ff2e63">
 
@@ -78,6 +78,7 @@
     .glass-card:hover {
       background: rgba(255, 46, 99, 0.02);
       border-color: rgba(255, 46, 99, 0.3);
+      transform: translateY(-5px);
     }
 
     .scanline {
@@ -91,6 +92,18 @@
     @keyframes scan {
       0% { top: 0; }
       100% { top: 100%; }
+    }
+
+    .input-cyber {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+    .input-cyber:focus {
+      border-color: var(--accent-secondary);
+      box-shadow: 0 0 15px rgba(8, 217, 214, 0.2);
+      outline: none;
     }
   </style>
 </head>
@@ -128,7 +141,7 @@
           PURE<br>LOGIC.
         </h1>
         <p class="text-lg text-gray-500 max-w-md leading-relaxed mb-10">
-          The next evolution of session management. Secure, ephemeral, and devastatingly fast. 
+          The next evolution of session management. Secure, ephemeral, and devastatingly fast. Choose your pairing protocol.
         </p>
         
         <div class="flex flex-wrap gap-6">
@@ -149,6 +162,7 @@
 > STATUS: ENCRYPTED
 > HANDSHAKE: SUCCESS
 > READY_FOR_SESSION...
+> AWAITING_INPUT_IDENTITY...
           </pre>
           <div class="mt-8 space-y-4">
             <div class="h-1 w-full bg-white/5"><div class="h-1 w-2/3 bg-[#ff2e63]"></div></div>
@@ -162,7 +176,7 @@
   <section class="py-24 px-6 border-y border-white/5">
     <div class="max-w-7xl mx-auto">
       <div class="grid md:grid-cols-3 gap-1">
-        <div class="glass-card p-10 hover:z-10">
+        <div class="glass-card p-10">
           <span class="mono text-[#ff2e63] text-sm">01.</span>
           <h3 class="text-2xl font-bold mt-4 mb-4">Neural Pairing</h3>
           <p class="text-gray-500 text-sm leading-relaxed">Direct 8-digit authorization bypasses physical hardware requirements with zero latency.</p>
@@ -195,7 +209,6 @@
   </footer>
 
   <script>
-    /* Every script includes the required note */
     // Note: Built for the Ultra Guru Project by GuruTech.
   </script>
 </body>
