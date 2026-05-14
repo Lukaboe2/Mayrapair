@@ -300,6 +300,86 @@
       letter-spacing: 2px; text-transform: uppercase; color: rgba(255,150,80,0.25);
     }
 
+    .guide-box {
+      margin-top: 20px;
+      background: rgba(255,80,0,0.03);
+      border: 1px solid rgba(255,100,0,0.12);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .guide-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 20px;
+      background: rgba(255,80,0,0.07);
+      border-bottom: 1px solid rgba(255,100,0,0.1);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--fire-3);
+    }
+    .guide-steps { padding: 8px 0; }
+    .guide-step {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255,100,0,0.06);
+      transition: background 0.2s;
+    }
+    .guide-step:last-child { border-bottom: none; }
+    .guide-step:hover { background: rgba(255,80,0,0.04); }
+    .gs-num {
+      width: 28px; height: 28px; flex-shrink: 0;
+      border-radius: 50%;
+      background: rgba(255,80,0,0.12);
+      border: 1px solid rgba(255,100,0,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 700;
+      color: var(--fire-2); margin-top: 2px;
+    }
+    .gs-body { flex: 1; }
+    .gs-title {
+      font-weight: 700; font-size: 14px; letter-spacing: 0.5px;
+      color: #ffe0c0; margin-bottom: 5px;
+    }
+    .gs-desc {
+      font-size: 13px; color: rgba(255,200,150,0.5); line-height: 1.6;
+    }
+    .gs-desc strong { color: rgba(255,200,150,0.75); font-weight: 700; }
+    .gs-example {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+      margin-top: 10px; padding: 10px 12px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 4px;
+      border: 1px solid rgba(255,100,0,0.08);
+    }
+    .ex-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 9px;
+      letter-spacing: 2px; color: rgba(255,180,80,0.35);
+      text-transform: uppercase; flex-shrink: 0;
+    }
+    .ex-bad {
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      color: #ff5555; text-decoration: line-through;
+    }
+    .ex-good {
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      color: #55ff88;
+    }
+    .ex-code {
+      font-family: 'Orbitron', monospace; font-size: 16px; font-weight: 700;
+      letter-spacing: 4px;
+      background: linear-gradient(to right, var(--fire-2), var(--fire-3));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .guide-tip {
+      display: flex; gap: 12px; align-items: flex-start;
+      margin: 0; padding: 14px 20px;
+      background: rgba(255,200,50,0.04);
+      border-top: 1px solid rgba(255,200,50,0.1);
+      font-size: 12px; color: rgba(255,220,150,0.55); line-height: 1.6;
+    }
+    .guide-tip i { color: #ffd700; flex-shrink: 0; margin-top: 2px; }
+    .guide-tip strong { color: rgba(255,220,150,0.8); }
+
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
       25% { transform: translateX(-6px); }
@@ -409,6 +489,63 @@
             <div class="pill-icon"><i class="fas fa-fire"></i></div>
             <div class="pill-title">Instant</div>
             <div class="pill-desc">Generated directly from ignition servers.</div>
+          </div>
+        </div>
+
+        <div class="guide-box">
+          <div class="guide-header">
+            <i class="fas fa-circle-info"></i>
+            <span>How It Works — New User Guide</span>
+          </div>
+
+          <div class="guide-steps">
+            <div class="guide-step">
+              <div class="gs-num">1</div>
+              <div class="gs-body">
+                <div class="gs-title">Enter your WhatsApp number</div>
+                <div class="gs-desc">Type your full number with country code — no spaces, no plus sign, no dashes.</div>
+                <div class="gs-example">
+                  <span class="ex-label">EXAMPLE</span>
+                  <span class="ex-bad"><i class="fas fa-times-circle"></i> +254 712 345 678</span>
+                  <span class="ex-good"><i class="fas fa-check-circle"></i> 254712345678</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="guide-step">
+              <div class="gs-num">2</div>
+              <div class="gs-body">
+                <div class="gs-title">Click "Ignite Connection"</div>
+                <div class="gs-desc">Our server will request a pairing code from WhatsApp and display it within seconds. Keep this page open.</div>
+              </div>
+            </div>
+
+            <div class="guide-step">
+              <div class="gs-num">3</div>
+              <div class="gs-body">
+                <div class="gs-title">Enter the code on your phone</div>
+                <div class="gs-desc">On your WhatsApp app, go to <strong>Settings → Linked Devices → Link a Device → Link with phone number instead</strong> and type in the 8-digit code shown.</div>
+                <div class="gs-example">
+                  <span class="ex-label">CODE LOOKS LIKE</span>
+                  <span class="ex-code">A3F7 · K9P2</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="guide-step">
+              <div class="gs-num">4</div>
+              <div class="gs-body">
+                <div class="gs-title">Receive your Session ID on WhatsApp</div>
+                <div class="gs-desc">Once linked, the bot will automatically message your own WhatsApp number with your unique Session ID. Copy and use it in your bot config.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-tip">
+            <i class="fas fa-lightbulb"></i>
+            <div>
+              <strong>Choose "Long" session</strong> if you don't have a database set up. Long sessions are self-contained strings that work anywhere. "Short" sessions require a database URL configured on this server.
+            </div>
           </div>
         </div>
       </div>

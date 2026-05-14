@@ -202,6 +202,109 @@
       letter-spacing: 2px; text-transform: uppercase; color: rgba(255,150,80,0.25);
     }
 
+    .guide-box {
+      margin-top: 16px;
+      background: rgba(255,80,0,0.03);
+      border: 1px solid rgba(255,100,0,0.12);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .guide-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 20px;
+      background: rgba(255,80,0,0.07);
+      border-bottom: 1px solid rgba(255,100,0,0.1);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--fire-3);
+    }
+    .guide-steps { padding: 8px 0; }
+    .guide-step {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255,100,0,0.06);
+      transition: background 0.2s;
+    }
+    .guide-step:last-child { border-bottom: none; }
+    .guide-step:hover { background: rgba(255,80,0,0.04); }
+    .gs-num {
+      width: 28px; height: 28px; flex-shrink: 0;
+      border-radius: 50%;
+      background: rgba(255,80,0,0.12);
+      border: 1px solid rgba(255,100,0,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 700;
+      color: var(--fire-2); margin-top: 2px;
+    }
+    .gs-body { flex: 1; min-width: 0; }
+    .gs-title {
+      font-weight: 700; font-size: 14px; letter-spacing: 0.5px;
+      color: #ffe0c0; margin-bottom: 5px;
+    }
+    .gs-desc {
+      font-size: 13px; color: rgba(255,200,150,0.5); line-height: 1.6;
+    }
+    .gs-desc strong { color: rgba(255,200,150,0.8); font-weight: 700; }
+    .gs-example {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+      margin-top: 10px; padding: 9px 12px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 4px;
+      border: 1px solid rgba(255,100,0,0.08);
+    }
+    .ex-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 9px;
+      letter-spacing: 2px; color: rgba(255,180,80,0.35);
+      text-transform: uppercase; flex-shrink: 0;
+    }
+    .ex-path {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: rgba(255,220,160,0.65);
+    }
+    .ex-session {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      background: linear-gradient(to right, var(--fire-2), var(--fire-3));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; font-weight: 700;
+    }
+    .gs-compare { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+    .gs-compare-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 12px;
+      background: rgba(0,0,0,0.25);
+      border-radius: 4px;
+      border: 1px solid rgba(255,100,0,0.08);
+    }
+    .cmp-badge {
+      font-family: 'Orbitron', monospace; font-size: 9px; font-weight: 700;
+      letter-spacing: 2px; padding: 3px 8px; border-radius: 2px; flex-shrink: 0;
+    }
+    .cmp-short {
+      background: rgba(255,80,0,0.2); border: 1px solid rgba(255,80,0,0.3);
+      color: var(--fire-3);
+    }
+    .cmp-long {
+      background: rgba(80,200,120,0.1); border: 1px solid rgba(80,200,120,0.25);
+      color: #55dd88;
+    }
+    .cmp-text {
+      font-size: 12px; color: rgba(255,200,150,0.5); line-height: 1.5;
+    }
+    .cmp-text code {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: var(--fire-3); background: rgba(255,80,0,0.08);
+      padding: 1px 5px; border-radius: 2px;
+    }
+    .guide-tip {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 14px 20px;
+      background: rgba(255,200,50,0.04);
+      border-top: 1px solid rgba(255,200,50,0.1);
+      font-size: 12px; color: rgba(255,220,150,0.55); line-height: 1.6;
+    }
+    .guide-tip i { color: #ffd700; flex-shrink: 0; margin-top: 2px; }
+    .guide-tip strong { color: rgba(255,220,150,0.8); }
+
     @media (max-width: 480px) {
       nav { padding: 0 20px; }
       .nav-links { display: none; }
@@ -279,6 +382,76 @@
             <div class="step-item">
               <span class="step-num">03</span>
               <span class="step-text">Point camera at the generated QR code to link</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-box">
+          <div class="guide-header">
+            <i class="fas fa-circle-info"></i>
+            <span>New User Guide — Step by Step</span>
+          </div>
+
+          <div class="guide-steps">
+            <div class="guide-step">
+              <div class="gs-num">1</div>
+              <div class="gs-body">
+                <div class="gs-title">Pick your Session Type</div>
+                <div class="gs-desc">Choose before generating — you can't change it after.</div>
+                <div class="gs-compare">
+                  <div class="gs-compare-item">
+                    <span class="cmp-badge cmp-short">SHORT</span>
+                    <span class="cmp-text">A compact ID like <code>GURU~aBc123XyZ</code> — requires a database on this server.</span>
+                  </div>
+                  <div class="gs-compare-item">
+                    <span class="cmp-badge cmp-long">LONG</span>
+                    <span class="cmp-text">A full self-contained string — works anywhere, no database needed. Recommended for beginners.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="guide-step">
+              <div class="gs-num">2</div>
+              <div class="gs-body">
+                <div class="gs-title">Click "Generate QR Code"</div>
+                <div class="gs-desc">A fresh QR code will appear on screen. It expires in about <strong>60 seconds</strong> — scan it quickly. If it expires, go back and generate a new one.</div>
+              </div>
+            </div>
+
+            <div class="guide-step">
+              <div class="gs-num">3</div>
+              <div class="gs-body">
+                <div class="gs-title">Scan with WhatsApp on your phone</div>
+                <div class="gs-desc">Open WhatsApp → <strong>Settings → Linked Devices → Link a Device</strong> → point your camera at the QR code.</div>
+                <div class="gs-example">
+                  <span class="ex-label">On iPhone</span>
+                  <span class="ex-path">Settings → Linked Devices → +</span>
+                </div>
+                <div class="gs-example" style="margin-top:6px;">
+                  <span class="ex-label">On Android</span>
+                  <span class="ex-path">⋮ Menu → Linked Devices → Link a Device</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="guide-step">
+              <div class="gs-num">4</div>
+              <div class="gs-body">
+                <div class="gs-title">Receive your Session ID on WhatsApp</div>
+                <div class="gs-desc">After a successful scan, the bot will send your Session ID directly to your own WhatsApp chat. Copy it and paste it into your bot's config file.</div>
+                <div class="gs-example">
+                  <span class="ex-label">SESSION LOOKS LIKE</span>
+                  <span class="ex-session">GURU~H4sIA...</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-tip">
+            <i class="fas fa-lightbulb"></i>
+            <div>
+              <strong>First time?</strong> Use <strong>Long session</strong> — it works out of the box without any database setup and is the most compatible with ULTRA GURU MD bots.
             </div>
           </div>
         </div>
