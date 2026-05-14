@@ -3,211 +3,380 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>ULTRA GURU | QR Code Login</title>
-  <meta name="description" content="Link your account to ULTRA GURU by scanning a QR code. Fast, secure, and simple.">
-  <meta name="theme-color" content="#f59e0b">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <title>ULTRA GURU MD — QR Code</title>
+  <meta name="theme-color" content="#ff4500">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    :root {
-      --brand-primary: #f59e0b; /* Amber 500 */
-      --brand-glow: rgba(245, 158, 11, 0.4);
-      --bg-dark: #030303;
-      --card-bg: #0d0d0d;
-    }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Outfit', sans-serif;
-      background: var(--bg-dark);
-      color: #fafafa;
-      min-height: 100vh;
+    :root {
+      --fire-1: #ff4500;
+      --fire-2: #ff6a00;
+      --fire-3: #ffb347;
+      --fire-4: #fff0a0;
+      --dark: #0a0400;
+      --deep: #050200;
+      --glass-border: rgba(255,100,0,0.18);
+    }
+    html, body {
+      width: 100%; min-height: 100%;
       overflow-x: hidden;
+      background: var(--deep);
+      color: #f5e6d3;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    #fire-canvas {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0; pointer-events: none;
+    }
+    .overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(to top,
+        rgba(5,2,0,0.92) 0%,
+        rgba(5,2,0,0.55) 40%,
+        rgba(5,2,0,0.3) 70%,
+        rgba(5,2,0,0.65) 100%);
+      z-index: 1; pointer-events: none;
+    }
+    .content {
+      position: relative; z-index: 10;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 72px;
+      background: rgba(5,2,0,0.7);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .logo-wrap { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+    .logo-icon { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; }
+    .logo-icon svg { width: 42px; height: 42px; filter: drop-shadow(0 0 10px var(--fire-1)) drop-shadow(0 0 20px var(--fire-2)); }
+    .logo-text { display: flex; flex-direction: column; line-height: 1; }
+    .logo-ultra {
+      font-family: 'Orbitron', monospace; font-size: 16px; font-weight: 900; letter-spacing: 4px;
+      background: linear-gradient(to right, #fff8f0, var(--fire-3));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .logo-guru {
+      font-family: 'Orbitron', monospace; font-size: 10px; font-weight: 400;
+      letter-spacing: 5px; color: var(--fire-2); text-transform: uppercase; margin-top: 2px;
+    }
+    .nav-links {
+      display: flex; gap: 28px;
+    }
+    .nav-links a {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(255,180,100,0.4); text-decoration: none; transition: color 0.3s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--fire-3); }
+    .nav-back {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(255,180,100,0.5); text-decoration: none; transition: color 0.3s;
+    }
+    .nav-back:hover { color: var(--fire-3); }
+
+    main {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 48px 20px;
+    }
+    .panel-wrap { width: 100%; max-width: 480px; }
+
+    .page-header { text-align: center; margin-bottom: 36px; }
+    .page-header h1 {
+      font-family: 'Orbitron', monospace; font-size: 32px; font-weight: 900;
+      letter-spacing: 4px; text-transform: uppercase;
+      background: linear-gradient(to bottom, #fff 0%, var(--fire-3) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 8px;
+    }
+    .page-header p {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(255,180,80,0.45);
     }
 
-    .gradient-text {
-      background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .blob {
-      position: fixed; border-radius: 50%;
-      filter: blur(90px); pointer-events: none; z-index: 0; will-change: transform;
-    }
-    @keyframes blobFloat {
-      0%,100% { transform: translate(0,0) scale(1); }
-      50%      { transform: translate(20px,-20px) scale(1.05); }
-    }
-
-    .nav-glass {
-      background: rgba(3, 3, 3, 0.85);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+    .fire-card {
+      background: rgba(10,4,0,0.75);
+      border: 1px solid var(--glass-border);
+      border-radius: 4px;
+      position: relative; overflow: hidden;
       backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      padding: 40px;
     }
-    
-    .nav-link:hover { color: var(--brand-primary); }
-
-    .sidebar-link:hover { background: rgba(245, 158, 11, 0.1); color: var(--brand-primary); transform: translateX(4px); }
-
-    #sidebar { transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); background: #0a0a0a; }
-
-    .btn-primary { 
-      background: var(--brand-primary); 
-      color: #000; 
-      font-weight: 700;
-      border-radius: 12px;
-      transition: all 0.3s ease;
-    }
-    .btn-primary:hover { 
-      transform: translateY(-3px); 
-      box-shadow: 0 10px 25px var(--brand-glow); 
-      filter: brightness(1.1);
-    }
-    
-    .btn-ghost { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 12px; }
-
-    .social-icon:hover { background: rgba(245, 158, 11, 0.2); color: var(--brand-primary); }
-
-    .card {
-      background: var(--card-bg);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 24px;
-      position: relative;
-      overflow: hidden;
-    }
-    .card::before {
+    .fire-card::before {
       content: '';
-      position: absolute; top: 0; left: 0; width: 100%; height: 4px;
-      background: linear-gradient(90deg, transparent, var(--brand-primary), transparent);
+      position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+      background: linear-gradient(90deg, transparent 0%, var(--fire-1) 30%, var(--fire-3) 70%, transparent 100%);
     }
 
-    [data-anim].in-view { opacity: 1; transform: translateY(0) scale(1); }
-    [data-anim] { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+    .field-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--fire-3); margin-bottom: 12px; display: block;
+    }
+
+    .type-toggle {
+      display: flex; gap: 1px;
+      background: rgba(255,80,0,0.08);
+      border: 1px solid rgba(255,100,0,0.12);
+      border-radius: 4px; overflow: hidden; padding: 4px;
+      margin-bottom: 28px;
+    }
+    .type-btn {
+      flex: 1; padding: 10px;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      letter-spacing: 2px; text-transform: uppercase;
+      border: none; cursor: pointer; border-radius: 3px;
+      transition: all 0.25s; background: transparent; color: rgba(255,180,80,0.4);
+    }
+    .type-btn.active {
+      background: linear-gradient(135deg, var(--fire-1), var(--fire-2));
+      color: #fff;
+      box-shadow: 0 2px 12px rgba(255,80,0,0.3);
+    }
+
+    .btn-ignite {
+      width: 100%; padding: 18px;
+      background: linear-gradient(135deg, var(--fire-1), var(--fire-2), var(--fire-3));
+      border: none; border-radius: 4px;
+      font-family: 'Orbitron', monospace; font-size: 13px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: #000; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .btn-ignite::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, var(--fire-3), #fff);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .btn-ignite:hover::before { opacity: 0.15; }
+    .btn-ignite:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,80,0,0.45); }
+    .btn-ignite > * { position: relative; z-index: 1; }
+
+    .divider { height: 1px; background: rgba(255,100,0,0.08); margin: 28px 0; }
+
+    .steps-box {
+      background: rgba(255,80,0,0.04);
+      border: 1px solid rgba(255,100,0,0.1);
+      border-radius: 4px; padding: 20px;
+    }
+    .steps-title {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--fire-3); margin-bottom: 14px;
+    }
+    .step-item {
+      display: flex; gap: 14px; margin-bottom: 10px; align-items: flex-start;
+    }
+    .step-item:last-child { margin-bottom: 0; }
+    .step-num {
+      font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 700;
+      color: var(--fire-2); flex-shrink: 0; margin-top: 1px;
+    }
+    .step-text { font-size: 13px; color: rgba(255,200,150,0.55); line-height: 1.5; }
+
+    .feature-pills {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px; margin-top: 20px;
+    }
+    .f-pill {
+      background: rgba(255,80,0,0.04);
+      border: 1px solid rgba(255,100,0,0.1);
+      border-radius: 4px; padding: 14px; text-align: center;
+    }
+    .f-pill-icon { font-size: 18px; color: var(--fire-3); margin-bottom: 6px; }
+    .f-pill-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 9px;
+      letter-spacing: 2px; text-transform: uppercase; color: rgba(255,180,80,0.4);
+    }
+
+    footer {
+      padding: 24px 40px;
+      border-top: 1px solid rgba(255,100,0,0.07);
+      background: rgba(5,2,0,0.8); text-align: center;
+    }
+    footer p {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      letter-spacing: 2px; text-transform: uppercase; color: rgba(255,150,80,0.25);
+    }
+
+    @media (max-width: 480px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .fire-card { padding: 28px 20px; }
+      .feature-pills { grid-template-columns: 1fr 1fr; }
+    }
   </style>
 </head>
 <body>
-  <div class="blob w-96 h-96 bg-amber-600/10 top-[-80px] left-[-80px]" style="animation:blobFloat 14s ease-in-out infinite;"></div>
+  <canvas id="fire-canvas"></canvas>
+  <div class="overlay"></div>
 
-  <nav class="nav-glass sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-3 no-underline">
-        <div class="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center">
-          <i class="fas fa-bolt text-black text-sm"></i>
+  <div class="content">
+    <nav>
+      <a href="/" class="logo-wrap">
+        <div class="logo-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="lgFlame" x1="24" y1="48" x2="24" y2="0" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#ff2200"/>
+                <stop offset="40%" stop-color="#ff6a00"/>
+                <stop offset="80%" stop-color="#ffb347"/>
+                <stop offset="100%" stop-color="#fff0a0"/>
+              </linearGradient>
+            </defs>
+            <path d="M24 4C24 4 28 12 22 18C28 14 34 22 30 30C32 26 36 28 34 36C36 32 42 34 38 42C36 46 28 48 24 48C20 48 12 46 10 42C6 34 12 32 14 36C12 28 18 26 20 30C16 22 22 14 28 18C22 12 24 4 24 4Z" fill="url(#lgFlame)"/>
+            <circle cx="24" cy="36" r="4" fill="#fff0a0" opacity="0.9"/>
+          </svg>
         </div>
-        <span class="text-lg font-bold tracking-tight">ULTRA <span class="text-amber-500">GURU</span></span>
+        <div class="logo-text">
+          <span class="logo-ultra">ULTRA GURU</span>
+          <span class="logo-guru">MD · SESSION</span>
+        </div>
       </a>
-      <div class="hidden md:flex items-center gap-7">
-        <a href="#" class="nav-link text-gray-400 text-sm font-medium transition-colors">Source Code</a>
-        <a href="/pair" class="nav-link text-gray-400 text-sm font-medium transition-colors">Pair Code</a>
-        <a href="/qr" class="text-amber-500 text-sm font-medium">QR Code</a>
-      </div>
-      <div class="flex items-center gap-3">
-        <button id="menuBtn" class="md:hidden text-gray-400"><i class="fas fa-bars text-xl"></i></button>
-      </div>
-    </div>
-  </nav>
 
-  <main class="relative z-10">
-    <section class="min-h-[calc(100vh-64px)] flex flex-col items-center justify-center px-5 py-12">
-      <div class="w-full max-w-md">
+      <div class="nav-links">
+        <a href="/pair">Pair Code</a>
+        <a href="/qr" class="active">QR Code</a>
+      </div>
 
-        <div class="text-center mb-8" data-anim="fade-up">
-          <h1 class="text-3xl font-extrabold mb-2">QR Node</h1>
-          <p class="text-gray-500 text-sm uppercase tracking-widest">Handshake Protocol</p>
+      <a href="/" class="nav-back"><i class="fas fa-arrow-left"></i> &nbsp;Back</a>
+    </nav>
+
+    <main>
+      <div class="panel-wrap">
+        <div class="page-header">
+          <h1>QR Code</h1>
+          <p>Optical Handshake Protocol · Visual Sync v2</p>
         </div>
 
-        <div class="card p-8 shadow-2xl" data-anim="zoom-in">
-          <div class="mb-6">
-            <label class="block text-[10px] font-black uppercase tracking-widest text-amber-500 mb-3">Session Type</label>
-            <div class="flex rounded-xl overflow-hidden border border-white/10 bg-black/40 p-1">
-              <button type="button" id="typeShort" onclick="selectType('short')"
-                class="flex-1 py-2 text-xs font-bold rounded-lg transition-all"
-                style="background:var(--brand-primary); color:#000;">
-                SHORT
-              </button>
-              <button type="button" id="typeLong" onclick="selectType('long')"
-                class="flex-1 py-2 text-xs font-bold rounded-lg transition-all"
-                style="background:transparent; color:#6b7280;">
-                LONG
-              </button>
-            </div>
+        <div class="fire-card">
+          <label class="field-label">Session Type</label>
+          <div class="type-toggle">
+            <button class="type-btn active" id="typeShort" onclick="setType('short')">Short</button>
+            <button class="type-btn" id="typeLong" onclick="setType('long')">Long</button>
           </div>
 
-          <button id="generateBtn" onclick="startQR()" class="btn-primary w-full py-4 flex items-center justify-center gap-3 group">
+          <button class="btn-ignite" onclick="launchQR()">
             <i class="fas fa-qrcode"></i>
-            <span>GENERATE QR CODE</span>
+            <span>Generate QR Code</span>
           </button>
 
-          <div class="mt-8 pt-6 border-t border-white/5">
-            <div class="bg-amber-500/5 border border-amber-500/10 rounded-xl p-4">
-              <p class="text-amber-500 text-[10px] font-black uppercase mb-3 tracking-widest">Instructions</p>
-              <ul class="text-gray-500 text-xs space-y-2">
-                <li class="flex gap-2"><span>1.</span> <span>Open WhatsApp on your phone</span></li>
-                <li class="flex gap-2"><span>2.</span> <span>Tap Menu or Settings → Linked Devices</span></li>
-                <li class="flex gap-2"><span>3.</span> <span>Point your camera at the generated QR</span></li>
-              </ul>
+          <div class="divider"></div>
+
+          <div class="steps-box">
+            <p class="steps-title">How to Scan</p>
+            <div class="step-item">
+              <span class="step-num">01</span>
+              <span class="step-text">Open WhatsApp on your mobile device</span>
+            </div>
+            <div class="step-item">
+              <span class="step-num">02</span>
+              <span class="step-text">Tap Menu or Settings → Linked Devices</span>
+            </div>
+            <div class="step-item">
+              <span class="step-num">03</span>
+              <span class="step-text">Point camera at the generated QR code to link</span>
             </div>
           </div>
         </div>
 
-        <div class="mt-8 grid grid-cols-3 gap-3">
-          <div class="bg-white/[0.02] border border-white/5 rounded-xl p-3 text-center">
-            <i class="fas fa-shield-alt text-amber-500 text-xs mb-1 block"></i>
-            <p class="text-[10px] text-gray-600 uppercase">Secure</p>
+        <div class="feature-pills">
+          <div class="f-pill">
+            <div class="f-pill-icon"><i class="fas fa-shield-alt"></i></div>
+            <div class="f-pill-label">Secure</div>
           </div>
-          <div class="bg-white/[0.02] border border-white/5 rounded-xl p-3 text-center">
-            <i class="fas fa-bolt text-amber-500 text-xs mb-1 block"></i>
-            <p class="text-[10px] text-gray-600 uppercase">Instant</p>
+          <div class="f-pill">
+            <div class="f-pill-icon"><i class="fas fa-bolt"></i></div>
+            <div class="f-pill-label">Instant</div>
           </div>
-          <div class="bg-white/[0.02] border border-white/5 rounded-xl p-3 text-center">
-            <i class="fas fa-fingerprint text-amber-500 text-xs mb-1 block"></i>
-            <p class="text-[10px] text-gray-600 uppercase">Verified</p>
+          <div class="f-pill">
+            <div class="f-pill-icon"><i class="fas fa-fingerprint"></i></div>
+            <div class="f-pill-label">Verified</div>
           </div>
         </div>
       </div>
-    </section>
-  </main>
+    </main>
 
-  <footer class="py-8 border-t border-white/5 text-center bg-[#050505]">
-    <p class="text-[10px] text-gray-600 uppercase tracking-widest">
-      © 2026 ULTRA GURU • Built with precision by GuruTech
-    </p>
-  </footer>
+    <footer>
+      <p>© 2026 Ultra Guru MD · GuruhTech Labs · All Rights Reserved</p>
+    </footer>
+  </div>
 
   <script>
-    /* Note: Built for the Ultra Guru Project by GuruTech. */
     let selectedType = 'short';
 
-    function selectType(type) {
-      selectedType = type;
-      const sBtn = document.getElementById('typeShort');
-      const lBtn = document.getElementById('typeLong');
-      if (type === 'short') {
-        sBtn.style.background = 'var(--brand-primary)';
-        sBtn.style.color = '#000';
-        lBtn.style.background = 'transparent';
-        lBtn.style.color = '#6b7280';
-      } else {
-        lBtn.style.background = 'var(--brand-primary)';
-        lBtn.style.color = '#000';
-        sBtn.style.background = 'transparent';
-        sBtn.style.color = '#6b7280';
+    function setType(t) {
+      selectedType = t;
+      document.getElementById('typeShort').classList.toggle('active', t === 'short');
+      document.getElementById('typeLong').classList.toggle('active', t === 'long');
+    }
+
+    function launchQR() {
+      window.location.href = '/qr/session?type=' + selectedType;
+    }
+
+    (function() {
+      const canvas = document.getElementById('fire-canvas');
+      const ctx = canvas.getContext('2d');
+      let W, H, cols, rows, fire, palette;
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+        cols = Math.ceil(W / 4);
+        rows = Math.ceil(H / 4) + 4;
+        fire = new Uint8Array(cols * rows);
+        buildPalette();
       }
-    }
-
-    function startQR() {
-      window.location.href = `/qr/session?type=${selectedType}`;
-    }
-
-    // Simple reveal animation
-    document.querySelectorAll('[data-anim]').forEach(el => {
-      el.classList.add('in-view');
-    });
+      function buildPalette() {
+        palette = new Uint32Array(256);
+        for (let i = 0; i < 256; i++) {
+          let r, g, b, a;
+          if (i < 60) { r=0;g=0;b=0;a=0; }
+          else if (i < 100) { const t=(i-60)/40; r=Math.round(t*180);g=0;b=0;a=Math.round(t*180); }
+          else if (i < 150) { const t=(i-100)/50; r=Math.round(180+t*75);g=Math.round(t*60);b=0;a=Math.round(180+t*60); }
+          else if (i < 200) { const t=(i-150)/50; r=255;g=Math.round(60+t*120);b=0;a=Math.round(240+t*15); }
+          else { const t=(i-200)/55; r=255;g=Math.round(180+t*60);b=Math.round(t*120);a=255; }
+          palette[i] = (a<<24)|(b<<16)|(g<<8)|r;
+        }
+      }
+      function seedFire() {
+        const base = (rows-1)*cols;
+        for (let x=0;x<cols;x++) {
+          fire[base+x] = Math.random()>0.15 ? Math.floor(180+Math.random()*75) : 0;
+        }
+      }
+      function spreadFire() {
+        for (let y=0;y<rows-1;y++) {
+          for (let x=0;x<cols;x++) {
+            const below = fire[(y+1)*cols+x];
+            const decay = Math.floor(Math.random()*3);
+            const dst = x-decay+1;
+            if (dst>=0&&dst<cols) fire[y*cols+dst] = Math.max(0, below-(Math.random()>0.5?decay:0));
+          }
+        }
+      }
+      function render() {
+        const imgData = ctx.createImageData(W,H);
+        const d = new Uint32Array(imgData.data.buffer);
+        const cW=W/cols, cH=H/rows;
+        for (let y=0;y<rows;y++) for (let x=0;x<cols;x++) {
+          const color = palette[fire[y*cols+x]];
+          const px=Math.floor(x*cW), py=Math.floor(y*cH);
+          const pw=Math.min(Math.ceil(cW),W-px), ph=Math.min(Math.ceil(cH),H-py);
+          for (let dy=0;dy<ph;dy++) for (let dx=0;dx<pw;dx++) d[(py+dy)*W+(px+dx)]=color;
+        }
+        ctx.putImageData(imgData,0,0);
+      }
+      function loop() {
+        seedFire(); spreadFire(); spreadFire(); render();
+        requestAnimationFrame(loop);
+      }
+      window.addEventListener('resize', resize);
+      resize(); loop();
+    })();
   </script>
 </body>
 </html>

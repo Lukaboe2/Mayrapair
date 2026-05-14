@@ -3,279 +3,557 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>ULTRA GURU | Secure Link</title>
-  <meta name="theme-color" content="#f59e0b">
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <title>ULTRA GURU MD — Pair Code</title>
+  <meta name="theme-color" content="#ff4500">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --brand-primary: #f59e0b; /* Amber 500 */
-      --brand-glow: rgba(245, 158, 11, 0.4);
-      --bg-dark: #030303;
-      --card-bg: #0d0d0d;
+      --fire-1: #ff4500;
+      --fire-2: #ff6a00;
+      --fire-3: #ffb347;
+      --fire-4: #fff0a0;
+      --dark: #0a0400;
+      --deep: #050200;
+      --glass-border: rgba(255,100,0,0.18);
     }
-
-    body {
-      font-family: 'Outfit', sans-serif;
-      background-color: var(--bg-dark);
-      color: #fafafa;
+    html, body {
+      width: 100%; min-height: 100%;
+      overflow-x: hidden;
+      background: var(--deep);
+      color: #f5e6d3;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    #fire-canvas {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0; pointer-events: none;
+    }
+    .overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(to top,
+        rgba(5,2,0,0.92) 0%,
+        rgba(5,2,0,0.55) 40%,
+        rgba(5,2,0,0.3) 70%,
+        rgba(5,2,0,0.65) 100%);
+      z-index: 1; pointer-events: none;
+    }
+    .content {
+      position: relative; z-index: 10;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      display: flex; flex-direction: column;
+    }
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 72px;
+      background: rgba(5,2,0,0.7);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .logo-wrap { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+    .logo-icon { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; }
+    .logo-icon svg { width: 42px; height: 42px; filter: drop-shadow(0 0 10px var(--fire-1)) drop-shadow(0 0 20px var(--fire-2)); }
+    .logo-text { display: flex; flex-direction: column; line-height: 1; }
+    .logo-ultra {
+      font-family: 'Orbitron', monospace; font-size: 16px; font-weight: 900; letter-spacing: 4px;
+      background: linear-gradient(to right, #fff8f0, var(--fire-3));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .logo-guru {
+      font-family: 'Orbitron', monospace; font-size: 10px; font-weight: 400;
+      letter-spacing: 5px; color: var(--fire-2); text-transform: uppercase; margin-top: 2px;
+    }
+    .nav-back {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(255,180,100,0.5); text-decoration: none; transition: color 0.3s;
+    }
+    .nav-back:hover { color: var(--fire-3); }
+
+    main {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 48px 20px;
+    }
+    .panel-wrap { width: 100%; max-width: 460px; }
+
+    .page-header { text-align: center; margin-bottom: 36px; }
+    .page-header h1 {
+      font-family: 'Orbitron', monospace; font-size: 32px; font-weight: 900;
+      letter-spacing: 4px; text-transform: uppercase;
+      background: linear-gradient(to bottom, #fff 0%, var(--fire-3) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 8px;
+    }
+    .page-header p {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(255,180,80,0.45);
     }
 
-    .mono { font-family: 'JetBrains Mono', monospace; }
-
-    .glow-text {
-      background: linear-gradient(to right, #f59e0b, #fbbf24);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .nav-blur {
-      background: rgba(3, 3, 3, 0.8);
+    .fire-card {
+      background: rgba(10,4,0,0.75);
+      border: 1px solid var(--glass-border);
+      border-radius: 4px;
+      position: relative; overflow: hidden;
       backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 40px;
     }
-
-    .main-card {
-      background: var(--card-bg);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 24px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .main-card::before {
+    .fire-card::before {
       content: '';
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 4px;
-      background: linear-gradient(90deg, transparent, var(--brand-primary), transparent);
+      position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+      background: linear-gradient(90deg, transparent 0%, var(--fire-1) 30%, var(--fire-3) 70%, transparent 100%);
+    }
+    .fire-card::after {
+      content: '';
+      position: absolute; bottom: 0; right: 0; width: 120px; height: 120px;
+      background: radial-gradient(circle, rgba(255,80,0,0.06), transparent 70%);
+      pointer-events: none;
     }
 
-    .input-premium {
-      background: #151515;
-      border: 1px solid #252525;
-      border-radius: 14px;
-      transition: all 0.3s ease;
+    .field-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--fire-3); margin-bottom: 12px; display: block;
     }
-
-    .input-premium:focus {
-      border-color: var(--brand-primary);
-      box-shadow: 0 0 20px rgba(245, 158, 11, 0.1);
+    .input-wrap { position: relative; margin-bottom: 8px; }
+    .fire-input {
+      width: 100%;
+      background: rgba(255,80,0,0.04);
+      border: 1px solid rgba(255,100,0,0.15);
+      border-radius: 4px;
+      padding: 16px 52px 16px 20px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 18px; font-weight: 600; letter-spacing: 2px;
+      color: #ffe8c8;
       outline: none;
+      transition: all 0.3s;
+    }
+    .fire-input::placeholder { color: rgba(255,180,100,0.25); letter-spacing: 2px; }
+    .fire-input:focus {
+      border-color: var(--fire-2);
+      background: rgba(255,80,0,0.07);
+      box-shadow: 0 0 20px rgba(255,100,0,0.12), inset 0 0 20px rgba(255,80,0,0.03);
+    }
+    .input-icon {
+      position: absolute; right: 18px; top: 50%; transform: translateY(-50%);
+      color: rgba(255,150,50,0.35); font-size: 16px;
+    }
+    .error-text {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1px;
+      color: #ff4444; margin-top: 8px; display: none;
     }
 
-    .btn-solar {
-      background: var(--brand-primary);
-      color: #000;
-      font-weight: 700;
-      border-radius: 14px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    .type-row { margin-bottom: 28px; }
+    .type-toggle {
+      display: flex; gap: 1px;
+      background: rgba(255,80,0,0.08);
+      border: 1px solid rgba(255,100,0,0.12);
+      border-radius: 4px; overflow: hidden; padding: 4px;
+    }
+    .type-btn {
+      flex: 1; padding: 10px;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      letter-spacing: 2px; text-transform: uppercase;
+      border: none; cursor: pointer; border-radius: 3px;
+      transition: all 0.25s; background: transparent; color: rgba(255,180,80,0.4);
+    }
+    .type-btn.active {
+      background: linear-gradient(135deg, var(--fire-1), var(--fire-2));
+      color: #fff;
+      box-shadow: 0 2px 12px rgba(255,80,0,0.3);
     }
 
-    .btn-solar:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px var(--brand-glow);
-      filter: brightness(1.1);
+    .btn-ignite {
+      width: 100%; padding: 18px;
+      background: linear-gradient(135deg, var(--fire-1), var(--fire-2), var(--fire-3));
+      border: none; border-radius: 4px;
+      font-family: 'Orbitron', monospace; font-size: 13px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: #000; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      transition: all 0.3s; position: relative; overflow: hidden;
+      margin-top: 28px;
+    }
+    .btn-ignite::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, var(--fire-3), #fff);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .btn-ignite:hover::before { opacity: 0.15; }
+    .btn-ignite:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,80,0,0.45); }
+    .btn-ignite:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-ignite > * { position: relative; z-index: 1; }
+
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(0,0,0,0.3);
+      border-top-color: #000;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .divider {
+      height: 1px;
+      background: rgba(255,100,0,0.08);
+      margin: 28px 0;
+    }
+
+    .status-row {
+      display: flex; justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      letter-spacing: 2px; color: rgba(255,180,80,0.3);
+    }
+
+    .result-section { display: none; text-align: center; }
+    .result-icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(255,80,0,0.1);
+      border: 1px solid rgba(255,100,0,0.25);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 28px; color: var(--fire-3);
+      filter: drop-shadow(0 0 12px var(--fire-2));
+    }
+    .result-title {
+      font-family: 'Orbitron', monospace; font-size: 14px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(255,220,180,0.8); margin-bottom: 6px;
+    }
+    .result-sub {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      letter-spacing: 2px; color: rgba(255,150,80,0.4); margin-bottom: 28px;
     }
 
     .code-box {
-      font-size: 2.5rem;
-      letter-spacing: 8px;
-      color: var(--brand-primary);
-      text-shadow: 0 0 15px var(--brand-glow);
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,100,0,0.2);
+      border-radius: 4px;
+      padding: 32px 20px;
+      margin-bottom: 24px;
+      position: relative; overflow: hidden;
     }
-
-    .shimmer {
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-      background-size: 200% 100%;
-      animation: shimmer 2s infinite;
+    .code-box::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,100,0,0.04), transparent);
+      animation: shimmer 2.5s ease-in-out infinite;
     }
-
     @keyframes shimmer {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    .code-digits {
+      font-family: 'Orbitron', monospace;
+      font-size: 42px; font-weight: 900;
+      letter-spacing: 10px;
+      background: linear-gradient(to right, var(--fire-2), var(--fire-3), var(--fire-4));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      text-shadow: none;
+      position: relative; z-index: 1;
+    }
+
+    .action-row { display: flex; gap: 10px; }
+    .btn-copy {
+      flex: 1; padding: 14px;
+      background: rgba(255,80,0,0.08);
+      border: 1px solid rgba(255,100,0,0.2);
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--fire-3); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: all 0.3s;
+    }
+    .btn-copy:hover { background: rgba(255,80,0,0.15); border-color: var(--fire-2); }
+    .btn-reset {
+      padding: 14px 20px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px; color: rgba(255,200,150,0.5);
+      cursor: pointer; transition: all 0.3s; font-size: 14px;
+    }
+    .btn-reset:hover { background: rgba(255,255,255,0.07); color: #fff; }
+
+    .info-pills {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin-top: 20px;
+    }
+    .pill {
+      background: rgba(255,80,0,0.04);
+      border: 1px solid rgba(255,100,0,0.1);
+      border-radius: 4px; padding: 16px;
+    }
+    .pill-icon { font-size: 16px; color: var(--fire-3); margin-bottom: 8px; }
+    .pill-title { font-weight: 700; font-size: 13px; letter-spacing: 1px; color: #ffe0c0; margin-bottom: 4px; }
+    .pill-desc { font-size: 11px; color: rgba(255,180,80,0.4); line-height: 1.5; }
+
+    footer {
+      padding: 24px 40px;
+      border-top: 1px solid rgba(255,100,0,0.07);
+      background: rgba(5,2,0,0.8);
+      text-align: center;
+    }
+    footer p {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      letter-spacing: 2px; text-transform: uppercase; color: rgba(255,150,80,0.25);
     }
 
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
     }
     .shake { animation: shake 0.3s ease-in-out; }
+
+    @media (max-width: 480px) {
+      nav { padding: 0 20px; }
+      .fire-card { padding: 28px 20px; }
+      .code-digits { font-size: 30px; letter-spacing: 6px; }
+    }
   </style>
 </head>
 <body>
+  <canvas id="fire-canvas"></canvas>
+  <div class="overlay"></div>
 
-  <nav class="nav-blur sticky top-0 z-50">
-    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center">
-          <i class="fas fa-bolt text-black text-sm"></i>
+  <div class="content">
+    <nav>
+      <a href="/" class="logo-wrap">
+        <div class="logo-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="lgFlame" x1="24" y1="48" x2="24" y2="0" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#ff2200"/>
+                <stop offset="40%" stop-color="#ff6a00"/>
+                <stop offset="80%" stop-color="#ffb347"/>
+                <stop offset="100%" stop-color="#fff0a0"/>
+              </linearGradient>
+            </defs>
+            <path d="M24 4C24 4 28 12 22 18C28 14 34 22 30 30C32 26 36 28 34 36C36 32 42 34 38 42C36 46 28 48 24 48C20 48 12 46 10 42C6 34 12 32 14 36C12 28 18 26 20 30C16 22 22 14 28 18C22 12 24 4 24 4Z" fill="url(#lgFlame)"/>
+            <circle cx="24" cy="36" r="4" fill="#fff0a0" opacity="0.9"/>
+          </svg>
         </div>
-        <span class="text-lg font-bold tracking-tight">ULTRA <span class="text-amber-500">GURU</span></span>
-      </div>
-      <div class="flex gap-4">
-        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-github"></i></a>
-        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-telegram-plane"></i></a>
-      </div>
-    </div>
-  </nav>
+        <div class="logo-text">
+          <span class="logo-ultra">ULTRA GURU</span>
+          <span class="logo-guru">MD · SESSION</span>
+        </div>
+      </a>
+      <a href="/" class="nav-back"><i class="fas fa-arrow-left"></i> &nbsp;Back</a>
+    </nav>
 
-  <main class="flex-grow flex items-center justify-center px-6 py-12">
-    <div class="w-full max-w-md">
-      
-      <div class="text-center mb-10">
-        <h1 class="text-4xl font-extrabold mb-3">Pairing Node</h1>
-        <p class="text-gray-500 text-sm mono uppercase tracking-widest">Secure Handshake Protocol</p>
-      </div>
+    <main>
+      <div class="panel-wrap">
+        <div class="page-header">
+          <h1>Pair Code</h1>
+          <p>Secure Handshake Protocol · Neural Link v2</p>
+        </div>
 
-      <div class="main-card p-8 shadow-2xl">
-        
-        <div id="formSection">
-          <div class="mb-8">
-            <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-amber-500 mb-4">Target Identity</label>
-            <div class="relative">
-              <input 
-                id="phoneNumber" 
-                type="text" 
-                placeholder="2547XXXXXXXX" 
-                class="input-premium w-full py-4 px-5 text-lg font-semibold tracking-wide"
-              >
-              <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600">
-                <i class="fas fa-fingerprint"></i>
+        <div class="fire-card">
+          <div id="formSection">
+            <label class="field-label">Target Phone Identity</label>
+            <div class="input-wrap">
+              <input id="phoneNumber" type="text" class="fire-input" placeholder="2547XXXXXXXXX" maxlength="15" autocomplete="off">
+              <span class="input-icon"><i class="fas fa-fingerprint"></i></span>
+            </div>
+            <p id="errorBox" class="error-text"></p>
+
+            <div class="type-row" style="margin-top:24px;">
+              <label class="field-label">Session Type</label>
+              <div class="type-toggle">
+                <button class="type-btn active" id="typeLong" onclick="setType('long')">Long</button>
+                <button class="type-btn" id="typeShort" onclick="setType('short')">Short</button>
               </div>
             </div>
-            <p id="errorBox" class="text-red-500 text-xs mt-3 hidden mono"></p>
-          </div>
 
-          <button id="submitBtn" class="btn-solar w-full py-4 flex items-center justify-center gap-3 group">
-            <span id="btnText">INITIATE CONNECTION</span>
-            <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
-            <div id="loader" class="hidden w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin"></div>
-          </button>
+            <button id="submitBtn" class="btn-ignite" onclick="requestCode()">
+              <i class="fas fa-bolt"></i>
+              <span id="btnText">Ignite Connection</span>
+              <div class="spinner" id="spinner"></div>
+            </button>
 
-          <div class="mt-8 flex justify-between items-center text-[10px] mono text-gray-600 border-t border-white/5 pt-6">
-            <span>STATUS: READY</span>
-            <span>ENCRYPTION: AES-256</span>
-          </div>
-        </div>
-
-        <div id="resultSection" class="hidden text-center">
-          <div class="mb-6">
-            <div class="w-16 h-16 bg-amber-500/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-amber-500/20">
-              <i class="fas fa-key text-amber-500 text-xl"></i>
+            <div class="divider"></div>
+            <div class="status-row">
+              <span>STATUS: READY</span>
+              <span>ENCRYPTION: AES-256</span>
             </div>
-            <h2 class="text-xl font-bold">Authentication Code</h2>
-            <p class="text-gray-500 text-xs mt-1">Enter this on your primary device</p>
           </div>
 
-          <div class="bg-black/40 border border-white/5 rounded-2xl py-8 mb-8 shimmer">
-            <p id="pairCode" class="code-box mono font-bold"></p>
-          </div>
+          <div class="result-section" id="resultSection">
+            <div class="result-icon"><i class="fas fa-key"></i></div>
+            <h2 class="result-title">Authentication Code</h2>
+            <p class="result-sub">Enter this code on your primary WhatsApp device</p>
 
-          <div class="flex gap-3">
-            <button id="copyBtn" class="flex-grow py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
-              <i class="fas fa-copy text-amber-500"></i>
-              <span id="copyLabel">COPY</span>
-            </button>
-            <button id="resetBtn" class="px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all">
-              <i class="fas fa-redo-alt"></i>
-            </button>
+            <div class="code-box">
+              <p class="code-digits" id="pairCode"></p>
+            </div>
+
+            <div class="action-row">
+              <button class="btn-copy" id="copyBtn">
+                <i class="fas fa-copy"></i>
+                <span id="copyLabel">Copy Code</span>
+              </button>
+              <button class="btn-reset" id="resetBtn"><i class="fas fa-redo-alt"></i></button>
+            </div>
           </div>
         </div>
 
+        <div class="info-pills">
+          <div class="pill">
+            <div class="pill-icon"><i class="fas fa-shield-virus"></i></div>
+            <div class="pill-title">Encrypted</div>
+            <div class="pill-desc">Sessions never logged or stored publicly.</div>
+          </div>
+          <div class="pill">
+            <div class="pill-icon"><i class="fas fa-fire"></i></div>
+            <div class="pill-title">Instant</div>
+            <div class="pill-desc">Generated directly from ignition servers.</div>
+          </div>
+        </div>
       </div>
+    </main>
 
-      <div class="mt-10 grid grid-cols-2 gap-4">
-        <div class="p-4 rounded-2xl border border-white/5 bg-white/[0.02]">
-          <i class="fas fa-shield-virus text-amber-500 mb-2"></i>
-          <h4 class="text-xs font-bold">Encrypted</h4>
-          <p class="text-[10px] text-gray-600 leading-tight mt-1">Sessions are never stored on public logs.</p>
-        </div>
-        <div class="p-4 rounded-2xl border border-white/5 bg-white/[0.02]">
-          <i class="fas fa-tachometer-alt text-amber-500 mb-2"></i>
-          <h4 class="text-xs font-bold">Instant</h4>
-          <p class="text-[10px] text-gray-600 leading-tight mt-1">Generated directly from secure servers.</p>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <footer class="py-8 border-t border-white/5 text-center">
-    <p class="text-[10px] mono text-gray-600 uppercase tracking-widest">
-      © 2026 ULTRA GURU • Built with precision by GuruTech
-    </p>
-  </footer>
+    <footer>
+      <p>© 2026 Ultra Guru MD · GuruhTech Labs · All Rights Reserved</p>
+    </footer>
+  </div>
 
   <script>
-    /* Note: Built for the Ultra Guru Project by GuruTech. */
+    let selectedType = 'long';
+
+    function setType(t) {
+      selectedType = t;
+      document.getElementById('typeLong').classList.toggle('active', t === 'long');
+      document.getElementById('typeShort').classList.toggle('active', t === 'short');
+    }
+
     const phoneInput = document.getElementById('phoneNumber');
     const submitBtn = document.getElementById('submitBtn');
     const btnText = document.getElementById('btnText');
-    const loader = document.getElementById('loader');
+    const spinner = document.getElementById('spinner');
     const errorBox = document.getElementById('errorBox');
-    const formSection = document.getElementById('formSection');
-    const resultSection = document.getElementById('resultSection');
-    const pairCodeDisplay = document.getElementById('pairCode');
 
-    phoneInput.addEventListener('input', (e) => {
-        e.target.value = e.target.value.replace(/[^0-9]/g, '');
-        errorBox.classList.add('hidden');
+    phoneInput.addEventListener('input', function() {
+      this.value = this.value.replace(/[^0-9]/g, '');
+      errorBox.style.display = 'none';
     });
 
-    submitBtn.addEventListener('click', async () => {
-        const num = phoneInput.value.trim();
-        
-        if (num.length < 10) {
-            phoneInput.parentElement.classList.add('shake');
-            errorBox.textContent = "> ERROR: INVALID_IDENTITY_LENGTH";
-            errorBox.classList.remove('hidden');
-            setTimeout(() => phoneInput.parentElement.classList.remove('shake'), 400);
-            return;
+    async function requestCode() {
+      const num = phoneInput.value.trim();
+      if (num.length < 10) {
+        phoneInput.parentElement.classList.add('shake');
+        errorBox.textContent = '> ERROR: INVALID_IDENTITY_LENGTH';
+        errorBox.style.display = 'block';
+        setTimeout(() => phoneInput.parentElement.classList.remove('shake'), 400);
+        return;
+      }
+      submitBtn.disabled = true;
+      btnText.textContent = 'SYNCHRONIZING...';
+      spinner.style.display = 'block';
+      try {
+        const res = await fetch('/code?number=' + num + '&type=' + selectedType);
+        const data = await res.json();
+        if (data.code && data.code !== 'Service is Currently Unavailable' && data.code !== 'Failed to generate pairing code') {
+          document.getElementById('pairCode').textContent = data.code;
+          document.getElementById('formSection').style.display = 'none';
+          document.getElementById('resultSection').style.display = 'block';
+        } else {
+          errorBox.textContent = '> ERROR: ' + (data.code || 'PROTOCOL_INTERRUPTED');
+          errorBox.style.display = 'block';
         }
+      } catch (e) {
+        errorBox.textContent = '> ERROR: PROTOCOL_INTERRUPTED';
+        errorBox.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+        btnText.textContent = 'Ignite Connection';
+        spinner.style.display = 'none';
+      }
+    }
 
-        submitBtn.disabled = true;
-        btnText.textContent = "SYNCHRONIZING...";
-        loader.classList.remove('hidden');
+    document.getElementById('copyBtn').addEventListener('click', function() {
+      const code = document.getElementById('pairCode').textContent;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(code);
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = code;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      const lbl = document.getElementById('copyLabel');
+      lbl.textContent = 'Copied!';
+      setTimeout(() => { lbl.textContent = 'Copy Code'; }, 2000);
+    });
 
-        try {
-            const response = await fetch(`/code?number=${num}&type=long`);
-            const data = await response.json();
+    document.getElementById('resetBtn').addEventListener('click', function() {
+      document.getElementById('resultSection').style.display = 'none';
+      document.getElementById('formSection').style.display = 'block';
+      phoneInput.value = '';
+    });
 
-            if (data.code) {
-                pairCodeDisplay.textContent = data.code;
-                formSection.classList.add('hidden');
-                resultSection.classList.remove('hidden');
-            } else {
-                throw new Error("Handshake Failed");
-            }
-        } catch (err) {
-            errorBox.textContent = "> ERROR: PROTOCOL_INTERRUPTED";
-            errorBox.classList.remove('hidden');
-        } finally {
-            submitBtn.disabled = false;
-            btnText.textContent = "INITIATE CONNECTION";
-            loader.classList.add('hidden');
+    (function() {
+      const canvas = document.getElementById('fire-canvas');
+      const ctx = canvas.getContext('2d');
+      let W, H, cols, rows, fire, palette;
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+        cols = Math.ceil(W / 4);
+        rows = Math.ceil(H / 4) + 4;
+        fire = new Uint8Array(cols * rows);
+        buildPalette();
+      }
+      function buildPalette() {
+        palette = new Uint32Array(256);
+        for (let i = 0; i < 256; i++) {
+          let r, g, b, a;
+          if (i < 60) { r=0;g=0;b=0;a=0; }
+          else if (i < 100) { const t=(i-60)/40; r=Math.round(t*180);g=0;b=0;a=Math.round(t*180); }
+          else if (i < 150) { const t=(i-100)/50; r=Math.round(180+t*75);g=Math.round(t*60);b=0;a=Math.round(180+t*60); }
+          else if (i < 200) { const t=(i-150)/50; r=255;g=Math.round(60+t*120);b=0;a=Math.round(240+t*15); }
+          else { const t=(i-200)/55; r=255;g=Math.round(180+t*60);b=Math.round(t*120);a=255; }
+          palette[i] = (a<<24)|(b<<16)|(g<<8)|r;
         }
-    });
-
-    document.getElementById('copyBtn').addEventListener('click', () => {
-        navigator.clipboard.writeText(pairCodeDisplay.textContent);
-        const label = document.getElementById('copyLabel');
-        label.textContent = "COPIED!";
-        setTimeout(() => label.textContent = "COPY", 2000);
-    });
-
-    document.getElementById('resetBtn').addEventListener('click', () => {
-        resultSection.classList.add('hidden');
-        formSection.classList.remove('hidden');
-        phoneInput.value = "";
-    });
+      }
+      function seedFire() {
+        const base = (rows-1)*cols;
+        for (let x=0;x<cols;x++) {
+          fire[base+x] = Math.random()>0.15 ? Math.floor(180+Math.random()*75) : 0;
+        }
+      }
+      function spreadFire() {
+        for (let y=0;y<rows-1;y++) {
+          for (let x=0;x<cols;x++) {
+            const below = fire[(y+1)*cols+x];
+            const decay = Math.floor(Math.random()*3);
+            const dst = x-decay+1;
+            if (dst>=0&&dst<cols) fire[y*cols+dst] = Math.max(0, below-(Math.random()>0.5?decay:0));
+          }
+        }
+      }
+      function render() {
+        const imgData = ctx.createImageData(W,H);
+        const d = new Uint32Array(imgData.data.buffer);
+        const cW=W/cols, cH=H/rows;
+        for (let y=0;y<rows;y++) for (let x=0;x<cols;x++) {
+          const color = palette[fire[y*cols+x]];
+          const px=Math.floor(x*cW), py=Math.floor(y*cH);
+          const pw=Math.min(Math.ceil(cW),W-px), ph=Math.min(Math.ceil(cH),H-py);
+          for (let dy=0;dy<ph;dy++) for (let dx=0;dx<pw;dx++) d[(py+dy)*W+(px+dx)]=color;
+        }
+        ctx.putImageData(imgData,0,0);
+      }
+      function loop() {
+        seedFire(); spreadFire(); spreadFire(); render();
+        requestAnimationFrame(loop);
+      }
+      window.addEventListener('resize', resize);
+      resize(); loop();
+    })();
   </script>
 </body>
 </html>

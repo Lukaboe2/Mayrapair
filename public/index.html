@@ -3,213 +3,632 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>ULTRA GURU • Neural Interface</title>
-  <meta name="theme-color" content="#ff2e63">
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>ULTRA GURU MD — Session Generator</title>
+  <meta name="theme-color" content="#ff4500">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --bg-dark: #050508;
-      --accent-primary: #ff2e63; /* Electric Crimson */
-      --accent-secondary: #08d9d6; /* Cyber Cyan */
-      --glass: rgba(255, 255, 255, 0.03);
+      --fire-1: #ff4500;
+      --fire-2: #ff6a00;
+      --fire-3: #ffb347;
+      --fire-4: #fff0a0;
+      --ember: #ff2200;
+      --dark: #0a0400;
+      --deep: #050200;
+      --glass: rgba(255, 80, 0, 0.04);
+      --glass-border: rgba(255, 100, 0, 0.15);
     }
 
-    body {
-      font-family: 'Outfit', sans-serif;
-      background-color: var(--bg-dark);
-      color: #eaeaea;
+    html, body {
+      width: 100%; height: 100%;
       overflow-x: hidden;
+      background: var(--deep);
+      color: #f5e6d3;
+      font-family: 'Rajdhani', sans-serif;
     }
 
-    .mono { font-family: 'JetBrains Mono', monospace; }
+    #fire-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
 
-    /* Animated Gradient Background */
-    .bg-glow {
+    .overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at 50% -20%, #1a1a2e 0%, transparent 50%),
-                  radial-gradient(circle at 0% 100%, #110011 0%, transparent 40%);
+      background: linear-gradient(to top,
+        rgba(5,2,0,0.85) 0%,
+        rgba(5,2,0,0.4) 40%,
+        rgba(5,2,0,0.2) 70%,
+        rgba(5,2,0,0.5) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 72px;
+      background: rgba(5,2,0,0.6);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 48px; height: 48px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-icon svg {
+      width: 48px; height: 48px;
+      filter: drop-shadow(0 0 12px var(--fire-1)) drop-shadow(0 0 24px var(--fire-2));
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .logo-ultra {
+      font-family: 'Orbitron', monospace;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      background: linear-gradient(to right, #fff8f0, var(--fire-3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-guru {
+      font-family: 'Orbitron', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 6px;
+      color: var(--fire-2);
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,200,150,0.5);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--fire-3); }
+
+    .nav-cta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      border: 1px solid var(--fire-1);
+      color: var(--fire-3);
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .nav-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--fire-1);
+      transform: translateX(-100%);
+      transition: transform 0.3s;
       z-index: -1;
     }
 
-    .nav-blur {
-      background: rgba(5, 5, 8, 0.8);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 46, 99, 0.1);
+    .nav-cta:hover::before { transform: translateX(0); }
+    .nav-cta:hover { color: #000; }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px 80px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--fire-3);
+      border: 1px solid rgba(255,180,0,0.25);
+      background: rgba(255,100,0,0.08);
+      padding: 6px 16px;
+      border-radius: 2px;
+      margin-bottom: 40px;
+    }
+
+    .badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--fire-3);
+      box-shadow: 0 0 8px var(--fire-3);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero-logo {
+      margin-bottom: 20px;
+    }
+
+    .hero-logo svg {
+      width: 120px; height: 120px;
+      filter: drop-shadow(0 0 30px var(--fire-1)) drop-shadow(0 0 60px var(--fire-2));
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
     }
 
     .hero-title {
-      font-weight: 800;
-      letter-spacing: -0.05em;
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(48px, 9vw, 96px);
+      font-weight: 900;
       line-height: 0.9;
-      background: linear-gradient(to bottom right, #fff 30%, rgba(255,255,255,0.4));
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+      background: linear-gradient(to bottom, #ffffff 0%, var(--fire-3) 60%, var(--fire-1) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: none;
     }
 
-    .btn-cyber {
+    .hero-sub {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(14px, 3vw, 22px);
+      font-weight: 400;
+      letter-spacing: 10px;
+      color: var(--fire-2);
+      margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+
+    .hero-desc {
+      max-width: 520px;
+      font-size: 17px;
+      font-weight: 400;
+      color: rgba(255,220,180,0.6);
+      line-height: 1.8;
+      margin-bottom: 56px;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-fire {
       position: relative;
-      padding: 16px 36px;
-      background: #fff;
-      color: #000;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 44px;
+      font-family: 'Rajdhani', sans-serif;
       font-weight: 700;
-      clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
-      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      font-size: 15px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #000;
+      background: linear-gradient(135deg, var(--fire-3), var(--fire-1));
+      clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+      transition: all 0.3s;
+      overflow: hidden;
     }
 
-    .btn-cyber:hover {
-      background: var(--accent-primary);
-      color: #fff;
-      transform: scale(1.05);
-      box-shadow: 0 0 30px rgba(255, 46, 99, 0.4);
-    }
-
-    .glass-card {
-      background: var(--glass);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-    }
-
-    .glass-card:hover {
-      background: rgba(255, 46, 99, 0.02);
-      border-color: rgba(255, 46, 99, 0.3);
-      transform: translateY(-5px);
-    }
-
-    .scanline {
-      width: 100%;
-      height: 2px;
-      background: rgba(255, 46, 99, 0.1);
+    .btn-fire::before {
+      content: '';
       position: absolute;
-      animation: scan 4s linear infinite;
+      inset: 0;
+      background: linear-gradient(135deg, #fff, var(--fire-3));
+      opacity: 0;
+      transition: opacity 0.3s;
     }
 
-    @keyframes scan {
-      0% { top: 0; }
-      100% { top: 100%; }
+    .btn-fire:hover::before { opacity: 1; }
+    .btn-fire:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(255,80,0,0.5); }
+    .btn-fire span { position: relative; z-index: 1; }
+
+    .btn-ghost-fire {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 44px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--fire-3);
+      border: 1px solid rgba(255,150,0,0.3);
+      background: rgba(255,80,0,0.04);
+      clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+      transition: all 0.3s;
     }
 
-    .input-cyber {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #fff;
-      transition: all 0.3s ease;
+    .btn-ghost-fire:hover {
+      background: rgba(255,80,0,0.12);
+      border-color: var(--fire-2);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(255,80,0,0.2);
     }
-    .input-cyber:focus {
-      border-color: var(--accent-secondary);
-      box-shadow: 0 0 15px rgba(8, 217, 214, 0.2);
-      outline: none;
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,100,0,0.08);
+      border-top: 1px solid rgba(255,100,0,0.1);
+      border-bottom: 1px solid rgba(255,100,0,0.1);
+      margin-top: 80px;
+    }
+
+    .feature-item {
+      background: rgba(5,2,0,0.7);
+      backdrop-filter: blur(20px);
+      padding: 48px 36px;
+      transition: background 0.3s;
+    }
+
+    .feature-item:hover {
+      background: rgba(255,80,0,0.04);
+    }
+
+    .feature-num {
+      font-family: 'Orbitron', monospace;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--fire-2);
+      margin-bottom: 20px;
+    }
+
+    .feature-icon {
+      font-size: 28px;
+      color: var(--fire-3);
+      margin-bottom: 16px;
+      filter: drop-shadow(0 0 8px var(--fire-2));
+    }
+
+    .feature-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #ffe4c4;
+      margin-bottom: 12px;
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      color: rgba(255,200,150,0.5);
+      line-height: 1.7;
+    }
+
+    footer {
+      position: relative;
+      z-index: 10;
+      padding: 28px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,100,0,0.08);
+      background: rgba(5,2,0,0.8);
+    }
+
+    .footer-copy {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,150,80,0.35);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      color: rgba(255,150,80,0.4);
+      font-size: 14px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--fire-3); }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      main { padding: 40px 20px 60px; }
+      .features { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
     }
   </style>
 </head>
 <body>
-  <div class="bg-glow"></div>
+  <canvas id="fire-canvas"></canvas>
+  <div class="overlay"></div>
 
-  <nav class="nav-blur fixed top-0 w-full z-50">
-    <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-      <div class="flex items-center gap-4">
-        <div class="w-10 h-10 border-2 border-[#ff2e63] rotate-45 flex items-center justify-center">
-          <span class="rotate-[-45deg] font-black text-white">U</span>
+  <div class="content">
+    <nav>
+      <a href="/" class="logo-wrap">
+        <div class="logo-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="lgFlame" x1="24" y1="48" x2="24" y2="0" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#ff2200"/>
+                <stop offset="40%" stop-color="#ff6a00"/>
+                <stop offset="80%" stop-color="#ffb347"/>
+                <stop offset="100%" stop-color="#fff0a0"/>
+              </linearGradient>
+            </defs>
+            <path d="M24 4C24 4 28 12 22 18C28 14 34 22 30 30C32 26 36 28 34 36C36 32 42 34 38 42C36 46 28 48 24 48C20 48 12 46 10 42C6 34 12 32 14 36C12 28 18 26 20 30C16 22 22 14 28 18C22 12 24 4 24 4Z" fill="url(#lgFlame)"/>
+            <circle cx="24" cy="36" r="4" fill="#fff0a0" opacity="0.9"/>
+          </svg>
         </div>
-        <span class="text-xl font-bold tracking-tighter">ULTRA<span class="text-[#ff2e63]">GURU</span></span>
-      </div>
-      
-      <div class="hidden md:flex gap-10 text-xs font-semibold uppercase tracking-widest text-gray-400">
-        <a href="#" class="hover:text-[#ff2e63] transition-colors">Interface</a>
-        <a href="#" class="hover:text-[#ff2e63] transition-colors">Network</a>
-        <a href="#" class="hover:text-[#ff2e63] transition-colors">Nodes</a>
-      </div>
-
-      <a href="/pair" class="mono text-xs border border-white/10 px-4 py-2 hover:bg-white hover:text-black transition-all">
-        SYS_CONNECT: 01
+        <div class="logo-text">
+          <span class="logo-ultra">ULTRA GURU</span>
+          <span class="logo-guru">MD · SESSION</span>
+        </div>
       </a>
-    </div>
-  </nav>
 
-  <main class="relative pt-40 pb-20 px-6">
-    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-      <div>
-        <div class="inline-block mono text-[10px] bg-[#ff2e63]/10 text-[#ff2e63] px-3 py-1 mb-8 border border-[#ff2e63]/20">
-          STABLE_BUILD_V2.0.6
-        </div>
-        <h1 class="hero-title text-8xl md:text-9xl mb-8">
-          PURE<br>LOGIC.
-        </h1>
-        <p class="text-lg text-gray-500 max-w-md leading-relaxed mb-10">
-          The next evolution of session management. Secure, ephemeral, and devastatingly fast. Choose your pairing protocol.
-        </p>
-        
-        <div class="flex flex-wrap gap-6">
-          <a href="/pair" class="btn-cyber">GENERATE_PAIR</a>
-          <a href="/qr" class="flex items-center gap-3 px-8 py-4 border border-white/10 hover:border-[#08d9d6] transition-all group">
-            <i class="fas fa-qrcode text-[#08d9d6]"></i>
-            <span class="mono text-sm group-hover:text-[#08d9d6]">QR_SCAN</span>
-          </a>
-        </div>
+      <ul class="nav-links">
+        <li><a href="#">Interface</a></li>
+        <li><a href="#">Network</a></li>
+        <li><a href="#">Status</a></li>
+      </ul>
+
+      <a href="/pair" class="nav-cta">Pair Session</a>
+    </nav>
+
+    <main>
+      <div class="badge">System Online — Build v2.1.0</div>
+
+      <div class="hero-logo">
+        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="heroFlame" x1="60" y1="120" x2="60" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#ff2200"/>
+              <stop offset="35%" stop-color="#ff6a00"/>
+              <stop offset="70%" stop-color="#ffb347"/>
+              <stop offset="100%" stop-color="#fff5c0"/>
+            </linearGradient>
+            <radialGradient id="heroGlow" cx="50%" cy="90%" r="50%">
+              <stop offset="0%" stop-color="#ff4500" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#ff4500" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <ellipse cx="60" cy="110" rx="40" ry="8" fill="url(#heroGlow)"/>
+          <path d="M60 8C60 8 70 30 55 44C70 34 85 54 75 74C78 64 90 68 85 88C88 78 100 82 94 100C91 110 72 116 60 116C48 116 29 110 26 100C20 82 32 78 35 88C30 68 42 64 45 74C35 54 50 34 65 44C50 30 60 8 60 8Z" fill="url(#heroFlame)"/>
+          <ellipse cx="60" cy="90" rx="10" ry="10" fill="#fff8e0" opacity="0.95"/>
+          <ellipse cx="60" cy="90" rx="5" ry="5" fill="#ffffff"/>
+        </svg>
       </div>
 
-      <div class="relative hidden lg:block">
-        <div class="glass-card p-12 rounded-sm relative overflow-hidden">
-          <div class="scanline"></div>
-          <pre class="mono text-[10px] text-[#ff2e63]/60 leading-tight">
-> INITIALIZING GURU_TECH CORE...
-> ESTABLISHING SOCKET.IO...
-> STATUS: ENCRYPTED
-> HANDSHAKE: SUCCESS
-> READY_FOR_SESSION...
-> AWAITING_INPUT_IDENTITY...
-          </pre>
-          <div class="mt-8 space-y-4">
-            <div class="h-1 w-full bg-white/5"><div class="h-1 w-2/3 bg-[#ff2e63]"></div></div>
-            <div class="h-1 w-full bg-white/5"><div class="h-1 w-1/2 bg-[#08d9d6]"></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
+      <h1 class="hero-title">ULTRA GURU</h1>
+      <p class="hero-sub">MD · SESSION GENERATOR</p>
+      <p class="hero-desc">The most powerful WhatsApp session generator on the planet. Military-grade encryption. Zero-trace architecture. Choose your protocol below.</p>
 
-  <section class="py-24 px-6 border-y border-white/5">
-    <div class="max-w-7xl mx-auto">
-      <div class="grid md:grid-cols-3 gap-1">
-        <div class="glass-card p-10">
-          <span class="mono text-[#ff2e63] text-sm">01.</span>
-          <h3 class="text-2xl font-bold mt-4 mb-4">Neural Pairing</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">Direct 8-digit authorization bypasses physical hardware requirements with zero latency.</p>
-        </div>
-        <div class="glass-card p-10 border-x-0 md:border-x">
-          <span class="mono text-[#08d9d6] text-sm">02.</span>
-          <h3 class="text-2xl font-bold mt-4 mb-4">Visual Sync</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">Instant QR matrix generation for legacy device authentication via secure optical scan.</p>
-        </div>
-        <div class="glass-card p-10">
-          <span class="mono text-white text-sm">03.</span>
-          <h3 class="text-2xl font-bold mt-4 mb-4">Void Security</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">End-to-end volatile memory processing ensures your credentials never touch a disk.</p>
-        </div>
+      <div class="cta-group">
+        <a href="/pair" class="btn-fire">
+          <i class="fas fa-link"></i>
+          <span>Pair Code</span>
+        </a>
+        <a href="/qr" class="btn-ghost-fire">
+          <i class="fas fa-qrcode"></i>
+          <span>QR Code</span>
+        </a>
       </div>
-    </div>
-  </section>
+    </main>
 
-  <footer class="py-12 px-6">
-    <div class="max-w-7xl mx-auto flex flex-col md:row justify-between items-center gap-8">
-      <p class="mono text-[10px] text-gray-600 tracking-widest uppercase">
-        © 2026 // GURU_TECH_LABS // ALL_RIGHTS_RESERVED
-      </p>
-      <div class="flex gap-8">
-        <a href="#" class="text-white hover:text-[#ff2e63] transition-colors"><i class="fab fa-github"></i></a>
-        <a href="#" class="text-white hover:text-[#ff2e63] transition-colors"><i class="fab fa-discord"></i></a>
-        <a href="#" class="text-white hover:text-[#ff2e63] transition-colors"><i class="fas fa-code-branch"></i></a>
+    <section class="features">
+      <div class="feature-item">
+        <div class="feature-num">01 / PROTOCOL</div>
+        <div class="feature-icon"><i class="fas fa-fire"></i></div>
+        <h3 class="feature-title">Ignition Pairing</h3>
+        <p class="feature-desc">8-digit blazing-fast authorization. Zero hardware dependency. Direct neural handshake.</p>
       </div>
-    </div>
-  </footer>
+      <div class="feature-item">
+        <div class="feature-num">02 / VISION</div>
+        <div class="feature-icon"><i class="fas fa-eye"></i></div>
+        <h3 class="feature-title">QR Optical Sync</h3>
+        <p class="feature-desc">Real-time matrix generation. Secure optical scan via your primary WhatsApp device.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-num">03 / SECURITY</div>
+        <div class="feature-icon"><i class="fas fa-shield-virus"></i></div>
+        <h3 class="feature-title">Volatile Vault</h3>
+        <p class="feature-desc">End-to-end volatile memory processing. Credentials never touch a disk. Ever.</p>
+      </div>
+    </section>
+
+    <footer>
+      <span class="footer-copy">© 2026 Ultra Guru MD · GuruhTech Labs · All Rights Reserved</span>
+      <div class="footer-links">
+        <a href="https://github.com/GuruhTech/ULTRA-GURU" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+        <a href="https://whatsapp.com/channel/0029VbCl2UX3rZZilMSvxN1e" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+        <a href="#"><i class="fas fa-code-branch"></i></a>
+      </div>
+    </footer>
+  </div>
 
   <script>
-    // Note: Built for the Ultra Guru Project by GuruTech.
+    (function() {
+      const canvas = document.getElementById('fire-canvas');
+      const ctx = canvas.getContext('2d');
+      let W, H, cols, rows, fire, palette;
+
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+        cols = Math.ceil(W / 4);
+        rows = Math.ceil(H / 4) + 4;
+        fire = new Uint8Array(cols * rows);
+        buildPalette();
+      }
+
+      function buildPalette() {
+        palette = new Uint32Array(256);
+        for (let i = 0; i < 256; i++) {
+          let r, g, b, a;
+          if (i < 60) {
+            r = 0; g = 0; b = 0; a = 0;
+          } else if (i < 100) {
+            const t = (i - 60) / 40;
+            r = Math.round(t * 180);
+            g = 0; b = 0;
+            a = Math.round(t * 180);
+          } else if (i < 150) {
+            const t = (i - 100) / 50;
+            r = Math.round(180 + t * 75);
+            g = Math.round(t * 60);
+            b = 0;
+            a = Math.round(180 + t * 60);
+          } else if (i < 200) {
+            const t = (i - 150) / 50;
+            r = 255;
+            g = Math.round(60 + t * 120);
+            b = 0;
+            a = Math.round(240 + t * 15);
+          } else {
+            const t = (i - 200) / 55;
+            r = 255;
+            g = Math.round(180 + t * 60);
+            b = Math.round(t * 120);
+            a = 255;
+          }
+          palette[i] = (a << 24) | (b << 16) | (g << 8) | r;
+        }
+      }
+
+      function seedFire() {
+        const base = (rows - 1) * cols;
+        for (let x = 0; x < cols; x++) {
+          const v = Math.random() > 0.15 ? Math.floor(180 + Math.random() * 75) : 0;
+          fire[base + x] = v;
+        }
+      }
+
+      function spreadFire() {
+        for (let y = 0; y < rows - 1; y++) {
+          for (let x = 0; x < cols; x++) {
+            const below = fire[(y + 1) * cols + x];
+            const decay = Math.floor(Math.random() * 3);
+            const dst = x - decay + 1;
+            if (dst >= 0 && dst < cols) {
+              const next = below - (Math.random() > 0.5 ? decay : 0);
+              fire[y * cols + dst] = Math.max(0, next);
+            }
+          }
+        }
+      }
+
+      function render() {
+        const imgData = ctx.createImageData(W, H);
+        const data32 = new Uint32Array(imgData.data.buffer);
+        const cellW = W / cols;
+        const cellH = H / rows;
+
+        for (let y = 0; y < rows; y++) {
+          for (let x = 0; x < cols; x++) {
+            const heat = fire[y * cols + x];
+            const color = palette[heat];
+            const px = Math.floor(x * cellW);
+            const py = Math.floor(y * cellH);
+            const pw = Math.min(Math.ceil(cellW), W - px);
+            const ph = Math.min(Math.ceil(cellH), H - py);
+            for (let dy = 0; dy < ph; dy++) {
+              for (let dx = 0; dx < pw; dx++) {
+                data32[(py + dy) * W + (px + dx)] = color;
+              }
+            }
+          }
+        }
+        ctx.putImageData(imgData, 0, 0);
+      }
+
+      function addEmbers() {
+        const base = (rows - 1) * cols;
+        for (let i = 0; i < 3; i++) {
+          const x = Math.floor(Math.random() * cols);
+          fire[base + x] = Math.floor(200 + Math.random() * 55);
+        }
+      }
+
+      function loop() {
+        seedFire();
+        addEmbers();
+        spreadFire();
+        spreadFire();
+        render();
+        requestAnimationFrame(loop);
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+      loop();
+    })();
   </script>
 </body>
 </html>
