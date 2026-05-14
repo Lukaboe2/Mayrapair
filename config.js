@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 module.exports = {
-    PORT: process.env.PORT || 50900,
+    PORT: process.env.PORT || 5000,
     SESSION_PREFIX: process.env.SESSION_PREFIX || "GURU~",
     GC_JID: process.env.GC_JID || "LZE4CoZNhLB28z5jtqwNLA",
     DATABASE_URL: process.env.DATABASE_URL || "",
