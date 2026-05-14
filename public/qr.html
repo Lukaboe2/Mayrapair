@@ -21,35 +21,19 @@
     html, body {
       width: 100%; min-height: 100%;
       overflow-x: hidden;
-      background: var(--deep);
-      color: #f5e6d3;
+      background: #080500;
+      color: #f0dfc8;
       font-family: 'Rajdhani', sans-serif;
     }
-    #fire-canvas {
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0; pointer-events: none;
-    }
-    .overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(to top,
-        rgba(5,2,0,0.92) 0%,
-        rgba(5,2,0,0.55) 40%,
-        rgba(5,2,0,0.3) 70%,
-        rgba(5,2,0,0.65) 100%);
-      z-index: 1; pointer-events: none;
-    }
     .content {
-      position: relative; z-index: 10;
       min-height: 100vh;
       display: flex; flex-direction: column;
     }
     nav {
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 40px; height: 72px;
-      background: rgba(5,2,0,0.7);
-      backdrop-filter: blur(24px);
-      border-bottom: 1px solid var(--glass-border);
+      background: #0d0700;
+      border-bottom: 1px solid rgba(255,100,0,0.18);
     }
     .logo-wrap { display: flex; align-items: center; gap: 14px; text-decoration: none; }
     .logo-icon { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; }
@@ -98,11 +82,10 @@
     }
 
     .fire-card {
-      background: rgba(10,4,0,0.75);
-      border: 1px solid var(--glass-border);
+      background: #110800;
+      border: 1px solid rgba(255,100,0,0.18);
       border-radius: 4px;
       position: relative; overflow: hidden;
-      backdrop-filter: blur(20px);
       padding: 40px;
     }
     .fire-card::before {
@@ -194,8 +177,8 @@
 
     footer {
       padding: 24px 40px;
-      border-top: 1px solid rgba(255,100,0,0.07);
-      background: rgba(5,2,0,0.8); text-align: center;
+      border-top: 1px solid rgba(255,100,0,0.12);
+      background: #0d0700; text-align: center;
     }
     footer p {
       font-family: 'JetBrains Mono', monospace; font-size: 10px;
@@ -314,9 +297,6 @@
   </style>
 </head>
 <body>
-  <canvas id="fire-canvas"></canvas>
-  <div class="overlay"></div>
-
   <div class="content">
     <nav>
       <a href="/" class="logo-wrap">
@@ -491,65 +471,6 @@
       window.location.href = '/qr/session?type=' + selectedType;
     }
 
-    (function() {
-      const canvas = document.getElementById('fire-canvas');
-      const ctx = canvas.getContext('2d');
-      let W, H, cols, rows, fire, palette;
-      function resize() {
-        W = canvas.width = window.innerWidth;
-        H = canvas.height = window.innerHeight;
-        cols = Math.ceil(W / 4);
-        rows = Math.ceil(H / 4) + 4;
-        fire = new Uint8Array(cols * rows);
-        buildPalette();
-      }
-      function buildPalette() {
-        palette = new Uint32Array(256);
-        for (let i = 0; i < 256; i++) {
-          let r, g, b, a;
-          if (i < 60) { r=0;g=0;b=0;a=0; }
-          else if (i < 100) { const t=(i-60)/40; r=Math.round(t*180);g=0;b=0;a=Math.round(t*180); }
-          else if (i < 150) { const t=(i-100)/50; r=Math.round(180+t*75);g=Math.round(t*60);b=0;a=Math.round(180+t*60); }
-          else if (i < 200) { const t=(i-150)/50; r=255;g=Math.round(60+t*120);b=0;a=Math.round(240+t*15); }
-          else { const t=(i-200)/55; r=255;g=Math.round(180+t*60);b=Math.round(t*120);a=255; }
-          palette[i] = (a<<24)|(b<<16)|(g<<8)|r;
-        }
-      }
-      function seedFire() {
-        const base = (rows-1)*cols;
-        for (let x=0;x<cols;x++) {
-          fire[base+x] = Math.random()>0.15 ? Math.floor(180+Math.random()*75) : 0;
-        }
-      }
-      function spreadFire() {
-        for (let y=0;y<rows-1;y++) {
-          for (let x=0;x<cols;x++) {
-            const below = fire[(y+1)*cols+x];
-            const decay = Math.floor(Math.random()*3);
-            const dst = x-decay+1;
-            if (dst>=0&&dst<cols) fire[y*cols+dst] = Math.max(0, below-(Math.random()>0.5?decay:0));
-          }
-        }
-      }
-      function render() {
-        const imgData = ctx.createImageData(W,H);
-        const d = new Uint32Array(imgData.data.buffer);
-        const cW=W/cols, cH=H/rows;
-        for (let y=0;y<rows;y++) for (let x=0;x<cols;x++) {
-          const color = palette[fire[y*cols+x]];
-          const px=Math.floor(x*cW), py=Math.floor(y*cH);
-          const pw=Math.min(Math.ceil(cW),W-px), ph=Math.min(Math.ceil(cH),H-py);
-          for (let dy=0;dy<ph;dy++) for (let dx=0;dx<pw;dx++) d[(py+dy)*W+(px+dx)]=color;
-        }
-        ctx.putImageData(imgData,0,0);
-      }
-      function loop() {
-        seedFire(); spreadFire(); spreadFire(); render();
-        requestAnimationFrame(loop);
-      }
-      window.addEventListener('resize', resize);
-      resize(); loop();
-    })();
   </script>
 </body>
 </html>
