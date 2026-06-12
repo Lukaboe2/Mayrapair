@@ -1,9 +1,9 @@
 const { 
-    giftedId,
+    guruhId,
     removeFile
-} = require('../gift');
+} = require('../guru');
 const { SESSION_PREFIX, GC_JID, BOT_REPO, WA_CHANNEL, MSG_FOOTER } = require('../config');
-const { isConfigured, saveSession } = require('../gift/sessionStore');
+const { isConfigured, saveSession } = require('../guru/sessionStore');
 const QRCode = require('qrcode');
 const express = require('express');
 const zlib = require('zlib');
@@ -11,9 +11,8 @@ const path = require('path');
 const fs = require('fs');
 let router = express.Router();
 const pino = require("pino");
-const { sendButtons } = require('gifted-btns');
 const {
-    default: giftedConnect,
+    default: guruhConnect,
     useMultiFileAuthState,
     Browsers,
     delay,
@@ -23,7 +22,7 @@ const {
 const sessionDir = path.join(__dirname, "session");
 
 router.get('/session', async (req, res) => {
-    const id = giftedId();
+    const id = guruhId();
     const sessionType = (req.query.type || 'short').toLowerCase();
     let responseSent = false;
     let sessionCleanedUp = false;
@@ -35,12 +34,11 @@ router.get('/session', async (req, res) => {
         }
     }
 
-    async function GIFTED_QR_CODE() {
+    async function GURUH_QR_CODE() {
         const { version } = await fetchLatestBaileysVersion();
-        console.log(version);
         const { state, saveCreds } = await useMultiFileAuthState(path.join(sessionDir, id));
         try {
-            let Gifted = giftedConnect({
+            let Guruh = guruhConnect({
                 version,
                 auth: state,
                 printQRInTerminal: false,
@@ -50,8 +48,8 @@ router.get('/session', async (req, res) => {
                 keepAliveIntervalMs: 30000
             });
 
-            Gifted.ev.on('creds.update', saveCreds);
-            Gifted.ev.on("connection.update", async (s) => {
+            Guruh.ev.on('creds.update', saveCreds);
+            Guruh.ev.on("connection.update", async (s) => {
                 const { connection, lastDisconnect, qr } = s;
 
                 if (qr && !responseSent) {
@@ -61,7 +59,7 @@ router.get('/session', async (req, res) => {
                             <!DOCTYPE html>
                             <html>
                             <head>
-                                <title>ATASSA-MD | QR CODE</title>
+                                <title>PANTHERR-X-ULTRA | QR CODE</title>
                                 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
                                 <style>
                                     body {
@@ -170,7 +168,7 @@ router.get('/session', async (req, res) => {
                                         <span style="font-size:1rem;margin-top:1px;flex-shrink:0;">ℹ️</span>
                                         <p style="margin:0;font-size:0.78rem;color:#93c5fd;line-height:1.5;">Session store is not configured &mdash; automatically switched to <strong>Long session</strong>.</p>
                                     </div>` : ''}
-                                    <h1>ATASSA QR CODE</h1>
+                                    <h1>PANTHERR-X-ULTRA QR CODE</h1>
                                     <div class="qr-container">
                                         <div class="qr-code pulse">
                                             <img src="${qrImage}" alt="QR Code"/>
@@ -198,7 +196,7 @@ router.get('/session', async (req, res) => {
 
                 if (connection === "open") {
                     try {
-                        await Gifted.groupAcceptInvite(GC_JID);
+                        await Guruh.groupAcceptInvite(GC_JID);
                     } catch (e) {
                         console.log("Group join error:", e.message);
                     }
@@ -238,34 +236,24 @@ router.get('/session', async (req, res) => {
                         let b64data = compressedData.toString('base64');
                         const fullSession = SESSION_PREFIX + b64data;
 
-                        let msgText, msgButtons;
+                        let sessionId;
                         if (isConfigured() && sessionType === 'short') {
                             const shortId = await saveSession(fullSession);
-                            const shortSession = `${SESSION_PREFIX}${shortId}`;
-                            msgText = `*SESSION ID ✅*\n\n${shortSession}`;
-                            msgButtons = [
-                                { name: 'cta_copy', buttonParamsJson: JSON.stringify({ display_text: 'Copy Session', copy_code: shortSession }) },
-                                { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Visit Bot Repo', url: BOT_REPO }) },
-                                { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Join WaChannel', url: WA_CHANNEL }) }
-                            ];
+                            sessionId = `${SESSION_PREFIX}${shortId}`;
                         } else {
-                            msgText = `*SESSION ID ✅*\n\n${fullSession}`;
-                            msgButtons = [
-                                { name: 'cta_copy', buttonParamsJson: JSON.stringify({ display_text: 'Copy Session', copy_code: fullSession }) },
-                                { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Visit Bot Repo', url: BOT_REPO }) },
-                                { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Join WaChannel', url: WA_CHANNEL }) }
-                            ];
+                            sessionId = fullSession;
                         }
 
-                        await sendButtons(Gifted, Gifted.user.id, {
-                            title: '',
-                            text: msgText,
-                            footer: MSG_FOOTER,
-                            buttons: msgButtons
+                        // Send session ID alone as a plain text message
+                        await Guruh.sendMessage(Guruh.user.id, { text: sessionId });
+                        await delay(1500);
+                        // Send info separately
+                        await Guruh.sendMessage(Guruh.user.id, {
+                            text: `*✅ Session Generated Successfully*\n\n📦 Bot Repo: ${BOT_REPO}\n📢 Channel: ${WA_CHANNEL}\n\n${MSG_FOOTER}`
                         });
 
                         await delay(2000);
-                        await Gifted.ws.close();
+                        await Guruh.ws.close();
                     } catch (sendError) {
                         console.error("Error sending session:", sendError);
                     } finally {
@@ -274,7 +262,7 @@ router.get('/session', async (req, res) => {
 
                 } else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output?.statusCode != 401) {
                     await delay(10000);
-                    GIFTED_QR_CODE();
+                    GURUH_QR_CODE();
                 }
             });
         } catch (err) {
@@ -288,7 +276,7 @@ router.get('/session', async (req, res) => {
     }
 
     try {
-        await GIFTED_QR_CODE();
+        await GURUH_QR_CODE();
     } catch (finalError) {
         console.error("Final error:", finalError);
         await cleanUpSession();

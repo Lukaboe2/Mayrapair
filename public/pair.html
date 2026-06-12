@@ -3,631 +3,344 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>ULTRA GURU MD — Pair Code</title>
-  <meta name="theme-color" content="#00bfff">
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>PANTHERR-X-ULTRA | Pair Code Login</title>
+  <meta name="description" content="Link your WhatsApp to PANTHERR-X-ULTRA using a pair code. Fast, secure, and simple.">
+  <meta name="theme-color" content="#00b8ff">
+  <meta property="og:image" content="https://i.ibb.co/k6SxWhdr/84bb97a4a575.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --blue: #00bfff;
-      --blue-glow: rgba(0,191,255,0.35);
-      --blue-dim: rgba(0,191,255,0.12);
+      --black:  #000000;
+      --dark:   #0a0a0a;
+      --dark2:  #111111;
+      --white:  #ffffff;
+      --blue:   #00b8ff;
+      --blue2:  #0080cc;
       --yellow: #ffd700;
-      --yellow-glow: rgba(255,215,0,0.35);
-      --yellow-dim: rgba(255,215,0,0.12);
-      --gold: #ffe066;
-      --chrome-1: #f0f0f5;
-      --chrome-2: #b0b0c0;
-      --chrome-3: #606070;
-      --body-bg: #0a0a12;
-      --card-bg: #12121a;
-      --panel-bg: #1a1a24;
-      --hex-stroke: rgba(255,255,255,0.05);
+      --yellow2:#e6b800;
+      --gray:   #777777;
+      --red:    #ff4a6a;
     }
-    html, body {
-      width: 100%; min-height: 100%;
-      overflow-x: hidden;
-      background: var(--body-bg);
-      background-image:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='97'%3E%3Cpath d='M28 0L56 16v32L28 64 0 48V16z' fill='none' stroke='%23ffffff06' stroke-width='1.2'/%3E%3Cpath d='M28 64L56 80v17' fill='none' stroke='%23ffffff06' stroke-width='1.2'/%3E%3Cpath d='M28 64L0 80v17' fill='none' stroke='%23ffffff06' stroke-width='1.2'/%3E%3C/svg%3E");
-      color: #d0d0e0;
-      font-family: 'Rajdhani', sans-serif;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--black); color: var(--white);
+      min-height: 100vh; overflow-x: hidden; scrollbar-width: none;
     }
-    .content { min-height: 100vh; display: flex; flex-direction: column; }
+    body::-webkit-scrollbar { display: none; }
 
-    nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 40px; height: 72px;
-      background: rgba(8,8,16,0.95);
-      border-bottom: 1px solid rgba(0,191,255,0.2);
-      box-shadow: 0 1px 0 rgba(0,191,255,0.08), 0 4px 24px rgba(0,0,0,0.5);
-    }
-    .logo-wrap { display: flex; align-items: center; gap: 14px; text-decoration: none; }
-    .logo-icon { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; }
-    .logo-icon svg { width: 42px; height: 42px; filter: drop-shadow(0 0 8px var(--blue)) drop-shadow(0 0 18px var(--yellow)); }
-    .logo-text { display: flex; flex-direction: column; line-height: 1; }
-    .logo-ultra {
-      font-family: 'Orbitron', monospace; font-size: 16px; font-weight: 900; letter-spacing: 4px;
-      background: linear-gradient(to right, var(--chrome-1), var(--blue));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .logo-guru {
-      font-family: 'Orbitron', monospace; font-size: 10px; font-weight: 400;
-      letter-spacing: 5px; color: var(--yellow); text-transform: uppercase; margin-top: 2px;
-    }
-    .nav-back {
-      font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px;
-      text-transform: uppercase; color: rgba(0,191,255,0.5); text-decoration: none; transition: color 0.3s;
-    }
-    .nav-back:hover { color: var(--blue); }
+    .grad-mixed { background:linear-gradient(135deg,var(--blue),var(--white),var(--yellow)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .grad-yellow { background:linear-gradient(135deg,var(--yellow),var(--yellow2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .grad-blue   { background:linear-gradient(135deg,var(--blue),var(--blue2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 
-    main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 20px; }
-    .panel-wrap { width: 100%; max-width: 460px; }
-
-    .page-header { text-align: center; margin-bottom: 36px; }
-    .page-header h1 {
-      font-family: 'Orbitron', monospace; font-size: 32px; font-weight: 900;
-      letter-spacing: 5px; text-transform: uppercase;
-      background: linear-gradient(180deg, var(--chrome-1) 0%, var(--blue) 50%, var(--chrome-2) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      filter: drop-shadow(0 0 12px var(--blue-glow));
-      margin-bottom: 10px;
-    }
-    .page-header p {
-      font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 3px;
-      text-transform: uppercase; color: rgba(0,191,255,0.5);
-    }
-
-    .fire-card {
-      background: var(--card-bg);
-      background-image:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='97'%3E%3Cpath d='M28 0L56 16v32L28 64 0 48V16z' fill='none' stroke='%23ffffff05' stroke-width='1'/%3E%3Cpath d='M28 64L56 80v17' fill='none' stroke='%23ffffff05' stroke-width='1'/%3E%3Cpath d='M28 64L0 80v17' fill='none' stroke='%23ffffff05' stroke-width='1'/%3E%3C/svg%3E");
-      border: 1px solid rgba(0,191,255,0.2);
-      clip-path: polygon(14px 0%, calc(100% - 14px) 0%, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0% calc(100% - 14px), 0% 14px);
-      position: relative;
-      padding: 40px;
-      box-shadow: 0 0 0 1px rgba(255,215,0,0.12), 0 0 30px rgba(0,191,255,0.08), 0 0 60px rgba(255,215,0,0.06), inset 0 0 40px rgba(0,0,0,0.4);
-    }
-    .fire-card::before {
-      content: '';
-      position: absolute; top: 0; left: 14px; right: 14px; height: 2px;
-      background: linear-gradient(90deg, transparent 0%, var(--blue) 30%, var(--yellow) 70%, transparent 100%);
-      box-shadow: 0 0 12px var(--blue-glow), 0 0 24px var(--yellow-glow);
-    }
-    .fire-card::after {
-      content: '';
-      position: absolute; bottom: 14px; right: 0; left: 14px; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
-    }
-    .rivet {
-      position: absolute; width: 8px; height: 8px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #606080, #1a1a28);
-      border: 1px solid rgba(255,215,0,0.3);
-      box-shadow: 0 0 4px rgba(255,215,0,0.2);
-    }
-    .rivet-tl { top: 6px; left: 6px; }
-    .rivet-tr { top: 6px; right: 6px; }
-    .rivet-bl { bottom: 6px; left: 6px; }
-    .rivet-br { bottom: 6px; right: 6px; }
-
-    .field-label {
-      font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 3px;
-      text-transform: uppercase; color: var(--blue); margin-bottom: 12px; display: block;
-      text-shadow: 0 0 8px var(--blue-glow);
-    }
-    .input-wrap { position: relative; margin-bottom: 8px; }
-    .fire-input {
-      width: 100%;
-      background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(0,191,255,0.15);
-      clip-path: polygon(8px 0%, calc(100% - 8px) 0%, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0% calc(100% - 8px), 0% 8px);
-      padding: 16px 52px 16px 20px;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 18px; font-weight: 600; letter-spacing: 2px;
-      color: var(--chrome-1);
-      outline: none;
-      transition: all 0.3s;
-    }
-    .fire-input::placeholder { color: rgba(200,200,220,0.2); letter-spacing: 2px; }
-    .fire-input:focus {
-      border-color: var(--blue);
-      background: rgba(0,191,255,0.04);
-      box-shadow: 0 0 20px var(--blue-dim), inset 0 0 10px rgba(0,191,255,0.03);
-    }
-    .input-icon {
-      position: absolute; right: 18px; top: 50%; transform: translateY(-50%);
-      color: rgba(0,191,255,0.3); font-size: 16px;
-    }
-    .error-text {
-      font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 1px;
-      color: #ff6699; margin-top: 8px; display: none;
-      text-shadow: 0 0 8px rgba(255,102,153,0.5);
-    }
-
-    .type-row { margin-bottom: 28px; }
-    .type-toggle {
-      display: flex; gap: 2px;
-      background: rgba(0,0,0,0.4);
-      border: 1px solid rgba(255,215,0,0.15);
-      clip-path: polygon(6px 0%, calc(100% - 6px) 0%, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0% calc(100% - 6px), 0% 6px);
-      overflow: hidden; padding: 4px;
-    }
-    .type-btn {
-      flex: 1; padding: 10px;
-      font-family: 'JetBrains Mono', monospace; font-size: 11px;
-      letter-spacing: 2px; text-transform: uppercase;
-      border: none; cursor: pointer; border-radius: 2px;
-      transition: all 0.25s; background: transparent; color: rgba(255,215,0,0.4);
-    }
-    .type-btn.active {
-      background: linear-gradient(135deg, rgba(0,191,255,0.2), rgba(0,191,255,0.1));
-      color: var(--blue);
-      border: 1px solid rgba(0,191,255,0.3);
-      box-shadow: 0 0 16px var(--blue-dim), inset 0 0 8px rgba(0,191,255,0.05);
-      text-shadow: 0 0 8px var(--blue-glow);
-    }
-
-    .btn-ignite {
-      width: 100%; padding: 18px;
-      background: linear-gradient(135deg, rgba(0,20,30,0.9), rgba(0,30,50,0.8));
-      border: 1px solid var(--blue);
-      clip-path: polygon(10px 0%, calc(100% - 10px) 0%, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0% calc(100% - 10px), 0% 10px);
-      font-family: 'Orbitron', monospace; font-size: 13px; font-weight: 700;
-      letter-spacing: 3px; text-transform: uppercase;
-      color: var(--blue); cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 12px;
-      transition: all 0.3s; position: relative; overflow: hidden;
-      margin-top: 28px;
-      box-shadow: 0 0 20px var(--blue-dim), inset 0 0 20px rgba(0,191,255,0.03);
-      text-shadow: 0 0 10px var(--blue-glow);
-    }
-    .btn-ignite:hover {
-      background: linear-gradient(135deg, rgba(0,191,255,0.15), rgba(0,191,255,0.08));
-      box-shadow: 0 0 40px var(--blue-glow), 0 0 80px var(--blue-dim);
-      transform: translateY(-2px);
-    }
-    .btn-ignite:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-
-    .spinner {
-      width: 18px; height: 18px;
-      border: 2px solid rgba(0,191,255,0.2);
-      border-top-color: var(--blue);
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      display: none;
-    }
+    .blob { position:fixed; border-radius:50%; filter:blur(100px); pointer-events:none; z-index:0; }
+    @keyframes blobFloat { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(20px,-20px) scale(1.05);} }
+    @keyframes shake { 0%,100%{transform:translateX(0);} 20%,60%{transform:translateX(-5px);} 40%,80%{transform:translateX(5px);} }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    .divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,215,0,0.2), transparent);
-      margin: 28px 0;
+    .accent-bar { height:3px; background:linear-gradient(90deg,var(--blue),var(--yellow),var(--blue)); }
+
+    nav {
+      background: rgba(0,0,0,0.94); border-bottom: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+      position:sticky; top:0; z-index:50;
+    }
+    .nav-inner { max-width:1000px; margin:0 auto; padding:0 20px; height:54px; display:flex; align-items:center; justify-content:space-between; }
+    .nav-link { position:relative; transition:color 0.2s; }
+    .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:2px; background:var(--yellow); transition:width 0.22s; border-radius:2px; }
+    .nav-link:hover { color:var(--yellow) !important; }
+    .nav-link:hover::after { width:100%; }
+
+    .card {
+      background: #0d0d0d;
+      border-top: 3px solid var(--blue);
+      border-left: 1px solid rgba(255,255,255,0.07);
+      border-right: 1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.7);
     }
 
-    .status-row {
-      display: flex; justify-content: space-between;
-      font-family: 'JetBrains Mono', monospace; font-size: 10px;
-      letter-spacing: 2px; color: rgba(0,191,255,0.35);
+    input {
+      width:100%; background:rgba(255,255,255,0.04);
+      border:1.5px solid rgba(255,255,255,0.1); color:var(--white);
+      border-radius:11px; font-size:0.9rem; font-family:inherit;
+      padding:13px 14px 13px 42px;
+      transition:border-color 0.2s, box-shadow 0.2s;
     }
+    input::placeholder { color:#333; }
+    input:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(0,184,255,0.1); }
 
-    .result-section { display: none; text-align: center; }
-    .result-icon {
-      width: 72px; height: 72px;
-      clip-path: polygon(12px 0%, calc(100% - 12px) 0%, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0% calc(100% - 12px), 0% 12px);
-      background: rgba(0,191,255,0.06);
-      border: 1px solid rgba(0,191,255,0.3);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 20px;
-      font-size: 28px; color: var(--blue);
-      filter: drop-shadow(0 0 12px var(--blue-glow));
+    .btn {
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      padding:13px 24px; border-radius:11px;
+      font-weight:800; font-size:0.9rem; font-family:inherit;
+      cursor:pointer; border:none; text-decoration:none; width:100%;
+      transition:transform 0.18s, box-shadow 0.18s;
     }
-    .result-title {
-      font-family: 'Orbitron', monospace; font-size: 14px; font-weight: 700;
-      letter-spacing: 3px; text-transform: uppercase;
-      background: linear-gradient(to right, var(--chrome-1), var(--blue));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      margin-bottom: 6px;
-    }
-    .result-sub {
-      font-family: 'JetBrains Mono', monospace; font-size: 10px;
-      letter-spacing: 2px; color: rgba(255,215,0,0.4); margin-bottom: 28px;
-    }
+    .btn:active { transform:scale(0.97)!important; }
+    .btn-blue { background:linear-gradient(135deg,var(--blue),var(--blue2)); color:#000; }
+    .btn-blue:hover { transform:translateY(-2px); box-shadow:0 12px 30px rgba(0,184,255,0.35); }
+    .btn-blue:disabled { opacity:0.5; cursor:not-allowed; transform:none!important; box-shadow:none!important; }
+
+    .spinner { width:16px; height:16px; border:2px solid rgba(0,0,0,0.3); border-top-color:#000; border-radius:50%; animation:spin 0.7s linear infinite; }
 
     .code-box {
-      background: rgba(0,0,0,0.6);
-      border: 1px solid rgba(0,191,255,0.2);
-      clip-path: polygon(8px 0%, calc(100% - 8px) 0%, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0% calc(100% - 8px), 0% 8px);
-      padding: 32px 20px;
-      margin-bottom: 24px;
-      position: relative; overflow: hidden;
-      box-shadow: inset 0 0 30px rgba(0,191,255,0.04);
-    }
-    .code-box::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(0,191,255,0.06), transparent);
-      animation: shimmer 2.5s ease-in-out infinite;
-    }
-    @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-    .code-digits {
-      font-family: 'Orbitron', monospace;
-      font-size: 42px; font-weight: 900;
-      letter-spacing: 10px;
-      background: linear-gradient(to right, var(--blue), var(--chrome-1), var(--yellow));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      position: relative; z-index: 1;
-      filter: drop-shadow(0 0 8px var(--blue-glow));
+      background: #0a0a0a; border:1.5px solid var(--yellow);
+      border-radius:14px; padding:28px; text-align:center;
+      box-shadow: 0 0 30px rgba(255,215,0,0.1);
     }
 
-    .action-row { display: flex; gap: 10px; }
-    .btn-copy {
-      flex: 1; padding: 14px;
-      background: rgba(0,191,255,0.05);
-      border: 1px solid rgba(0,191,255,0.2);
-      clip-path: polygon(6px 0%, calc(100% - 6px) 0%, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0% calc(100% - 6px), 0% 6px);
-      font-family: 'JetBrains Mono', monospace; font-size: 11px;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: var(--blue); cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      transition: all 0.3s;
-      text-shadow: 0 0 8px var(--blue-glow);
+    .copy-btn {
+      background:rgba(0,184,255,0.1); border:1.5px solid rgba(0,184,255,0.3);
+      border-radius:10px; color:var(--blue); padding:9px 20px;
+      font-size:0.8rem; font-weight:700; font-family:inherit;
+      cursor:pointer; display:flex; align-items:center; gap:6px;
+      transition:background 0.18s, transform 0.18s;
     }
-    .btn-copy:hover { background: rgba(0,191,255,0.12); box-shadow: 0 0 20px var(--blue-dim); }
-    .btn-reset {
-      padding: 14px 20px;
-      background: rgba(255,215,0,0.05);
-      border: 1px solid rgba(255,215,0,0.2);
-      clip-path: polygon(6px 0%, calc(100% - 6px) 0%, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0% calc(100% - 6px), 0% 6px);
-      color: rgba(255,215,0,0.6);
-      cursor: pointer; transition: all 0.3s; font-size: 14px;
-    }
-    .btn-reset:hover { background: rgba(255,215,0,0.12); color: var(--yellow); box-shadow: 0 0 20px var(--yellow-dim); }
+    .copy-btn:hover { background:rgba(0,184,255,0.2); transform:translateY(-2px); }
+    .copy-btn.copied { background:rgba(0,255,136,0.08); border-color:rgba(0,255,136,0.3); color:#00ff88; }
 
-    .info-pills {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 12px; margin-top: 16px;
+    .new-btn {
+      background:transparent; border:1.5px solid rgba(255,255,255,0.1);
+      border-radius:10px; color:var(--gray); padding:9px 20px;
+      font-size:0.8rem; font-weight:700; font-family:inherit;
+      cursor:pointer; display:flex; align-items:center; gap:6px;
+      transition:background 0.18s, color 0.18s, transform 0.18s;
     }
-    .pill {
-      background: rgba(0,0,0,0.4);
-      border: 1px solid rgba(255,215,0,0.15);
-      clip-path: polygon(8px 0%, calc(100% - 8px) 0%, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0% calc(100% - 8px), 0% 8px);
-      padding: 16px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='48'%3E%3Cpath d='M14 0L28 8v16L14 32 0 24V8z' fill='none' stroke='%23ffffff04' stroke-width='1'/%3E%3C/svg%3E");
-    }
-    .pill-icon { font-size: 16px; color: var(--blue); margin-bottom: 8px; text-shadow: 0 0 8px var(--blue-glow); }
-    .pill-title { font-weight: 700; font-size: 13px; letter-spacing: 1px; color: var(--chrome-1); margin-bottom: 4px; }
-    .pill-desc { font-size: 11px; color: rgba(255,215,0,0.4); line-height: 1.5; }
+    .new-btn:hover { background:rgba(255,255,255,0.05); color:var(--white); transform:translateY(-2px); }
 
-    footer {
-      padding: 24px 40px;
-      border-top: 1px solid rgba(0,191,255,0.08);
-      background: rgba(6,6,14,0.95);
-      text-align: center;
+    .social-icon {
+      width:32px; height:32px; border-radius:7px;
+      background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07);
+      display:flex; align-items:center; justify-content:center;
+      color:var(--gray); font-size:0.82rem; text-decoration:none;
+      transition:background 0.2s, color 0.2s, transform 0.2s;
     }
-    footer p {
-      font-family: 'JetBrains Mono', monospace; font-size: 10px;
-      letter-spacing: 2px; text-transform: uppercase; color: rgba(0,191,255,0.2);
-    }
+    .social-icon:hover { background:rgba(255,215,0,0.1); color:var(--yellow); transform:translateY(-2px); }
 
-    .guide-box {
-      margin-top: 16px;
-      background: rgba(0,0,0,0.4);
-      border: 1px solid rgba(255,215,0,0.15);
-      clip-path: polygon(10px 0%, calc(100% - 10px) 0%, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0% calc(100% - 10px), 0% 10px);
-      overflow: hidden;
-    }
-    .guide-header {
-      display: flex; align-items: center; gap: 10px;
-      padding: 14px 20px;
-      background: rgba(255,215,0,0.07);
-      border-bottom: 1px solid rgba(255,215,0,0.12);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--yellow);
-      text-shadow: 0 0 8px var(--yellow-glow);
-    }
-    .guide-steps { padding: 8px 0; }
-    .guide-step {
-      display: flex; gap: 16px; align-items: flex-start;
-      padding: 16px 20px;
-      border-bottom: 1px solid rgba(255,215,0,0.06);
-      transition: background 0.2s;
-    }
-    .guide-step:last-child { border-bottom: none; }
-    .guide-step:hover { background: rgba(0,191,255,0.02); }
-    .gs-num {
-      width: 28px; height: 28px; flex-shrink: 0;
-      clip-path: polygon(4px 0%, calc(100% - 4px) 0%, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0% calc(100% - 4px), 0% 4px);
-      background: rgba(0,191,255,0.1);
-      border: 1px solid rgba(0,191,255,0.25);
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 700;
-      color: var(--blue); margin-top: 2px;
-      text-shadow: 0 0 6px var(--blue-glow);
-    }
-    .gs-body { flex: 1; }
-    .gs-title { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; color: var(--chrome-1); margin-bottom: 5px; }
-    .gs-desc { font-size: 13px; color: rgba(210,210,230,0.45); line-height: 1.6; }
-    .gs-desc strong { color: rgba(210,210,230,0.75); font-weight: 700; }
-    .gs-example {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
-      margin-top: 10px; padding: 10px 12px;
-      background: rgba(0,0,0,0.4);
-      clip-path: polygon(4px 0%, calc(100% - 4px) 0%, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0% calc(100% - 4px), 0% 4px);
-      border: 1px solid rgba(0,191,255,0.08);
-    }
-    .ex-label {
-      font-family: 'JetBrains Mono', monospace; font-size: 9px;
-      letter-spacing: 2px; color: rgba(0,191,255,0.35);
-      text-transform: uppercase; flex-shrink: 0;
-    }
-    .ex-bad { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #ff6699; text-decoration: line-through; }
-    .ex-good { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--blue); text-shadow: 0 0 6px var(--blue-glow); }
-    .ex-code {
-      font-family: 'Orbitron', monospace; font-size: 16px; font-weight: 700; letter-spacing: 4px;
-      background: linear-gradient(to right, var(--blue), var(--chrome-1));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .guide-tip {
-      display: flex; gap: 12px; align-items: flex-start;
-      margin: 0; padding: 14px 20px;
-      background: rgba(255,215,0,0.04);
-      border-top: 1px solid rgba(255,215,0,0.12);
-      font-size: 12px; color: rgba(210,210,230,0.45); line-height: 1.6;
-    }
-    .guide-tip i { color: var(--gold); flex-shrink: 0; margin-top: 2px; text-shadow: 0 0 8px rgba(255,215,0,0.5); }
-    .guide-tip strong { color: rgba(210,210,230,0.75); }
-
-    @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
-    .shake { animation: shake 0.3s ease-in-out; }
-
-    @media (max-width: 480px) {
-      nav { padding: 0 20px; }
-      .fire-card { padding: 28px 20px; }
-      .code-digits { font-size: 28px; letter-spacing: 6px; }
-    }
+    [data-anim] { will-change:transform,opacity; transition:opacity 0.6s cubic-bezier(0.4,0,0.2,1),transform 0.6s cubic-bezier(0.4,0,0.2,1); }
+    [data-anim="fade-up"] { opacity:0; transform:translateY(28px); }
+    [data-anim="zoom-in"] { opacity:0; transform:scale(0.9); }
+    [data-anim].in-view { opacity:1; transform:translateY(0) scale(1); }
+    [data-delay="1"]{transition-delay:0.1s;} [data-delay="2"]{transition-delay:0.2s;}
   </style>
 </head>
 <body>
-  <div class="content">
-    <nav>
-      <a href="/" class="logo-wrap">
-        <div class="logo-icon">
-          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="lgFlame" x1="24" y1="48" x2="24" y2="0" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#00bfff"/>
-                <stop offset="40%" stop-color="#40d8ff"/>
-                <stop offset="80%" stop-color="#ffd700"/>
-                <stop offset="100%" stop-color="#ffffff"/>
-              </linearGradient>
-            </defs>
-            <path d="M24 4C24 4 28 12 22 18C28 14 34 22 30 30C32 26 36 28 34 36C36 32 42 34 38 42C36 46 28 48 24 48C20 48 12 46 10 42C6 34 12 32 14 36C12 28 18 26 20 30C16 22 22 14 28 18C22 12 24 4 24 4Z" fill="url(#lgFlame)"/>
-            <circle cx="24" cy="36" r="4" fill="#ffffff" opacity="0.9"/>
-          </svg>
-        </div>
-        <div class="logo-text">
-          <span class="logo-ultra">ULTRA GURU</span>
-          <span class="logo-guru">MD · SESSION</span>
-        </div>
+  <div class="accent-bar"></div>
+  <div class="blob" style="width:400px;height:400px;background:rgba(0,100,200,0.12);top:-80px;left:-80px;animation:blobFloat 14s ease-in-out infinite;"></div>
+  <div class="blob" style="width:280px;height:280px;background:rgba(255,215,0,0.05);bottom:10%;right:-60px;animation:blobFloat 18s ease-in-out 5s infinite;"></div>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="/" style="display:flex;align-items:center;gap:9px;text-decoration:none;">
+        <img src="https://i.ibb.co/k6SxWhdr/84bb97a4a575.jpg" alt="logo" style="width:30px;height:30px;border-radius:50%;border:2px solid var(--yellow);object-fit:cover;">
+        <span style="font-weight:900;font-size:0.88rem;" class="grad-mixed">PANTHERR-X-ULTRA</span>
       </a>
-      <a href="/" class="nav-back"><i class="fas fa-arrow-left"></i> &nbsp;Back</a>
-    </nav>
+      <div style="display:flex;align-items:center;gap:22px;">
+        <a href="https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR" target="_blank" class="nav-link" style="color:var(--gray);font-size:0.8rem;font-weight:500;text-decoration:none;"><i class="fab fa-github"></i> Source</a>
+        <a href="/pair" class="nav-link" style="color:var(--blue);font-size:0.8rem;font-weight:700;text-decoration:none;"><i class="fas fa-link"></i> Pair Code</a>
+        <a href="/qr" class="nav-link" style="color:var(--gray);font-size:0.8rem;font-weight:500;text-decoration:none;"><i class="fas fa-qrcode"></i> QR Code</a>
+      </div>
+      <a href="/qr" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,215,0,0.08);border:1.5px solid rgba(255,215,0,0.25);color:var(--yellow);padding:7px 15px;border-radius:9px;font-size:0.78rem;font-weight:700;text-decoration:none;transition:background 0.18s;" onmouseover="this.style.background='rgba(255,215,0,0.16)'" onmouseout="this.style.background='rgba(255,215,0,0.08)'">
+        <i class="fas fa-qrcode"></i> Use QR Instead
+      </a>
+    </div>
+  </nav>
 
-    <main>
-      <div class="panel-wrap">
-        <div class="page-header">
-          <h1>Pair Code</h1>
-          <p>Secure Handshake Protocol · Neural Link v2</p>
+  <main style="position:relative;z-index:10;min-height:calc(100vh - 57px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;">
+    <div style="width:100%;max-width:420px;">
+
+      <!-- Header -->
+      <div style="text-align:center;margin-bottom:28px;" data-anim="fade-up">
+        <div style="display:flex;justify-content:center;margin-bottom:18px;">
+          <div style="position:relative;">
+            <div style="width:82px;height:82px;border-radius:50%;border:2.5px solid var(--yellow);padding:3px;box-shadow:0 0 0 5px rgba(255,215,0,0.07),0 0 40px rgba(255,215,0,0.12);">
+              <img src="https://i.ibb.co/k6SxWhdr/84bb97a4a575.jpg" alt="logo" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+            </div>
+            <span style="position:absolute;bottom:0;right:0;background:var(--blue);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;border:2px solid #000;">
+              <i class="fas fa-link" style="color:#000;font-size:0.68rem;"></i>
+            </span>
+          </div>
+        </div>
+        <h1 style="font-size:1.7rem;font-weight:900;margin-bottom:6px;" class="grad-blue">Pair Code Login</h1>
+        <p style="color:var(--gray);font-size:0.84rem;">Enter your WhatsApp number — no + sign needed</p>
+      </div>
+
+      <!-- Card -->
+      <div class="card" style="padding:28px;" data-anim="zoom-in" data-delay="1">
+
+        <!-- FORM -->
+        <div id="formSection">
+          <div style="margin-bottom:20px;">
+            <label style="display:block;font-size:0.7rem;font-weight:800;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Phone Number</label>
+            <div style="position:relative;">
+              <i class="fas fa-phone" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#333;font-size:0.8rem;pointer-events:none;"></i>
+              <input id="phoneNumber" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="e.g., 2547xxxxxxxx">
+            </div>
+            <p id="phoneError" style="display:none;color:var(--red);font-size:0.76rem;margin-top:6px;align-items:center;gap:5px;">
+              <i class="fas fa-exclamation-circle"></i> <span id="phoneErrorText"></span>
+            </p>
+          </div>
+
+          <button id="submitBtn" class="btn btn-blue" style="margin-bottom:4px;">
+            <span id="btnContent" style="display:flex;align-items:center;gap:8px;">
+              <i class="fas fa-bolt"></i> GET PAIR CODE
+            </span>
+            <span id="btnLoading" style="display:none;align-items:center;gap:8px;">
+              <span class="spinner"></span> Fetching code...
+            </span>
+          </button>
+
+          <p id="generalError" style="display:none;color:var(--red);font-size:0.76rem;text-align:center;margin-top:10px;"></p>
+
+          <div style="margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;gap:8px;">
+            <span style="color:#333;font-size:0.78rem;">Prefer QR?</span>
+            <a href="/qr" style="color:var(--yellow);font-size:0.78rem;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:4px;transition:opacity 0.18s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
+              <i class="fas fa-qrcode"></i> Scan QR Code
+            </a>
+          </div>
         </div>
 
-        <div class="fire-card">
-          <div class="rivet rivet-tl"></div>
-          <div class="rivet rivet-tr"></div>
-          <div class="rivet rivet-bl"></div>
-          <div class="rivet rivet-br"></div>
-          <div id="formSection">
-            <label class="field-label">Target Phone Identity</label>
-            <div class="input-wrap">
-              <input id="phoneNumber" type="text" class="fire-input" placeholder="2547XXXXXXXXX" maxlength="15" autocomplete="off">
-              <span class="input-icon"><i class="fas fa-fingerprint"></i></span>
+        <!-- RESULT -->
+        <div id="resultSection" style="display:none;">
+          <div style="text-align:center;margin-bottom:22px;">
+            <div style="width:46px;height:46px;border-radius:12px;background:rgba(0,255,136,0.1);border:1.5px solid rgba(0,255,136,0.25);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+              <i class="fas fa-check" style="color:#00ff88;font-size:1.1rem;"></i>
             </div>
-            <p id="errorBox" class="error-text"></p>
+            <p style="color:var(--white);font-weight:800;font-size:0.95rem;margin-bottom:4px;">Your Pair Code</p>
+            <p style="color:var(--gray);font-size:0.78rem;">Enter this in WhatsApp → Linked Devices → Link a Device</p>
+          </div>
 
-            <div class="type-row" style="margin-top:24px;">
-              <label class="field-label">Session Type</label>
-              <div class="type-toggle">
-                <button class="type-btn active" id="typeLong" onclick="setType('long')">Long</button>
-                <button class="type-btn" id="typeShort" onclick="setType('short')">Short</button>
-              </div>
-            </div>
+          <div class="code-box" style="margin-bottom:20px;">
+            <p id="pairCode" style="font-size:2.5rem;font-weight:900;letter-spacing:9px;color:var(--yellow);text-shadow:0 0 20px rgba(255,215,0,0.3);"></p>
+          </div>
 
-            <button id="submitBtn" class="btn-ignite" onclick="requestCode()">
-              <i class="fas fa-bolt"></i>
-              <span id="btnText">Ignite Connection</span>
-              <div class="spinner" id="spinner"></div>
+          <div style="display:flex;gap:10px;justify-content:center;margin-bottom:20px;">
+            <button id="copyBtn" class="copy-btn">
+              <i class="fas fa-copy" style="font-size:0.72rem;"></i>
+              <span id="copyText">Copy Code</span>
             </button>
-
-            <div class="divider"></div>
-            <div class="status-row">
-              <span>STATUS: READY</span>
-              <span>ENCRYPTION: AES-256</span>
-            </div>
+            <button id="newCodeBtn" class="new-btn">
+              <i class="fas fa-redo" style="font-size:0.72rem;"></i> New Code
+            </button>
           </div>
 
-          <div class="result-section" id="resultSection">
-            <div class="result-icon"><i class="fas fa-key"></i></div>
-            <h2 class="result-title">Authentication Code</h2>
-            <p class="result-sub">Enter this code on your primary WhatsApp device</p>
-
-            <div class="code-box">
-              <p class="code-digits" id="pairCode"></p>
-            </div>
-
-            <div class="action-row">
-              <button class="btn-copy" id="copyBtn">
-                <i class="fas fa-copy"></i>
-                <span id="copyLabel">Copy Code</span>
-              </button>
-              <button class="btn-reset" id="resetBtn"><i class="fas fa-redo-alt"></i></button>
-            </div>
-          </div>
-        </div>
-
-        <div class="info-pills">
-          <div class="pill">
-            <div class="pill-icon"><i class="fas fa-shield-virus"></i></div>
-            <div class="pill-title">Encrypted</div>
-            <div class="pill-desc">Sessions never logged or stored publicly.</div>
-          </div>
-          <div class="pill">
-            <div class="pill-icon"><i class="fas fa-fire"></i></div>
-            <div class="pill-title">Instant</div>
-            <div class="pill-desc">Generated directly from ignition servers.</div>
-          </div>
-        </div>
-
-        <div class="guide-box">
-          <div class="guide-header">
-            <i class="fas fa-circle-info"></i>
-            <span>How It Works — New User Guide</span>
-          </div>
-
-          <div class="guide-steps">
-            <div class="guide-step">
-              <div class="gs-num">1</div>
-              <div class="gs-body">
-                <div class="gs-title">Enter your WhatsApp number</div>
-                <div class="gs-desc">Type your full number with country code — no spaces, no plus sign, no dashes.</div>
-                <div class="gs-example">
-                  <span class="ex-label">EXAMPLE</span>
-                  <span class="ex-bad"><i class="fas fa-times-circle"></i> +254 712 345 678</span>
-                  <span class="ex-good"><i class="fas fa-check-circle"></i> 254712345678</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="guide-step">
-              <div class="gs-num">2</div>
-              <div class="gs-body">
-                <div class="gs-title">Click "Ignite Connection"</div>
-                <div class="gs-desc">Our server will request a pairing code from WhatsApp and display it within seconds. Keep this page open.</div>
-              </div>
-            </div>
-
-            <div class="guide-step">
-              <div class="gs-num">3</div>
-              <div class="gs-body">
-                <div class="gs-title">Enter the code on your phone</div>
-                <div class="gs-desc">On your WhatsApp app, go to <strong>Settings → Linked Devices → Link a Device → Link with phone number instead</strong> and type in the 8-digit code shown.</div>
-                <div class="gs-example">
-                  <span class="ex-label">CODE LOOKS LIKE</span>
-                  <span class="ex-code">A3F7 · K9P2</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="guide-step">
-              <div class="gs-num">4</div>
-              <div class="gs-body">
-                <div class="gs-title">Receive your Session ID on WhatsApp</div>
-                <div class="gs-desc">Once linked, the bot will automatically message your own WhatsApp number with your unique Session ID. Copy and use it in your bot config.</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="guide-tip">
-            <i class="fas fa-lightbulb"></i>
-            <div>
-              <strong>Choose "Long" session</strong> if you don't have a database set up. Long sessions are self-contained strings that work anywhere. "Short" sessions require a database URL configured on this server.
-            </div>
+          <div style="padding-top:16px;border-top:1px solid rgba(255,255,255,0.05);text-align:center;">
+            <a href="/" style="color:var(--gray);font-size:0.78rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:color 0.18s;" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--gray)'">
+              <i class="fas fa-arrow-left" style="font-size:0.72rem;"></i> Back to Home
+            </a>
           </div>
         </div>
       </div>
-    </main>
 
-    <footer>
-      <p>© 2026 Ultra Guru MD · GuruhTech Labs · All Rights Reserved</p>
-    </footer>
-  </div>
+      <!-- Mini stats -->
+      <div style="margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;" data-anim="fade-up" data-delay="2">
+        <div style="background:#0d0d0d;border:1px solid rgba(0,184,255,0.12);border-top:2px solid var(--blue);border-radius:11px;padding:12px;text-align:center;">
+          <i class="fas fa-shield-alt" style="color:var(--blue);font-size:0.9rem;display:block;margin-bottom:6px;"></i>
+          <p style="color:var(--gray);font-size:0.7rem;">Encrypted</p>
+        </div>
+        <div style="background:#0d0d0d;border:1px solid rgba(255,215,0,0.12);border-top:2px solid var(--yellow);border-radius:11px;padding:12px;text-align:center;">
+          <i class="fas fa-bolt" style="color:var(--yellow);font-size:0.9rem;display:block;margin-bottom:6px;"></i>
+          <p style="color:var(--gray);font-size:0.7rem;">Instant</p>
+        </div>
+        <div style="background:#0d0d0d;border:1px solid rgba(255,255,255,0.06);border-top:2px solid var(--white);border-radius:11px;padding:12px;text-align:center;">
+          <i class="fas fa-mobile-alt" style="color:var(--white);font-size:0.9rem;display:block;margin-bottom:6px;"></i>
+          <p style="color:var(--gray);font-size:0.7rem;">No Phone</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer style="padding:20px;background:#050505;border-top:1px solid rgba(255,255,255,0.04);">
+    <div style="max-width:600px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <a href="/" style="display:flex;align-items:center;gap:7px;text-decoration:none;">
+        <img src="https://i.ibb.co/k6SxWhdr/84bb97a4a575.jpg" alt="logo" style="width:22px;height:22px;border-radius:50%;border:1px solid var(--yellow);object-fit:cover;">
+        <span style="font-size:0.76rem;font-weight:900;" class="grad-mixed">PANTHERR-X-ULTRA</span>
+      </a>
+      <p style="color:#222;font-size:0.72rem;">&copy; <span id="yr"></span> GuruTech Lab</p>
+      <div style="display:flex;gap:7px;">
+        <a href="https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+        <a href="https://youtube.com/@GuruTech" target="_blank" class="social-icon"><i class="fab fa-youtube"></i></a>
+        <a href="https://whatsapp.com/channel/0029VbCl2UX3rZZilMSvxN1e" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </footer>
 
   <script>
-    let selectedType = 'long';
+    document.getElementById('yr').textContent = new Date().getFullYear();
+    const obs = new IntersectionObserver(entries => entries.forEach(e => e.isIntersecting ? e.target.classList.add('in-view') : e.target.classList.remove('in-view')), { threshold: 0.1 });
+    document.querySelectorAll('[data-anim]').forEach(el => obs.observe(el));
 
-    function setType(t) {
-      selectedType = t;
-      document.getElementById('typeLong').classList.toggle('active', t === 'long');
-      document.getElementById('typeShort').classList.toggle('active', t === 'short');
-    }
+    (function setFavicon(src) {
+      const c = document.createElement('canvas'); c.width = c.height = 64;
+      const ctx = c.getContext('2d'), img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => { ctx.beginPath(); ctx.arc(32,32,32,0,Math.PI*2); ctx.closePath(); ctx.clip(); ctx.drawImage(img,0,0,64,64); const l = document.createElement('link'); l.type='image/png'; l.rel='shortcut icon'; l.href = c.toDataURL(); document.head.appendChild(l); };
+      img.src = src;
+    })('https://i.ibb.co/k6SxWhdr/84bb97a4a575.jpg');
 
     const phoneInput = document.getElementById('phoneNumber');
-    const submitBtn = document.getElementById('submitBtn');
-    const btnText = document.getElementById('btnText');
-    const spinner = document.getElementById('spinner');
-    const errorBox = document.getElementById('errorBox');
+    const submitBtn  = document.getElementById('submitBtn');
+    const btnContent = document.getElementById('btnContent');
+    const btnLoading = document.getElementById('btnLoading');
+    const phoneError = document.getElementById('phoneError');
+    const phoneErrorText = document.getElementById('phoneErrorText');
+    const generalError = document.getElementById('generalError');
+    const formSection = document.getElementById('formSection');
+    const resultSection = document.getElementById('resultSection');
+    const pairCodeEl = document.getElementById('pairCode');
+    const copyBtn = document.getElementById('copyBtn');
+    const copyText = document.getElementById('copyText');
+    const newCodeBtn = document.getElementById('newCodeBtn');
 
-    phoneInput.addEventListener('input', function() {
-      this.value = this.value.replace(/[^0-9]/g, '');
-      errorBox.style.display = 'none';
-    });
-
-    async function requestCode() {
-      const num = phoneInput.value.trim();
-      if (num.length < 10) {
-        phoneInput.parentElement.classList.add('shake');
-        errorBox.textContent = '> ERROR: INVALID_IDENTITY_LENGTH';
-        errorBox.style.display = 'block';
-        setTimeout(() => phoneInput.parentElement.classList.remove('shake'), 400);
-        return;
-      }
-      submitBtn.disabled = true;
-      btnText.textContent = 'SYNCHRONIZING...';
-      spinner.style.display = 'block';
-      try {
-        const res = await fetch('/code?number=' + num + '&type=' + selectedType);
-        const data = await res.json();
-        if (data.code && data.code !== 'Service is Currently Unavailable' && data.code !== 'Failed to generate pairing code') {
-          document.getElementById('pairCode').textContent = data.code;
-          document.getElementById('formSection').style.display = 'none';
-          document.getElementById('resultSection').style.display = 'block';
-        } else {
-          errorBox.textContent = '> ERROR: ' + (data.code || 'PROTOCOL_INTERRUPTED');
-          errorBox.style.display = 'block';
-        }
-      } catch (e) {
-        errorBox.textContent = '> ERROR: PROTOCOL_INTERRUPTED';
-        errorBox.style.display = 'block';
-      } finally {
-        submitBtn.disabled = false;
-        btnText.textContent = 'Ignite Connection';
-        spinner.style.display = 'none';
-      }
+    function showError(msg) {
+      phoneErrorText.textContent = msg;
+      phoneError.style.display = 'flex';
+      phoneInput.style.borderColor = 'rgba(255,74,106,0.6)';
+      phoneInput.style.animation = 'shake 0.4s ease';
+      setTimeout(() => phoneInput.style.animation = '', 400);
     }
+    function clearError() { phoneError.style.display = 'none'; phoneInput.style.borderColor = ''; }
+    function setLoading(on) {
+      submitBtn.disabled = on;
+      btnContent.style.display = on ? 'none' : 'flex';
+      btnLoading.style.display = on ? 'flex' : 'none';
+    }
+    phoneInput.addEventListener('input', clearError);
 
-    document.getElementById('copyBtn').addEventListener('click', function() {
-      const code = document.getElementById('pairCode').textContent;
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(code);
-      } else {
-        const ta = document.createElement('textarea');
-        ta.value = code;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-      }
-      const lbl = document.getElementById('copyLabel');
-      lbl.textContent = 'Copied!';
-      setTimeout(() => { lbl.textContent = 'Copy Code'; }, 2000);
+    submitBtn.addEventListener('click', async () => {
+      const raw = phoneInput.value.trim().replace(/[^0-9]/g, '');
+      if (!raw || raw.length < 7) { showError('Enter a valid phone number'); return; }
+      clearError(); generalError.style.display = 'none'; setLoading(true);
+      try {
+        const res = await fetch(`/code?number=${raw}&type=long`);
+        const data = await res.json();
+        if (!res.ok || !data.code) throw new Error(data.code || 'Failed');
+        pairCodeEl.textContent = data.code;
+        formSection.style.display = 'none';
+        resultSection.style.display = 'block';
+      } catch (err) {
+        generalError.textContent = err.message || 'Could not fetch pair code. Try again.';
+        generalError.style.display = 'block';
+      } finally { setLoading(false); }
     });
 
-    document.getElementById('resetBtn').addEventListener('click', function() {
-      document.getElementById('resultSection').style.display = 'none';
-      document.getElementById('formSection').style.display = 'block';
-      phoneInput.value = '';
+    phoneInput.addEventListener('keydown', e => { if (e.key === 'Enter') submitBtn.click(); });
+
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(pairCodeEl.textContent).then(() => {
+        copyBtn.classList.add('copied'); copyText.textContent = 'Copied!';
+        setTimeout(() => { copyBtn.classList.remove('copied'); copyText.textContent = 'Copy Code'; }, 2000);
+      });
     });
 
+    newCodeBtn.addEventListener('click', () => {
+      formSection.style.display = 'block'; resultSection.style.display = 'none';
+      generalError.style.display = 'none'; phoneInput.value = '';
+    });
   </script>
 </body>
 </html>

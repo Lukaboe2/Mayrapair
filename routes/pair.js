@@ -1,18 +1,17 @@
 const { 
-    giftedId,
+    guruhId,
     removeFile
-} = require('../gift');
+} = require('../guru');
 const { SESSION_PREFIX, GC_JID, BOT_REPO, WA_CHANNEL, MSG_FOOTER } = require('../config');
-const { isConfigured, saveSession } = require('../gift/sessionStore');
+const { isConfigured, saveSession } = require('../guru/sessionStore');
 const zlib = require('zlib');
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
 let router = express.Router();
 const pino = require("pino");
-const { sendButtons } = require('gifted-btns');
 const {
-    default: giftedConnect,
+    default: guruhConnect,
     useMultiFileAuthState,
     delay,
     fetchLatestBaileysVersion,
@@ -38,7 +37,7 @@ try {
 } catch (_) {}
 
 router.get('/', async (req, res) => {
-    const id = giftedId();
+    const id = guruhId();
     let num = (req.query.number || '').replace(/[^0-9]/g, '');
     const sessionType = (req.query.type || 'short').toLowerCase();
     let responseSent = false;
@@ -54,15 +53,14 @@ router.get('/', async (req, res) => {
         }
     }
 
-    async function GIFTED_PAIR_CODE() {
+    async function GURUH_PAIR_CODE() {
         const { version } = await fetchLatestBaileysVersion();
-        console.log(`[pair:${id}] version:`, version, '| registered:', false);
         const { state, saveCreds } = await useMultiFileAuthState(path.join(sessionDir, id));
 
-        let Gifted;
+        let Guruh;
         try {
             const pinoLogger = pino({ level: "fatal" }).child({ level: "fatal" });
-            Gifted = giftedConnect({
+            Guruh = guruhConnect({
                 version,
                 auth: {
                     creds: state.creds,
@@ -80,7 +78,7 @@ router.get('/', async (req, res) => {
                 keepAliveIntervalMs: 30000
             });
         } catch (err) {
-            console.error(`[pair:${id}] giftedConnect failed:`, err.message);
+            console.error(`[pair:${id}] guruhConnect failed:`, err.message);
             if (!responseSent && !res.headersSent) {
                 res.status(500).json({ code: "Service is Currently Unavailable" });
                 responseSent = true;
@@ -89,19 +87,16 @@ router.get('/', async (req, res) => {
             return;
         }
 
-        // Attach ALL event listeners FIRST before any async work
-        Gifted.ev.on('creds.update', saveCreds);
+        Guruh.ev.on('creds.update', saveCreds);
 
-        Gifted.ev.on("connection.update", async (s) => {
+        Guruh.ev.on("connection.update", async (s) => {
             const { connection, lastDisconnect } = s;
             const statusCode = lastDisconnect?.error?.output?.statusCode;
-            console.log("[pair:"+id+"] event: "+JSON.stringify(Object.keys(s))+" conn="+connection+" status="+statusCode);
 
             if (connection === "open") {
                 pairingDone = true;
-                console.log(`[pair:${id}] Pairing complete — connection open, saving session`);
                 try {
-                    try { await Gifted.groupAcceptInvite(GC_JID); } catch (_) {}
+                    try { await Guruh.groupAcceptInvite(GC_JID); } catch (_) {}
 
                     await delay(50000);
 
@@ -125,31 +120,24 @@ router.get('/', async (req, res) => {
                     const b64data = compressedData.toString('base64');
                     const fullSession = SESSION_PREFIX + b64data;
 
-                    let msgText, msgButtons;
+                    let sessionId;
                     if (isConfigured() && sessionType === 'short') {
                         const shortId = await saveSession(fullSession);
-                        const shortSession = `${SESSION_PREFIX}${shortId}`;
-                        msgText = `*SESSION ID ✅*\n\n${shortSession}`;
-                        msgButtons = [
-                            { name: 'cta_copy', buttonParamsJson: JSON.stringify({ display_text: 'Copy Session', copy_code: shortSession }) },
-                            { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Visit Bot Repo', url: BOT_REPO }) },
-                            { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Join WaChannel', url: WA_CHANNEL }) }
-                        ];
+                        sessionId = `${SESSION_PREFIX}${shortId}`;
                     } else {
-                        msgText = `*SESSION ID ✅*\n\n${fullSession}`;
-                        msgButtons = [
-                            { name: 'cta_copy', buttonParamsJson: JSON.stringify({ display_text: 'Copy Session', copy_code: fullSession }) },
-                            { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Visit Bot Repo', url: BOT_REPO }) },
-                            { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Join WaChannel', url: WA_CHANNEL }) }
-                        ];
+                        sessionId = fullSession;
                     }
 
                     await delay(5000);
                     let sessionSent = false, sendAttempts = 0;
                     while (sendAttempts < 5 && !sessionSent) {
                         try {
-                            await sendButtons(Gifted, Gifted.user.id, {
-                                title: '', text: msgText, footer: MSG_FOOTER, buttons: msgButtons
+                            // Send session ID alone as a plain text message
+                            await Guruh.sendMessage(Guruh.user.id, { text: sessionId });
+                            await delay(1500);
+                            // Send info separately
+                            await Guruh.sendMessage(Guruh.user.id, {
+                                text: `*✅ Session Generated Successfully*\n\n📦 Bot Repo: ${BOT_REPO}\n📢 Channel: ${WA_CHANNEL}\n\n${MSG_FOOTER}`
                             });
                             sessionSent = true;
                             console.log(`[pair:${id}] Session sent successfully`);
@@ -161,7 +149,7 @@ router.get('/', async (req, res) => {
                     }
 
                     await delay(3000);
-                    try { await Gifted.ws.close(); } catch (_) {}
+                    try { await Guruh.ws.close(); } catch (_) {}
                 } catch (sessionError) {
                     console.error(`[pair:${id}] Session processing error:`, sessionError.message);
                 } finally {
@@ -170,24 +158,19 @@ router.get('/', async (req, res) => {
 
             } else if (connection === "close") {
                 if (pairingDone || statusCode === 401 || reconnectCount >= MAX_RECONNECTS) {
-                    console.log(`[pair:${id}] Not reconnecting (done=${pairingDone}, status=${statusCode}, attempts=${reconnectCount})`);
                     await cleanUpSession();
                     return;
                 }
-                // WhatsApp sends 515 (restart required) after pairing code entry — must reconnect
                 reconnectCount++;
-                console.log(`[pair:${id}] Reconnect #${reconnectCount} in 5s (status ${statusCode})`);
                 await delay(5000);
-                GIFTED_PAIR_CODE();
+                GURUH_PAIR_CODE();
             }
         });
 
-        // Request pairing code AFTER listeners are attached (avoids missing close events)
-        if (!Gifted.authState.creds.registered) {
-            await delay(2000); // brief wait for WS to establish
-            console.log(`[pair:${id}] Requesting pairing code for ${num}`);
+        if (!Guruh.authState.creds.registered) {
+            await delay(2000);
             try {
-                const code = await Gifted.requestPairingCode(num);
+                const code = await Guruh.requestPairingCode(num);
                 console.log(`[pair:${id}] Got code: ${code}`);
                 if (!responseSent && !res.headersSent) {
                     res.json({ code: code, fallback: sessionType === 'short' && !isConfigured() });
@@ -207,7 +190,7 @@ router.get('/', async (req, res) => {
     }
 
     try {
-        await GIFTED_PAIR_CODE();
+        await GURUH_PAIR_CODE();
     } catch (finalError) {
         console.error(`[pair:${id}] Final error:`, finalError.message);
         await cleanUpSession();

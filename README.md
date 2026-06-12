@@ -1,275 +1,164 @@
-# 🔥 ULTRA GURU MD — Session Generator
+<div align="center">
 
-> **Open Source** WhatsApp Session Generator for **ULTRA GURU MD** and any Baileys-based WhatsApp bot.  
-> Generate secure session IDs via **Pair Code** or **QR Code** login — fast, encrypted, and zero-trace.
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Rockstar-ExtraBold&color=00b8ff&lines=FORK+AND+STAR+THE+REPO+BEFORE+DEPLOYMENT)](https://git.io/typing-svg)
+
+[![BLACK PANTHER Banner](https://i.ibb.co/k6SxWhdr/84bb97a4a575.jpg)](https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR)
 
 <p align="center">
-  <a href="https://github.com/GuruhTech/ULTRA-GURU-PAIR/fork">
-    <img alt="Fork Repo" src="https://img.shields.io/badge/-FORK%20REPO-ff4500?style=for-the-badge&logo=github&logoColor=white"/>
-  </a>
-  &nbsp;
-  <a href="https://github.com/GuruhTech/ULTRA-GURU-PAIR/stargazers">
-    <img alt="Stars" src="https://img.shields.io/github/stars/GuruhTech/ULTRA-GURU-PAIR?style=for-the-badge&color=ff6a00&labelColor=0a0400"/>
-  </a>
-  &nbsp;
-  <a href="LICENSE">
-    <img alt="License MIT" src="https://img.shields.io/badge/License-MIT-ffb347?style=for-the-badge&labelColor=0a0400"/>
-  </a>
-  &nbsp;
-  <a href="https://github.com/GuruhTech/ULTRA-GURU">
-    <img alt="ULTRA GURU MD" src="https://img.shields.io/badge/Bot-ULTRA%20GURU%20MD-ff4500?style=for-the-badge&logo=whatsapp&logoColor=white&labelColor=0a0400"/>
+  <a href="https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR">
+    <img src="https://res.cloudinary.com/dqxlb29uz/image/upload/v1780267810/bwm_uploads/media-1780267810008.jpg" width="100%" alt="PANTHERR-X-ULTRA Banner">
   </a>
 </p>
 
+# 🐾 PANTHERR-X-ULTRA PAIR 🎖️
+
+[![Author](https://img.shields.io/badge/AUTHOR-GURUTECH+LAB-00b8ff?style=for-the-badge&logo=github&logoColor=white)](https://github.com/GuruhTech)
+[![Stars](https://img.shields.io/github/stars/GuruhTech/PANTHERR-X-ULTRA-PAIR?style=for-the-badge&label=STARS&color=FFD700&logo=github&logoColor=white)](https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR/stargazers/)
+[![Forks](https://img.shields.io/github/forks/GuruhTech/PANTHERR-X-ULTRA-PAIR?style=for-the-badge&label=FORKS&color=00b8ff&logo=github&logoColor=white)](https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR/network/members)
+<img src="https://komarev.com/ghpvc/?username=GuruhTech&label=PROFILE+VIEWS&color=00b8ff&style=for-the-badge" alt="Profile Views">
+
+> WhatsApp session generator for **BLACK-PANTHER-MD** / **ULTRA-GURU-MD** and any Baileys-based bot.  
+> Supports **pair code** and **QR code** login.
+
+</div>
+
 ---
 
-## What is this?
+## 🛠️ QUICK SETUP
 
-**ULTRA GURU MD Session Generator** is the official open-source session tool for the [ULTRA GURU MD](https://github.com/GuruhTech/ULTRA-GURU) WhatsApp bot project. It lets you link a WhatsApp account to your bot by generating a **Session ID** — a compressed, encrypted credential string your bot uses to authenticate without scanning a QR code every restart.
+**1. FORK THE REPO**
 
-Built on the [Baileys](https://github.com/WhiskeySockets/Baileys) library, it supports:
+[![Fork Repo](https://img.shields.io/badge/FORK%20REPO-1E90FF?style=for-the-badge&logo=github&logoColor=white)](https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR/fork)
 
-- **Pair Code** — enter an 8-digit code directly in WhatsApp Linked Devices (no QR needed)
-- **QR Code** — classic optical scan via phone camera
-- **Long sessions** — full self-contained zlib/base64 strings (no database required)
-- **Short sessions** — compact IDs stored in MongoDB or PostgreSQL
+**2. DOWNLOAD ZIP**
+
+[![Download ZIP](https://img.shields.io/badge/DOWNLOAD%20ZIP-4169E1?style=for-the-badge&logo=github&logoColor=white)](https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR/archive/refs/heads/main.zip)
 
 ---
 
-## Features
+## ✨ Features
 
-| Feature | Description |
+- 🔗 **Pair Code login** — enter number, get code, link on WhatsApp — no QR scan
+- 📷 **QR Code login** — traditional QR scan
+- 🗜️ **Long session** — full zlib/base64 inline string, works anywhere
+- ⚡ **No database required** — works out of the box with no config
+
+---
+
+## ⚙️ Environment Variables
+
+| Variable | Required | Description |
+|---|---|---|
+| `DATABASE_URL` | Optional | MongoDB or PostgreSQL for short session IDs |
+| `SESSION_PREFIX` | Optional | Prefix for session strings. Default: `Guruh~` |
+| `PORT` | Optional | Port to listen on. Default: `5000` |
+| `BOT_REPO` | Optional | GitHub URL shown in WhatsApp message |
+| `WA_CHANNEL` | Optional | WhatsApp channel URL in message |
+| `MSG_FOOTER` | Optional | Footer text in WhatsApp session message |
+
+---
+
+## 🚀 DEPLOYMENT
+
+### ☁️ Deploy on Render (Free)
+
+> **Step-by-step guide for Render free plan:**
+
+**1. Fork this repo**
+
+Go to [github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR](https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR) and click **Fork**.
+
+**2. Create account on Render**
+
+Sign up at [render.com](https://render.com) — free plan available.
+
+**3. Create a new Web Service**
+
+- Click **New → Web Service**
+- Connect your GitHub account
+- Select your forked repo **PANTHERR-X-ULTRA-PAIR**
+
+**4. Configure the service**
+
+| Setting | Value |
 |---|---|
-| 🔗 Pair Code Login | No QR needed — enter a code in WhatsApp → Linked Devices |
-| 📷 QR Code Login | Traditional scan with your phone camera |
-| 🗜️ Long Session | Full inline session string, works anywhere, no DB needed |
-| 🗃️ Short Session | Compact ID backed by MongoDB or PostgreSQL |
-| ⚡ Auto DB Detection | Detects `mongodb://` or `postgres://` from `DATABASE_URL` |
-| 🔒 Zero-Trace | Credentials are never logged or stored publicly |
-| 🌐 Open Source | MIT licensed — fork, modify, self-host freely |
+| **Name** | `pantherr-x-ultra-pair` (or any name) |
+| **Region** | Choose closest to you |
+| **Branch** | `main` |
+| **Runtime** | `Node` |
+| **Build Command** | `npm install` |
+| **Start Command** | `node index.js` |
+| **Plan** | **Free** |
+
+**5. Add Environment Variables** *(optional)*
+
+In the Render dashboard → **Environment** tab, add:
+```
+PORT=10000
+BOT_REPO=https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR
+WA_CHANNEL=https://whatsapp.com/channel/0029VbCl2UX3rZZilMSvxN1e
+```
+> ⚠️ Render free plan uses port `10000` — set `PORT=10000`
+
+**6. Click Deploy**
+
+Wait ~2 minutes. Your session generator will be live at:
+```
+https://your-service-name.onrender.com
+```
+
+**7. Keep it alive (free plan)**
+
+> Free Render services sleep after 15 min of inactivity. To keep it awake:
+> - Use [UptimeRobot](https://uptimerobot.com) — free service that pings your URL every 5 minutes
+> - Set monitor URL to: `https://your-service-name.onrender.com/health`
 
 ---
 
-## Quick Start
+### ☁️ Heroku
+
+[![Deploy to Heroku](https://img.shields.io/badge/DEPLOY%20TO%20HEROKU-430098?style=for-the-badge&logo=heroku&logoColor=white)](https://dashboard.heroku.com/new?template=https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR)
+
+---
+
+### 🐧 VPS / Termux
 
 ```bash
-# Clone the repo
-git clone https://github.com/GuruhTech/ULTRA-GURU-PAIR.git
-cd ULTRA-GURU-PAIR
-
-# Install dependencies
+git clone https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR.git
+cd PANTHERR-X-ULTRA-PAIR
 npm install
-
-# Start the server
-node index.js
-```
-
-Then open `http://localhost:5000` in your browser.
-
----
-
-## Environment Variables
-
-Create a `.env` file in the project root:
-
-```env
-# Required for short sessions (optional — long sessions work without it)
-DATABASE_URL=mongodb+srv://user:pass@cluster.mongodb.net/sessions
-# or
-DATABASE_URL=postgres://user:pass@host:5432/sessions
-
-# Customization
-SESSION_PREFIX=GURU~
-PORT=5000
-BOT_REPO=https://github.com/GuruhTech/ULTRA-GURU
-WA_CHANNEL=https://whatsapp.com/channel/0029Vb7jauLHLHQbkcbcHi0e
-MSG_FOOTER=> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ULTRA GURU MD*
-```
-
-### All Variables
-
-| Variable | Default | Description |
-|---|---|---|
-| `DATABASE_URL` | *(none)* | MongoDB or PostgreSQL URL for short sessions. If unset, all sessions use long format. |
-| `SESSION_PREFIX` | `GURU~` | Prefix prepended to every session string. |
-| `PORT` | `5000` | Port the server listens on. |
-| `BOT_REPO` | ULTRA GURU repo | GitHub URL shown in the WhatsApp session message. |
-| `WA_CHANNEL` | GuruhTech channel | WhatsApp channel URL shown in the session message. |
-| `MSG_FOOTER` | GuruhTech footer | Footer text in the WhatsApp session delivery message. |
-
----
-
-## API Reference
-
-| Endpoint | Method | Description |
-|---|---|---|
-| `/` | GET | Home landing page |
-| `/pair` | GET | Pair code login UI |
-| `/qr` | GET | QR code login UI |
-| `/code?number=2547xxx&type=long` | GET | Returns `{ code, fallback }` JSON with pairing code |
-| `/qr/session?type=long` | GET | Generates and renders QR code inline |
-| `/session/:id` | GET | Retrieves a short session string from the database |
-| `/health` | GET | Server status and storage backend info |
-
-> `fallback: true` in the `/code` response means short was requested but no DB is configured — it automatically falls back to long session.
-
----
-
-## Using the Session in ULTRA GURU MD
-
-### 1. Load the Session in Your Bot
-
-```js
-// lib/session.js
-const fs = require('fs');
-const zlib = require('zlib');
-const path = require('path');
-const axios = require('axios');
-
-const sessionDir = path.join(__dirname, '..', 'session');
-const credsPath = path.join(sessionDir, 'creds.json');
-
-if (!fs.existsSync(sessionDir)) fs.mkdirSync(sessionDir, { recursive: true });
-
-async function loadSession(SESSION_ID) {
-    if (!SESSION_ID || typeof SESSION_ID !== 'string') {
-        throw new Error('SESSION_ID is missing or invalid');
-    }
-
-    if (fs.existsSync(credsPath)) fs.unlinkSync(credsPath);
-
-    const PREFIX = 'GURU~';
-
-    if (!SESSION_ID.startsWith(PREFIX)) {
-        throw new Error(`Invalid session format. Must start with "${PREFIX}"`);
-    }
-
-    const payload = SESSION_ID.slice(PREFIX.length);
-
-    if (payload.length < 50) {
-        // SHORT SESSION — fetch from server
-        const res = await axios.get(`https://your-session-server.com/session/${payload}`, { timeout: 10000 });
-        return loadSession(res.data.trim());
-    } else {
-        // LONG SESSION — decode inline
-        const compressed = Buffer.from(payload, 'base64');
-        const decompressed = zlib.gunzipSync(compressed);
-        fs.writeFileSync(credsPath, decompressed, 'utf8');
-        console.log('✅ ULTRA GURU MD session loaded');
-    }
-}
-
-module.exports = { loadSession };
-```
-
-### 2. Connect Your Bot
-
-```js
-// index.js
-const { loadSession } = require('./lib/session');
-const { makeWASocket, useMultiFileAuthState, fetchLatestBaileysVersion } = require('@whiskeysockets/baileys');
-
-async function startBot() {
-    await loadSession(process.env.SESSION_ID);
-
-    const { state, saveCreds } = await useMultiFileAuthState('./session');
-    const { version } = await fetchLatestBaileysVersion();
-
-    const sock = makeWASocket({
-        version,
-        auth: state,
-        printQRInTerminal: false,
-    });
-
-    sock.ev.on('creds.update', saveCreds);
-}
-
-startBot();
-```
-
-### 3. Your `.env` for the Bot
-
-```env
-SESSION_ID=GURU~H4sIAAAAAAAAA...   # long session (recommended)
-# or
-SESSION_ID=GURU~aBc123XyZ          # short session (requires server DB)
+npm start
 ```
 
 ---
 
-## Deployment
+## API Endpoints
 
-Self-host this session server anywhere:
-
-<a href="https://dashboard.render.com" target="_blank">
-  <img alt="Deploy to Render" src="https://img.shields.io/badge/-DEPLOY%20TO%20RENDER-ff4500?style=for-the-badge&logo=render&logoColor=white"/>
-</a>
-&nbsp;
-<a href="https://dashboard.heroku.com/new?template=https://github.com/GuruhTech/ULTRA-GURU-PAIR" target="_blank">
-  <img alt="Deploy to Heroku" src="https://img.shields.io/badge/-DEPLOY%20TO%20HEROKU-ff6a00?style=for-the-badge&logo=heroku&logoColor=white"/>
-</a>
-&nbsp;
-<a href="https://app.koyeb.com" target="_blank">
-  <img alt="Deploy to Koyeb" src="https://img.shields.io/badge/-DEPLOY%20TO%20KOYEB-ffb347?style=for-the-badge&logo=koyeb&logoColor=white"/>
-</a>
-
----
-
-## Community
-
-Join the ULTRA GURU MD community:
-
-| Platform | Link |
+| Endpoint | Description |
 |---|---|
-| 💬 WhatsApp Group | [Join Group](https://chat.whatsapp.com/Cp6waPAdT3hLVcbdfBeV61) |
-| 📢 WhatsApp Channel | [Follow Channel](https://whatsapp.com/channel/0029Vb7jauLHLHQbkcbcHi0e) |
-| ✈️ Telegram | [@GURU_TECHLAB](https://t.me/GURU_TECHLAB) |
-| 🤖 Main Bot Repo | [ULTRA-GURU](https://github.com/GuruhTech/ULTRA-GURU) |
+| `GET /` | Home landing page |
+| `GET /pair` | Pair code login page |
+| `GET /qr` | QR code login page |
+| `GET /qr/session?type=long` | Generates QR code |
+| `GET /code?number=2547xxx&type=long` | Returns pair code |
+| `GET /health` | Server health check |
 
 ---
 
-## Contributing
+## 📞 Support
 
-This project is **open source** under the [MIT License](LICENSE). Contributions are welcome!
-
-1. Fork the repo
-2. Create your feature branch: `git checkout -b feature/my-feature`
-3. Commit your changes: `git commit -m 'Add my feature'`
-4. Push to the branch: `git push origin feature/my-feature`
-5. Open a Pull Request
-
-Please keep PRs focused and follow the existing code style.
+[![JOIN CHANNEL](https://img.shields.io/badge/JOIN%20CHANNEL-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://whatsapp.com/channel/0029VbCl2UX3rZZilMSvxN1e)
+[![YOUTUBE TUTORIAL](https://img.shields.io/badge/YOUTUBE%20TUTORIAL-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/@GuruTech)
 
 ---
 
-## License
+### Related Projects
 
-```
-MIT License
-
-Copyright (c) 2026 GuruhTech Labs
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-```
+- 🐾 [BLACK-PANTHER-MD](https://github.com/koyoteh/BLACK-PANTHER) — Multi-Device WhatsApp Bot by GuruTech
+- 🎖️ [ULTRA-GURU-MD](https://github.com/GuruhTech/ULTRA-GURU) — Ultimate WhatsApp Bot by GuruTech
 
 ---
 
-<p align="center">
-  Made with 🔥 by <a href="https://github.com/GuruhTech">GuruhTech Labs</a> · Powering <strong>ULTRA GURU MD</strong>
-</p>
+<div align="center">
+Made with ❤️ by GuruTech Lab 🇰🇪
+</div>

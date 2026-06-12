@@ -1,11 +1,11 @@
 module.exports = {
   apps: [{
-    name: "atassasess",
+    name: "pantherr-x-ultra-pair",
     script: "index.js",
-    cwd: "/root/web/gifted-session",
+    cwd: "/root/web/pantherr-x-ultra-pair",
     env: {
-      PORT: 6898,
-      DATAASE_URL: ""
+      PORT: 5000,
+      DATABASE_URL: ""
     }
   }]
 };
