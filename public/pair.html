@@ -231,13 +231,34 @@
 
             <div class="mb-5">
               <label class="block text-xs font-semibold uppercase tracking-widest mb-2" style="color:var(--text-secondary);">Session Type</label>
-              <div class="flex rounded-xl overflow-hidden border gap-1 p-1" style="border-color:var(--border);background:var(--bg-panel);">
-                <button type="button" id="typeLong" onclick="selectType('long')" class="flex-1 py-2.5 text-xs font-semibold flex items-center justify-center gap-1.5 rounded-lg transition-all duration-200 type-btn-active">
-                  <i class="fas fa-file-code text-xs"></i> Long
-                </button>
-                <button type="button" id="typeShort" onclick="selectType('short')" class="flex-1 py-2.5 text-xs font-semibold flex items-center justify-center gap-1.5 rounded-lg transition-all duration-200" style="background:transparent;color:var(--text-secondary);">
-                  <i class="fas fa-database text-xs"></i> Short
-                </button>
+
+              <!-- Long — default primary choice -->
+              <div id="typeLong" onclick="selectType('long')" class="flex items-center justify-between px-4 py-3 rounded-xl cursor-pointer transition-all duration-200" style="background:rgba(0,168,132,0.13);border:1.5px solid var(--green);margin-bottom:8px;">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:var(--green);">
+                    <i class="fas fa-file-code text-white text-xs"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm font-semibold" style="color:var(--text-primary);">Long Session</p>
+                    <p class="text-xs" style="color:var(--text-secondary);">Full session string — recommended</p>
+                  </div>
+                </div>
+                <div id="longRadio" class="w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0" style="border-color:var(--green);background:var(--green);">
+                  <div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+                </div>
+              </div>
+
+              <!-- Short — optional -->
+              <div id="typeShort" onclick="selectType('short')" class="flex items-center justify-between px-4 py-2.5 rounded-xl cursor-pointer transition-all duration-200" style="background:transparent;border:1px dashed rgba(134,150,160,0.25);">
+                <div class="flex items-center gap-3">
+                  <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style="background:var(--bg-panel);border:1px solid var(--border);">
+                    <i class="fas fa-database text-xs" style="color:var(--text-secondary);"></i>
+                  </div>
+                  <div>
+                    <p class="text-xs font-medium" style="color:var(--text-secondary);">Short Session <span class="text-xs font-normal ml-1 px-1.5 py-0.5 rounded" style="background:var(--bg-panel);color:var(--text-secondary);font-size:0.6rem;letter-spacing:0.05em;">OPTIONAL</span></p>
+                  </div>
+                </div>
+                <div id="shortRadio" class="w-4 h-4 rounded-full border-2 flex-shrink-0" style="border-color:rgba(134,150,160,0.3);"></div>
               </div>
             </div>
 
@@ -382,13 +403,32 @@
     let selectedType = 'long';
     function selectType(type) {
       selectedType = type;
-      const s = document.getElementById('typeShort'), l = document.getElementById('typeLong');
-      if (type === 'short') {
-        s.classList.add('type-btn-active'); s.style.color='#fff'; s.style.background='';
-        l.classList.remove('type-btn-active'); l.style.background='transparent'; l.style.color='var(--text-secondary)';
+      const longCard  = document.getElementById('typeLong');
+      const shortCard = document.getElementById('typeShort');
+      const longRadio  = document.getElementById('longRadio');
+      const shortRadio = document.getElementById('shortRadio');
+      if (type === 'long') {
+        longCard.style.background = 'rgba(0,168,132,0.13)';
+        longCard.style.border     = '1.5px solid var(--green)';
+        longRadio.style.background    = 'var(--green)';
+        longRadio.style.borderColor   = 'var(--green)';
+        longRadio.innerHTML = '<div class="w-1.5 h-1.5 rounded-full bg-white"></div>';
+        shortCard.style.background = 'transparent';
+        shortCard.style.border     = '1px dashed rgba(134,150,160,0.25)';
+        shortRadio.style.background  = 'transparent';
+        shortRadio.style.borderColor = 'rgba(134,150,160,0.3)';
+        shortRadio.innerHTML = '';
       } else {
-        l.classList.add('type-btn-active'); l.style.color='#fff'; l.style.background='';
-        s.classList.remove('type-btn-active'); s.style.background='transparent'; s.style.color='var(--text-secondary)';
+        shortCard.style.background = 'rgba(0,168,132,0.08)';
+        shortCard.style.border     = '1.5px solid var(--green)';
+        shortRadio.style.background  = 'var(--green)';
+        shortRadio.style.borderColor = 'var(--green)';
+        shortRadio.innerHTML = '<div class="w-1.5 h-1.5 rounded-full bg-white"></div>';
+        longCard.style.background = 'transparent';
+        longCard.style.border     = '1px dashed rgba(134,150,160,0.25)';
+        longRadio.style.background   = 'transparent';
+        longRadio.style.borderColor  = 'rgba(134,150,160,0.3)';
+        longRadio.innerHTML = '';
       }
     }
 
