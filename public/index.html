@@ -3,281 +3,271 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>ULTRA X PANTHER | WhatsApp Bot Session Generator</title>
+  <title>ULTRA GURU MD | WhatsApp Session Studio</title>
   <meta name="description" content="ULTRA GURU MD — powerful WhatsApp bot session generator with pair code and QR code login. Fast, secure, and built by GuruTech Lab.">
-  <meta name="theme-color" content="#0ea5e9">
+  <meta name="theme-color" content="#facc15">
   <meta property="og:type" content="website">
   <meta property="og:title" content="ULTRA GURU MD | WhatsApp Bot">
   <meta property="og:description" content="Generate your WhatsApp session with ULTRA GURU MD. Supports pair code and QR code login methods.">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
+
+    :root {
+      --blue:    #2563eb;
+      --blue2:   #60a5fa;
+      --yellow:  #facc15;
+      --yellow2: #fde047;
+      --ink:     #05070d;
+      --panel:   rgba(255,255,255,0.045);
+      --border:  rgba(255,255,255,0.09);
+      --border-y:rgba(250,204,21,0.35);
+      --border-b:rgba(37,99,235,0.4);
+    }
+
     body {
-      font-family: 'Space Grotesk', sans-serif;
-      background: #020408;
-      color: #e2e8f0;
+      font-family: 'Sora', sans-serif;
+      background: var(--ink);
+      color: #f8fafc;
       min-height: 100vh;
       overflow-x: hidden;
       scrollbar-width: none;
     }
     body::-webkit-scrollbar { display: none; }
 
-    /* ── Grid BG ── */
+    /* ── Diagonal stripe atmosphere ── */
     body::before {
       content: '';
+      position: fixed; inset: -20%;
+      background:
+        repeating-linear-gradient(135deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 64px);
+      pointer-events: none; z-index: 0;
+      transform: rotate(0deg);
+    }
+    body::after {
+      content: '';
       position: fixed; inset: 0;
-      background-image:
-        linear-gradient(rgba(14,165,233,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(14,165,233,0.04) 1px, transparent 1px);
-      background-size: 44px 44px;
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(37,99,235,0.18), transparent 60%);
       pointer-events: none; z-index: 0;
     }
 
-    /* ── Tokens ── */
-    :root {
-      --blue:   #0ea5e9;
-      --blue2:  #38bdf8;
-      --yellow: #facc15;
-      --yellow2:#fde68a;
-      --black:  #020408;
-      --dark:   #070d18;
-      --glass:  rgba(7,13,24,0.75);
-      --border: rgba(14,165,233,0.18);
-      --border-y: rgba(250,204,21,0.2);
-    }
+    .mono { font-family: 'Space Mono', monospace; }
 
     /* ── Gradient text ── */
     .gradient-text {
-      background: linear-gradient(135deg, var(--yellow) 0%, var(--blue2) 60%, #fff 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      background: linear-gradient(100deg, var(--yellow) 0%, #fff 45%, var(--blue2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
     .gradient-text-blue {
-      background: linear-gradient(135deg, var(--blue) 0%, var(--blue2) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      background: linear-gradient(100deg, var(--blue2), #fff 80%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
 
-    /* ── Orbs ── */
-    .orb {
-      position: fixed; border-radius: 50%;
-      filter: blur(100px); pointer-events: none; z-index: 0;
-    }
-    @keyframes drift {
+    /* ── Blobs ── */
+    .blob { position: fixed; border-radius: 50%; filter: blur(110px); pointer-events: none; z-index: 0; }
+    @keyframes floaty {
       0%,100% { transform: translate(0,0) scale(1); }
-      33%      { transform: translate(30px,-20px) scale(1.06); }
-      66%      { transform: translate(-20px,15px) scale(0.97); }
+      50% { transform: translate(40px,-30px) scale(1.08); }
     }
 
     /* ── Nav ── */
     .nav-glass {
-      background: rgba(2,4,8,0.88);
+      background: rgba(5,7,13,0.7);
       border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
     }
-    .nav-link { position: relative; transition: color 0.2s; font-family: 'Space Grotesk', sans-serif; }
+    .nav-link { position: relative; transition: color 0.2s; }
     .nav-link::after {
-      content: ''; position: absolute; bottom: -2px; left: 0;
-      width: 0; height: 1.5px;
-      background: linear-gradient(90deg, var(--yellow), var(--blue));
-      transition: width 0.22s; border-radius: 2px;
+      content: ''; position: absolute; bottom: -4px; left: 50%; translate: -50% 0;
+      width: 0; height: 3px; border-radius: 2px;
+      background: var(--yellow);
+      transition: width 0.22s;
     }
-    .nav-link:hover { color: var(--blue2); }
-    .nav-link:hover::after { width: 100%; }
+    .nav-link:hover { color: #fff; }
+    .nav-link:hover::after { width: 60%; }
 
     /* ── Sidebar ── */
     .sidebar-link {
-      display: flex; align-items: center; gap: 11px;
-      padding: 9px 12px; border-radius: 10px;
-      color: #64748b; text-decoration: none;
-      font-size: 0.875rem; font-weight: 500;
-      transition: background 0.18s, color 0.18s, transform 0.18s;
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 14px; border-radius: 12px;
+      color: #94a3b8; text-decoration: none;
+      font-size: 0.875rem; font-weight: 600;
+      transition: background 0.18s, color 0.18s, transform 0.18s, border-color 0.18s;
       border: 1px solid transparent;
     }
     .sidebar-link:hover {
-      background: rgba(14,165,233,0.08);
-      border-color: var(--border);
-      color: var(--blue2);
-      transform: translateX(4px);
+      background: rgba(250,204,21,0.07);
+      border-color: var(--border-y);
+      color: var(--yellow);
+      transform: translateX(5px);
     }
-    .sidebar-link i { width: 17px; text-align: center; font-size: 0.85rem; }
-    #sidebar { transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); }
+    .sidebar-link i { width: 18px; text-align: center; font-size: 0.9rem; }
+    #sidebar { transition: transform 0.32s cubic-bezier(0.4,0,0.2,1); }
     #sidebarOverlay { transition: opacity 0.3s ease; }
 
     /* ── Buttons ── */
     .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 11px 28px; border-radius: 10px;
-      font-weight: 600; font-size: 0.875rem; font-family: 'Space Grotesk', sans-serif;
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      padding: 13px 30px; border-radius: 999px;
+      font-weight: 700; font-size: 0.875rem; font-family: 'Sora', sans-serif;
       text-decoration: none; cursor: pointer; border: none;
-      transition: transform 0.18s, box-shadow 0.18s; will-change: transform;
+      transition: transform 0.18s, box-shadow 0.18s, filter 0.18s;
     }
-    .btn:active { transform: scale(0.97) !important; }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--blue) 0%, #0284c7 100%);
-      color: #fff;
-      box-shadow: 0 0 0 1px rgba(14,165,233,0.3), 0 4px 20px rgba(14,165,233,0.25);
-    }
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 0 1px rgba(14,165,233,0.5), 0 12px 32px rgba(14,165,233,0.4);
-    }
+    .btn:active { transform: scale(0.96) !important; }
     .btn-yellow {
-      background: linear-gradient(135deg, var(--yellow) 0%, #f59e0b 100%);
-      color: #020408; font-weight: 700;
-      box-shadow: 0 0 0 1px rgba(250,204,21,0.3), 0 4px 20px rgba(250,204,21,0.2);
+      background: var(--yellow); color: #05070d;
+      box-shadow: 0 6px 0 0 #b45309, 0 6px 24px rgba(250,204,21,0.25);
     }
-    .btn-yellow:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 0 1px rgba(250,204,21,0.5), 0 12px 32px rgba(250,204,21,0.35);
+    .btn-yellow:hover { transform: translateY(-3px); box-shadow: 0 9px 0 0 #b45309, 0 14px 30px rgba(250,204,21,0.35); }
+    .btn-blue {
+      background: var(--blue); color: #fff;
+      box-shadow: 0 6px 0 0 #1e3a8a, 0 6px 24px rgba(37,99,235,0.3);
     }
-    .btn-ghost {
-      background: rgba(14,165,233,0.07);
-      border: 1px solid var(--border);
-      color: var(--blue2);
+    .btn-blue:hover { transform: translateY(-3px); box-shadow: 0 9px 0 0 #1e3a8a, 0 14px 30px rgba(37,99,235,0.4); }
+    .btn-outline {
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid rgba(255,255,255,0.18);
+      color: #fff;
     }
-    .btn-ghost:hover {
-      transform: translateY(-3px);
-      background: rgba(14,165,233,0.14);
-      box-shadow: 0 8px 24px rgba(14,165,233,0.15);
-    }
+    .btn-outline:hover { transform: translateY(-3px); border-color: var(--yellow); background: rgba(250,204,21,0.06); }
 
-    .icon-animated { display: inline-flex; align-items: center; justify-content: center; transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1); }
-    .btn:hover .icon-animated { transform: scale(1.25) rotate(-8deg); }
+    .icon-animated { display: inline-flex; align-items: center; justify-content: center; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+    .btn:hover .icon-animated { transform: scale(1.2) rotate(10deg); }
 
-    /* ── Glass card ── */
+    /* ── Floating glass card ── */
     .glass-card {
-      background: var(--glass);
+      background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(14,165,233,0.08);
-      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      border-radius: 24px;
+      backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      position: relative; overflow: hidden;
     }
-    .glass-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(14,165,233,0.35);
-      box-shadow: 0 20px 48px rgba(14,165,233,0.12), inset 0 1px 0 rgba(14,165,233,0.14);
+    .glass-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--yellow), var(--blue));
+      opacity: 0; transition: opacity 0.3s;
     }
+    .glass-card:hover { transform: translateY(-8px) rotate(-0.3deg); border-color: rgba(255,255,255,0.18); box-shadow: 0 24px 60px rgba(0,0,0,0.5); }
+    .glass-card:hover::before { opacity: 1; }
     .glass-card .card-icon {
-      width: 46px; height: 46px;
-      background: rgba(14,165,233,0.1);
+      width: 50px; height: 50px;
+      background: rgba(255,255,255,0.05);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 14px;
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 16px;
-      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), background 0.25s;
+      margin-bottom: 18px;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), background 0.25s;
     }
-    .glass-card:hover .card-icon { transform: scale(1.12) rotate(-6deg); background: rgba(14,165,233,0.2); }
-    .glass-card .card-icon i { color: var(--blue2); font-size: 1.05rem; }
+    .glass-card:hover .card-icon { transform: scale(1.1) rotate(-8deg); background: rgba(250,204,21,0.12); }
+    .glass-card .card-icon i { color: var(--yellow); font-size: 1.15rem; }
 
     /* ── Badge ── */
     .badge-pill {
-      display: inline-flex; align-items: center; gap: 7px;
-      background: rgba(14,165,233,0.08);
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.05);
       border: 1px solid var(--border);
-      border-radius: 999px; padding: 5px 14px;
-      font-size: 0.72rem; font-weight: 600; color: var(--blue2);
-      letter-spacing: 0.04em;
+      border-radius: 999px; padding: 7px 18px;
+      font-size: 0.72rem; font-weight: 700; color: #fff;
+      letter-spacing: 0.08em;
     }
-    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 6px #4ade80; animation: pulse 2s ease-in-out infinite; }
-    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--yellow); box-shadow: 0 0 10px var(--yellow); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
 
     /* ── Divider ── */
     .divider-line { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
 
     /* ── Stat cards ── */
     .stat-card {
-      background: rgba(7,13,24,0.6);
+      background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      backdrop-filter: blur(12px);
-      padding: 16px; text-align: center;
+      border-radius: 18px;
+      backdrop-filter: blur(14px);
+      padding: 18px; text-align: center;
     }
 
     /* ── Social ── */
     .social-icon {
-      width: 36px; height: 36px; border-radius: 9px;
-      background: rgba(14,165,233,0.06); border: 1px solid var(--border);
+      width: 40px; height: 40px; border-radius: 12px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
       display: flex; align-items: center; justify-content: center;
-      color: #475569; font-size: 0.85rem; text-decoration: none;
-      transition: background 0.2s, color 0.2s, transform 0.2s;
+      color: #94a3b8; font-size: 0.9rem; text-decoration: none;
+      transition: background 0.2s, color 0.2s, transform 0.2s, border-color 0.2s;
     }
-    .social-icon:hover { background: rgba(14,165,233,0.18); color: var(--blue2); transform: translateY(-3px); }
+    .social-icon:hover { background: rgba(250,204,21,0.1); color: var(--yellow); border-color: var(--border-y); transform: translateY(-3px) rotate(-6deg); }
 
-    .footer-link { color: #475569; text-decoration: none; font-size: 0.82rem; display: flex; align-items: center; gap: 7px; transition: color 0.18s, transform 0.18s; }
-    .footer-link:hover { color: var(--blue2); transform: translateX(4px); }
+    .footer-link { color: #94a3b8; text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; transition: color 0.18s, transform 0.18s; }
+    .footer-link:hover { color: var(--yellow); transform: translateX(4px); }
 
-    /* ── Mono tag ── */
-    .mono { font-family: 'JetBrains Mono', monospace; }
-
-    /* ── Scan line atmosphere ── */
-    .scanline {
-      position: fixed; top: 0; left: 0; right: 0;
-      height: 2px; background: linear-gradient(90deg, transparent, var(--blue), var(--yellow), var(--blue), transparent);
-      opacity: 0.4; z-index: 100;
-      animation: scan 4s ease-in-out infinite;
+    /* ── Marquee strip ── */
+    .marquee-strip {
+      background: var(--yellow);
+      color: #05070d;
+      overflow: hidden;
+      white-space: nowrap;
+      transform: rotate(-1.2deg);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.4);
     }
-    @keyframes scan { 0% { transform: translateY(0); opacity: 0.4; } 50% { opacity: 0.7; } 100% { transform: translateY(100vh); opacity: 0; } }
+    .marquee-track {
+      display: inline-flex;
+      animation: marquee 28s linear infinite;
+    }
+    .marquee-track span {
+      display: inline-flex; align-items: center; gap: 14px;
+      padding: 12px 28px;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700; font-size: 0.78rem; letter-spacing: 0.12em;
+    }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
     /* ── Animations ── */
-    [data-anim] { will-change: transform, opacity; transition: opacity 0.65s cubic-bezier(0.4,0,0.2,1), transform 0.65s cubic-bezier(0.4,0,0.2,1); }
-    [data-anim="fade-up"]    { opacity: 0; transform: translateY(30px); }
-    [data-anim="zoom-in"]    { opacity: 0; transform: scale(0.88); }
-    [data-anim="slide-left"] { opacity: 0; transform: translateX(-28px); }
-    [data-anim="slide-right"]{ opacity: 0; transform: translateX(28px); }
+    [data-anim] { will-change: transform, opacity; transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1); }
+    [data-anim="fade-up"]    { opacity: 0; transform: translateY(34px); }
+    [data-anim="zoom-in"]    { opacity: 0; transform: scale(0.86); }
+    [data-anim="slide-left"] { opacity: 0; transform: translateX(-30px); }
+    [data-anim="slide-right"]{ opacity: 0; transform: translateX(30px); }
     [data-anim].in-view { opacity: 1; transform: translateY(0) scale(1) translateX(0); }
     [data-delay="1"] { transition-delay: 0.08s; }
     [data-delay="2"] { transition-delay: 0.16s; }
     [data-delay="3"] { transition-delay: 0.24s; }
     [data-delay="4"] { transition-delay: 0.32s; }
     [data-delay="5"] { transition-delay: 0.40s; }
-
-    /* ── Corner accent ── */
-    .corner-tl { position: absolute; top: 0; left: 0; width: 20px; height: 20px; border-top: 2px solid var(--yellow); border-left: 2px solid var(--yellow); border-radius: 4px 0 0 0; }
-    .corner-br { position: absolute; bottom: 0; right: 0; width: 20px; height: 20px; border-bottom: 2px solid var(--blue); border-right: 2px solid var(--blue); border-radius: 0 0 4px 0; }
   </style>
 </head>
 <body>
-  <!-- Scan line -->
-  <div class="scanline"></div>
-
-  <!-- Orbs -->
-  <div class="orb w-[500px] h-[500px] top-[-150px] left-[-100px]" style="background:rgba(14,165,233,0.09);animation:drift 14s ease-in-out infinite;"></div>
-  <div class="orb w-[380px] h-[380px] bottom-[5%] right-[-80px]" style="background:rgba(250,204,21,0.06);animation:drift 18s ease-in-out 5s infinite;"></div>
-  <div class="orb w-[260px] h-[260px] top-[45%] left-[55%]" style="background:rgba(14,165,233,0.05);animation:drift 22s ease-in-out 9s infinite;"></div>
+  <!-- Blobs -->
+  <div class="blob w-[560px] h-[560px] top-[-180px] left-[-120px]" style="background:rgba(37,99,235,0.25);animation:floaty 16s ease-in-out infinite;"></div>
+  <div class="blob w-[420px] h-[420px] bottom-[5%] right-[-100px]" style="background:rgba(250,204,21,0.16);animation:floaty 20s ease-in-out 4s infinite;"></div>
+  <div class="blob w-[300px] h-[300px] top-[40%] left-[60%]" style="background:rgba(255,255,255,0.05);animation:floaty 24s ease-in-out 8s infinite;"></div>
 
   <!-- Nav -->
   <nav class="nav-glass sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-5 h-13 py-2 flex items-center justify-between">
+    <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
       <a href="/" class="flex items-center gap-3 no-underline group">
-        <div style="width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#0ea5e9,#0284c7);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 1px rgba(14,165,233,0.4),0 0 16px rgba(14,165,233,0.3);">
-          <i class="fas fa-bolt" style="color:#fff;font-size:0.8rem;"></i>
+        <div style="width:38px;height:38px;border-radius:12px;background:var(--yellow);display:flex;align-items:center;justify-content:center;transform:rotate(-6deg);box-shadow:0 4px 16px rgba(250,204,21,0.35);">
+          <i class="fas fa-bolt" style="color:#05070d;font-size:0.95rem;"></i>
         </div>
         <div class="flex flex-col leading-none">
-          <span class="text-sm font-bold gradient-text-blue mono tracking-widest">ULTRA GURU</span>
-          <span class="text-[9px] text-yellow-400 mono tracking-[0.2em] font-semibold">MD • SESSION GEN</span>
+          <span class="text-sm font-extrabold tracking-wide">ULTRA GURU</span>
+          <span class="text-[9px] text-blue-300 mono tracking-[0.25em] font-semibold">MD · SESSION STUDIO</span>
         </div>
       </a>
-      <div class="hidden md:flex items-center gap-6">
-        <a href="https://github.com/GuruhTech/ULTRA-GURU" target="_blank" class="nav-link text-slate-400 text-sm font-medium no-underline flex items-center gap-1.5"><i class="fab fa-github text-xs"></i> GitHub</a>
-        <a href="/pair" class="nav-link text-slate-400 text-sm font-medium no-underline flex items-center gap-1.5"><i class="fas fa-link text-xs"></i> Pair Code</a>
-        <a href="/qr" class="nav-link text-slate-400 text-sm font-medium no-underline flex items-center gap-1.5"><i class="fas fa-qrcode text-xs"></i> QR Code</a>
-        <a href="https://whatsapp.com/channel/0029Vb7jauLHLHQbkcbcHi0e" target="_blank" class="nav-link text-slate-400 text-sm font-medium no-underline flex items-center gap-1.5"><i class="fab fa-whatsapp text-xs"></i> Channel</a>
+      <div class="hidden md:flex items-center gap-7">
+        <a href="https://github.com/GuruhTech/ULTRA-GURU" target="_blank" class="nav-link text-slate-300 text-sm font-semibold no-underline flex items-center gap-1.5"><i class="fab fa-github text-xs"></i> GitHub</a>
+        <a href="/pair" class="nav-link text-slate-300 text-sm font-semibold no-underline flex items-center gap-1.5"><i class="fas fa-link text-xs"></i> Pair Code</a>
+        <a href="/qr" class="nav-link text-slate-300 text-sm font-semibold no-underline flex items-center gap-1.5"><i class="fas fa-qrcode text-xs"></i> QR Code</a>
+        <a href="https://whatsapp.com/channel/0029Vb7jauLHLHQbkcbcHi0e" target="_blank" class="nav-link text-slate-300 text-sm font-semibold no-underline flex items-center gap-1.5"><i class="fab fa-whatsapp text-xs"></i> Channel</a>
       </div>
       <div class="flex items-center gap-3">
-        <a href="/pair" class="hidden md:inline-flex btn btn-primary py-2 px-4 text-xs">
+        <a href="/pair" class="hidden md:inline-flex btn btn-yellow py-2.5 px-5 text-xs">
           <span class="icon-animated"><i class="fas fa-bolt"></i></span> Get Session
         </a>
-        <button id="menuBtn" class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 border border-sky-500/20 text-slate-400 outline-none focus:outline-none">
+        <button id="menuBtn" class="md:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-slate-300 outline-none focus:outline-none">
           <i class="fas fa-bars" id="menuIcon"></i>
         </button>
       </div>
@@ -286,28 +276,28 @@
 
   <!-- Sidebar overlay -->
   <div id="sidebarOverlay" class="fixed inset-0 z-40 bg-black/70 opacity-0 pointer-events-none"></div>
-  <aside id="sidebar" class="fixed top-0 left-0 z-50 h-full w-72 border-r flex flex-col pt-5 pb-8 transform -translate-x-full rounded-r-3xl" style="background:#04080f;border-color:rgba(14,165,233,0.15);">
+  <aside id="sidebar" class="fixed top-0 left-0 z-50 h-full w-72 border-r flex flex-col pt-5 pb-8 transform -translate-x-full" style="background:#080a12;border-color:rgba(255,255,255,0.08);">
     <div class="flex items-center justify-between px-5 mb-6">
       <a href="/" class="flex items-center gap-2.5 no-underline">
-        <div style="width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,#0ea5e9,#0284c7);display:flex;align-items:center;justify-content:center;">
-          <i class="fas fa-bolt" style="color:#fff;font-size:0.65rem;"></i>
+        <div style="width:30px;height:30px;border-radius:9px;background:var(--yellow);display:flex;align-items:center;justify-content:center;transform:rotate(-6deg);">
+          <i class="fas fa-bolt" style="color:#05070d;font-size:0.7rem;"></i>
         </div>
-        <span class="text-sm font-bold gradient-text-blue mono">ULTRA GURU MD</span>
+        <span class="text-sm font-extrabold">ULTRA GURU MD</span>
       </a>
       <button id="closeBtn" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 text-slate-400">
         <i class="fas fa-times text-sm"></i>
       </button>
     </div>
     <div class="px-3 flex-1 space-y-1">
-      <a href="/" class="sidebar-link" style="background:rgba(14,165,233,0.08);border-color:rgba(14,165,233,0.2);color:#38bdf8;"><i class="fas fa-home"></i> Home</a>
+      <a href="/" class="sidebar-link" style="background:rgba(250,204,21,0.08);border-color:rgba(250,204,21,0.25);color:#facc15;"><i class="fas fa-house"></i> Home</a>
       <a href="/pair" class="sidebar-link"><i class="fas fa-link"></i> Pair Code</a>
       <a href="/qr" class="sidebar-link"><i class="fas fa-qrcode"></i> QR Code</a>
       <a href="https://github.com/GuruhTech/ULTRA-GURU" target="_blank" class="sidebar-link"><i class="fab fa-github"></i> GitHub Repo</a>
       <a href="https://whatsapp.com/channel/0029Vb7jauLHLHQbkcbcHi0e" target="_blank" class="sidebar-link"><i class="fab fa-whatsapp"></i> WA Channel</a>
       <a href="https://chat.whatsapp.com/Cp6waPAdT3hLVcbdfBeV61?s=cl&p=a&mlu=4&amv=0" target="_blank" class="sidebar-link"><i class="fas fa-users"></i> WA Group</a>
     </div>
-    <div class="px-5 pt-4 border-t" style="border-color:rgba(14,165,233,0.1);">
-      <p class="text-slate-600 text-xs mono">⚡ Powered by GuruTech Lab</p>
+    <div class="px-5 pt-4 border-t" style="border-color:rgba(255,255,255,0.06);">
+      <p class="text-slate-500 text-xs mono">⚡ Powered by GuruTech Lab</p>
     </div>
   </aside>
 
@@ -319,40 +309,39 @@
       <div class="max-w-3xl mx-auto w-full">
 
         <!-- Badge -->
-        <div class="flex justify-center mb-6" data-anim="zoom-in">
-          <span class="badge-pill"><span class="status-dot"></span> <span class="mono">SESSION SERVER • ONLINE</span></span>
+        <div class="flex justify-center mb-7" data-anim="zoom-in">
+          <span class="badge-pill"><span class="status-dot"></span> <span class="mono">SESSION SERVER ONLINE</span></span>
         </div>
 
         <!-- Logo mark -->
-        <div class="flex justify-center mb-7" data-anim="zoom-in" data-delay="1">
+        <div class="flex justify-center mb-8" data-anim="zoom-in" data-delay="1">
           <div class="relative inline-flex">
-            <div style="width:96px;height:96px;border-radius:20px;background:linear-gradient(135deg,#0284c7,#0ea5e9 50%,#38bdf8);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 1px rgba(14,165,233,0.4),0 0 60px rgba(14,165,233,0.25),0 0 0 16px rgba(14,165,233,0.06);">
-              <i class="fas fa-bolt" style="color:#fff;font-size:2.4rem;"></i>
+            <div style="width:100px;height:100px;border-radius:26px;background:var(--yellow);display:flex;align-items:center;justify-content:center;transform:rotate(-8deg);box-shadow:0 16px 50px rgba(250,204,21,0.3);">
+              <i class="fas fa-bolt" style="color:#05070d;font-size:2.6rem;"></i>
             </div>
-            <!-- Yellow accent dot -->
-            <span class="absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center" style="background:#facc15;box-shadow:0 0 10px rgba(250,204,21,0.6);">
-              <i class="fas fa-star" style="color:#020408;font-size:0.45rem;"></i>
+            <span class="absolute -top-2 -right-3 w-9 h-9 rounded-2xl flex items-center justify-center" style="background:var(--blue);box-shadow:0 8px 24px rgba(37,99,235,0.45);transform:rotate(12deg);">
+              <i class="fab fa-whatsapp" style="color:#fff;font-size:1rem;"></i>
             </span>
           </div>
         </div>
 
-        <div class="mono text-sky-500 text-xs tracking-[0.25em] font-semibold mb-2" data-anim="fade-up" data-delay="2">GURUTECH LAB PRESENTS</div>
-        <h1 class="text-5xl sm:text-6xl md:text-7xl font-bold leading-[1.05] mb-2 gradient-text" data-anim="fade-up" data-delay="2">
+        <div class="mono text-blue-300 text-xs tracking-[0.3em] font-bold mb-3" data-anim="fade-up" data-delay="2">GURUTECH LAB PRESENTS</div>
+        <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold leading-[1.05] mb-3 gradient-text" data-anim="fade-up" data-delay="2">
           ULTRA GURU MD
         </h1>
-        <div class="text-xl sm:text-2xl font-semibold text-slate-400 mb-6 mono tracking-wide" data-anim="fade-up" data-delay="3">Session Generator</div>
+        <div class="text-xl sm:text-2xl font-bold text-slate-300 mb-6 mono tracking-wide" data-anim="fade-up" data-delay="3">// session studio</div>
         <p class="text-slate-400 text-base sm:text-lg mb-10 max-w-xl mx-auto leading-relaxed" data-anim="fade-up" data-delay="3">
-          Enterprise-grade WhatsApp session generation with pair code &amp; QR login — blazing fast, end-to-end encrypted, built for reliability.
+          Spin up a fresh WhatsApp session in seconds — pair code or QR, encrypted end-to-end, and built for round-the-clock reliability.
         </p>
 
         <div class="flex flex-row items-center justify-center gap-3 flex-wrap" data-anim="fade-up" data-delay="4">
-          <a href="/pair" class="btn btn-primary">
+          <a href="/pair" class="btn btn-yellow">
             <span class="icon-animated"><i class="fas fa-link"></i></span> Pair Code
           </a>
-          <a href="/qr" class="btn btn-yellow">
+          <a href="/qr" class="btn btn-blue">
             <span class="icon-animated"><i class="fas fa-qrcode"></i></span> QR Code
           </a>
-          <a href="https://github.com/GuruhTech/ULTRA-GURU" target="_blank" class="btn btn-ghost">
+          <a href="https://github.com/GuruhTech/ULTRA-GURU" target="_blank" class="btn btn-outline">
             <span class="icon-animated"><i class="fab fa-github"></i></span> GitHub
           </a>
         </div>
@@ -361,19 +350,29 @@
       <!-- Stat row -->
       <div class="mt-16 w-full max-w-2xl mx-auto grid grid-cols-3 gap-4" data-anim="fade-up" data-delay="5">
         <div class="stat-card">
-          <p class="text-2xl font-bold gradient-text-blue mono">2</p>
-          <p class="text-slate-500 text-xs mt-1 tracking-wide">Login Methods</p>
+          <p class="text-2xl font-extrabold gradient-text-blue mono">2</p>
+          <p class="text-slate-400 text-xs mt-1 tracking-wide">Login Methods</p>
         </div>
         <div class="stat-card">
-          <p class="text-2xl font-bold mono" style="color:var(--yellow)">100%</p>
-          <p class="text-slate-500 text-xs mt-1 tracking-wide">Open Source</p>
+          <p class="text-2xl font-extrabold mono" style="color:var(--yellow)">100%</p>
+          <p class="text-slate-400 text-xs mt-1 tracking-wide">Open Source</p>
         </div>
         <div class="stat-card">
-          <p class="text-2xl font-bold gradient-text-blue mono">24/7</p>
-          <p class="text-slate-500 text-xs mt-1 tracking-wide">Available</p>
+          <p class="text-2xl font-extrabold gradient-text-blue mono">24/7</p>
+          <p class="text-slate-400 text-xs mt-1 tracking-wide">Available</p>
         </div>
       </div>
     </section>
+
+    <!-- Marquee -->
+    <div class="px-5 -mt-6 mb-4 relative z-20">
+      <div class="marquee-strip rounded-2xl max-w-6xl mx-auto">
+        <div class="marquee-track">
+          <span><i class="fas fa-bolt"></i> FAST PAIRING <i class="fas fa-shield-halved"></i> ENCRYPTED SESSIONS <i class="fas fa-code"></i> 100% OPEN SOURCE <i class="fab fa-whatsapp"></i> ULTRA GURU MD</span>
+          <span><i class="fas fa-bolt"></i> FAST PAIRING <i class="fas fa-shield-halved"></i> ENCRYPTED SESSIONS <i class="fas fa-code"></i> 100% OPEN SOURCE <i class="fab fa-whatsapp"></i> ULTRA GURU MD</span>
+        </div>
+      </div>
+    </div>
 
     <div class="divider-line"></div>
 
@@ -381,46 +380,30 @@
     <section class="py-20 px-5">
       <div class="max-w-6xl mx-auto">
         <div class="text-center mb-14">
-          <div class="mono text-sky-600 text-xs tracking-[0.2em] font-semibold mb-3" data-anim="fade-up">// CAPABILITIES</div>
-          <h2 class="text-3xl sm:text-4xl font-bold gradient-text mb-3" data-anim="fade-up" data-delay="1">Key Features</h2>
-          <p class="text-slate-500 text-sm max-w-md mx-auto" data-anim="fade-up" data-delay="2">Everything you need to connect and automate your WhatsApp.</p>
+          <div class="mono text-yellow-400 text-xs tracking-[0.25em] font-bold mb-3" data-anim="fade-up">// CAPABILITIES</div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold gradient-text mb-3" data-anim="fade-up" data-delay="1">Key Features</h2>
+          <p class="text-slate-400 text-sm max-w-md mx-auto" data-anim="fade-up" data-delay="2">Everything you need to connect and automate your WhatsApp.</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <a href="/pair" class="glass-card p-7 no-underline" data-anim="fade-up" data-delay="1">
-            <div class="relative">
-              <div class="corner-tl"></div>
-              <div class="corner-br"></div>
-              <div class="card-icon"><i class="fas fa-link"></i></div>
-              <h3 class="text-white font-semibold mb-2">Pair Code Login</h3>
-              <p class="text-slate-500 text-sm leading-relaxed">Connect your WhatsApp account with a simple pairing code. No QR scan needed — just enter a number.</p>
-            </div>
+            <div class="card-icon"><i class="fas fa-link"></i></div>
+            <h3 class="text-white font-bold mb-2 text-lg">Pair Code Login</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Connect your WhatsApp account with a simple pairing code. No QR scan needed — just enter a number.</p>
           </a>
           <a href="/qr" class="glass-card p-7 no-underline" data-anim="fade-up" data-delay="2">
-            <div class="relative">
-              <div class="corner-tl"></div>
-              <div class="corner-br"></div>
-              <div class="card-icon"><i class="fas fa-qrcode"></i></div>
-              <h3 class="text-white font-semibold mb-2">QR Code Login</h3>
-              <p class="text-slate-500 text-sm leading-relaxed">Classic QR scan for quick, seamless WhatsApp linking. Open your camera and connect instantly.</p>
-            </div>
+            <div class="card-icon"><i class="fas fa-qrcode"></i></div>
+            <h3 class="text-white font-bold mb-2 text-lg">QR Code Login</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Classic QR scan for quick, seamless WhatsApp linking. Open your camera and connect instantly.</p>
           </a>
           <a href="https://github.com/GuruhTech/ULTRA-GURU" target="_blank" class="glass-card p-7 no-underline" data-anim="fade-up" data-delay="3">
-            <div class="relative">
-              <div class="corner-tl"></div>
-              <div class="corner-br"></div>
-              <div class="card-icon"><i class="fas fa-code"></i></div>
-              <h3 class="text-white font-semibold mb-2">Open Source</h3>
-              <p class="text-slate-500 text-sm leading-relaxed">Fully available on GitHub under GuruTech. Fork it, customize it, deploy it your way.</p>
-            </div>
+            <div class="card-icon"><i class="fas fa-code"></i></div>
+            <h3 class="text-white font-bold mb-2 text-lg">Open Source</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">Fully available on GitHub under GuruTech. Fork it, customize it, deploy it your way.</p>
           </a>
           <div class="glass-card p-7 cursor-default" data-anim="fade-up" data-delay="4">
-            <div class="relative">
-              <div class="corner-tl"></div>
-              <div class="corner-br"></div>
-              <div class="card-icon"><i class="fas fa-shield-halved"></i></div>
-              <h3 class="text-white font-semibold mb-2">Encrypted Sessions</h3>
-              <p class="text-slate-500 text-sm leading-relaxed">End-to-end encrypted, gzip-compressed session handling. Your credentials stay secure, always.</p>
-            </div>
+            <div class="card-icon"><i class="fas fa-shield-halved"></i></div>
+            <h3 class="text-white font-bold mb-2 text-lg">Encrypted Sessions</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">End-to-end encrypted, gzip-compressed session handling. Your credentials stay secure, always.</p>
           </div>
         </div>
       </div>
@@ -431,16 +414,16 @@
     <!-- Community -->
     <section class="py-16 px-5">
       <div class="max-w-3xl mx-auto text-center">
-        <div class="mono text-sky-600 text-xs tracking-[0.2em] font-semibold mb-3" data-anim="fade-up">// COMMUNITY</div>
-        <h2 class="text-3xl font-bold gradient-text mb-6" data-anim="fade-up" data-delay="1">Join the GuruTech Community</h2>
+        <div class="mono text-yellow-400 text-xs tracking-[0.25em] font-bold mb-3" data-anim="fade-up">// COMMUNITY</div>
+        <h2 class="text-3xl font-extrabold gradient-text mb-6" data-anim="fade-up" data-delay="1">Join the GuruTech Community</h2>
         <div class="flex flex-col sm:flex-row gap-4 justify-center" data-anim="fade-up" data-delay="2">
-          <a href="https://chat.whatsapp.com/Cp6waPAdT3hLVcbdfBeV61?s=cl&p=a&mlu=4&amv=0" target="_blank" class="btn btn-primary flex-1 sm:flex-none justify-center">
+          <a href="https://chat.whatsapp.com/Cp6waPAdT3hLVcbdfBeV61?s=cl&p=a&mlu=4&amv=0" target="_blank" class="btn btn-yellow flex-1 sm:flex-none justify-center">
             <span class="icon-animated"><i class="fab fa-whatsapp"></i></span> Join WA Group
           </a>
-          <a href="https://whatsapp.com/channel/0029Vb7jauLHLHQbkcbcHi0e" target="_blank" class="btn btn-yellow flex-1 sm:flex-none justify-center">
+          <a href="https://whatsapp.com/channel/0029Vb7jauLHLHQbkcbcHi0e" target="_blank" class="btn btn-blue flex-1 sm:flex-none justify-center">
             <span class="icon-animated"><i class="fas fa-bullhorn"></i></span> Follow Channel
           </a>
-          <a href="https://github.com/GuruhTech/ULTRA-GURU" target="_blank" class="btn btn-ghost flex-1 sm:flex-none justify-center">
+          <a href="https://github.com/GuruhTech/ULTRA-GURU" target="_blank" class="btn btn-outline flex-1 sm:flex-none justify-center">
             <span class="icon-animated"><i class="fab fa-github"></i></span> Star on GitHub
           </a>
         </div>
@@ -450,35 +433,35 @@
     <div class="divider-line"></div>
 
     <!-- Footer -->
-    <footer class="py-12 px-5" style="background:rgba(2,4,8,0.95);">
+    <footer class="py-12 px-5" style="background:rgba(5,7,13,0.85);">
       <div class="max-w-6xl mx-auto">
         <div class="flex flex-col sm:flex-row gap-8 mb-8">
           <div class="flex-1">
             <a href="/" class="flex items-center gap-2.5 no-underline mb-3">
-              <div style="width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,#0ea5e9,#0284c7);display:flex;align-items:center;justify-content:center;">
-                <i class="fas fa-bolt" style="color:#fff;font-size:0.55rem;"></i>
+              <div style="width:28px;height:28px;border-radius:9px;background:var(--yellow);display:flex;align-items:center;justify-content:center;transform:rotate(-6deg);">
+                <i class="fas fa-bolt" style="color:#05070d;font-size:0.6rem;"></i>
               </div>
-              <span class="text-sm font-bold gradient-text-blue mono">ULTRA GURU MD</span>
+              <span class="text-sm font-extrabold">ULTRA GURU MD</span>
             </a>
-            <p class="text-slate-600 text-xs leading-relaxed mb-4 max-w-xs">Advanced WhatsApp session generator built by GuruTech Lab. Fast, secure, and open source.</p>
+            <p class="text-slate-500 text-xs leading-relaxed mb-4 max-w-xs">Advanced WhatsApp session generator built by GuruTech Lab. Fast, secure, and open source.</p>
             <div class="flex gap-2">
               <a href="https://github.com/GuruhTech/ULTRA-GURU" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
               <a href="https://whatsapp.com/channel/0029Vb7jauLHLHQbkcbcHi0e" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
             </div>
           </div>
           <div>
-            <p class="text-xs font-semibold text-slate-500 mono tracking-widest mb-3 uppercase">Links</p>
+            <p class="text-xs font-bold text-slate-400 mono tracking-widest mb-3 uppercase">Links</p>
             <div class="space-y-2">
-              <a href="/pair" class="footer-link"><i class="fas fa-link text-sky-600 text-xs"></i> Pair Code</a>
-              <a href="/qr" class="footer-link"><i class="fas fa-qrcode text-sky-600 text-xs"></i> QR Code</a>
-              <a href="https://github.com/GuruhTech/ULTRA-GURU" target="_blank" class="footer-link"><i class="fab fa-github text-sky-600 text-xs"></i> Source Code</a>
-              <a href="https://chat.whatsapp.com/Cp6waPAdT3hLVcbdfBeV61?s=cl&p=a&mlu=4&amv=0" target="_blank" class="footer-link"><i class="fas fa-users text-sky-600 text-xs"></i> WA Group</a>
+              <a href="/pair" class="footer-link"><i class="fas fa-link text-xs"></i> Pair Code</a>
+              <a href="/qr" class="footer-link"><i class="fas fa-qrcode text-xs"></i> QR Code</a>
+              <a href="https://github.com/GuruhTech/ULTRA-GURU" target="_blank" class="footer-link"><i class="fab fa-github text-xs"></i> Source Code</a>
+              <a href="https://chat.whatsapp.com/Cp6waPAdT3hLVcbdfBeV61?s=cl&p=a&mlu=4&amv=0" target="_blank" class="footer-link"><i class="fas fa-users text-xs"></i> WA Group</a>
             </div>
           </div>
         </div>
         <div class="divider-line mb-5"></div>
-        <p class="text-slate-700 text-xs text-center mono">
-          &copy; <span id="yr"></span> ULTRA GURU MD &mdash; Built by <a href="https://github.com/GuruhTech" target="_blank" class="text-sky-500 no-underline font-medium">GuruTech Lab</a>
+        <p class="text-slate-600 text-xs text-center mono">
+          &copy; <span id="yr"></span> ULTRA GURU MD &mdash; Built by <a href="https://github.com/GuruhTech" target="_blank" class="text-yellow-400 no-underline font-bold">GuruTech Lab</a>
         </p>
       </div>
     </footer>
