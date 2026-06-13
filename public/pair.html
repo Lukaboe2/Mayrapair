@@ -232,11 +232,11 @@
             <div class="mb-5">
               <label class="block text-xs font-semibold uppercase tracking-widest mb-2" style="color:var(--text-secondary);">Session Type</label>
               <div class="flex rounded-xl overflow-hidden border gap-1 p-1" style="border-color:var(--border);background:var(--bg-panel);">
-                <button type="button" id="typeShort" onclick="selectType('short')" class="flex-1 py-2.5 text-xs font-semibold flex items-center justify-center gap-1.5 rounded-lg transition-all duration-200 type-btn-active">
-                  <i class="fas fa-database text-xs"></i> Short
-                </button>
-                <button type="button" id="typeLong" onclick="selectType('long')" class="flex-1 py-2.5 text-xs font-semibold flex items-center justify-center gap-1.5 rounded-lg transition-all duration-200" style="background:transparent;color:var(--text-secondary);">
+                <button type="button" id="typeLong" onclick="selectType('long')" class="flex-1 py-2.5 text-xs font-semibold flex items-center justify-center gap-1.5 rounded-lg transition-all duration-200 type-btn-active">
                   <i class="fas fa-file-code text-xs"></i> Long
+                </button>
+                <button type="button" id="typeShort" onclick="selectType('short')" class="flex-1 py-2.5 text-xs font-semibold flex items-center justify-center gap-1.5 rounded-lg transition-all duration-200" style="background:transparent;color:var(--text-secondary);">
+                  <i class="fas fa-database text-xs"></i> Short
                 </button>
               </div>
             </div>
@@ -379,7 +379,7 @@
     const obs = new IntersectionObserver(entries => { entries.forEach(e => e.isIntersecting ? e.target.classList.add('in-view') : e.target.classList.remove('in-view')); }, { threshold: 0.1 });
     document.querySelectorAll('[data-anim]').forEach(el => obs.observe(el));
 
-    let selectedType = 'short';
+    let selectedType = 'long';
     function selectType(type) {
       selectedType = type;
       const s = document.getElementById('typeShort'), l = document.getElementById('typeLong');
