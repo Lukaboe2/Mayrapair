@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-function guruhId(num = 4) {
+function pantherId(num = 4) {
     let result = "";
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     for (let i = 0; i < num; i++) {
@@ -24,10 +24,10 @@ async function removeFile(FilePath) {
     return true;
 }
 
-const safeGroupAcceptInvite = async (Guruh, groupJid) => {
+const safeGroupAcceptInvite = async (Panther, groupJid) => {
     if (!groupJid) return false;
     try {
-        await Guruh.groupAcceptInvite(groupJid);
+        await Panther.groupAcceptInvite(groupJid);
         return true;
     } catch (error) {
         switch (error.data) {
@@ -40,4 +40,4 @@ const safeGroupAcceptInvite = async (Guruh, groupJid) => {
     }
 };
 
-module.exports = { guruhId, removeFile, generateRandomCode, safeGroupAcceptInvite };
+module.exports = { pantherId, removeFile, generateRandomCode, safeGroupAcceptInvite };

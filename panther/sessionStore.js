@@ -29,7 +29,7 @@ async function init(config) {
                 data: { type: String, required: true },
                 createdAt: { type: Date, default: Date.now }
             });
-            mongoModel = mongoose.models.GuruhSession || mongoose.model('GuruhSession', sessionSchema);
+            mongoModel = mongoose.models.PantherSession || mongoose.model('PantherSession', sessionSchema);
             storageBackend = 'mongodb';
             console.log('Session storage: MongoDB connected');
         } catch (e) {
@@ -40,7 +40,7 @@ async function init(config) {
             const { Pool } = require('pg');
             pgPool = new Pool({ connectionString: config.DATABASE_URL, ssl: { rejectUnauthorized: false } });
             await pgPool.query(`
-                CREATE TABLE IF NOT EXISTS guruh_sessions (
+                CREATE TABLE IF NOT EXISTS panther_sessions (
                     short_id VARCHAR(20) PRIMARY KEY,
                     data TEXT NOT NULL,
                     created_at TIMESTAMP DEFAULT NOW()
@@ -67,7 +67,7 @@ async function saveSession(fullSessionString) {
         await mongoModel.create({ shortId, data: fullSessionString });
     } else if (storageBackend === 'postgresql') {
         await pgPool.query(
-            'INSERT INTO guruh_sessions (short_id, data) VALUES ($1, $2)',
+            'INSERT INTO panther_sessions (short_id, data) VALUES ($1, $2)',
             [shortId, fullSessionString]
         );
     }
@@ -83,7 +83,7 @@ async function getSession(id) {
         return doc ? doc.data : null;
     } else if (storageBackend === 'postgresql') {
         const result = await pgPool.query(
-            'SELECT data FROM guruh_sessions WHERE short_id = $1',
+            'SELECT data FROM panther_sessions WHERE short_id = $1',
             [safeId]
         );
         return result.rows[0] ? result.rows[0].data : null;

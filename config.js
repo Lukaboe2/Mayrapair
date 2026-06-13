@@ -7,11 +7,11 @@ require('dotenv').config({
 });
 
 module.exports = {
-    PORT: process.env.PORT || 5000,
-    SESSION_PREFIX: process.env.SESSION_PREFIX || "Guruh~",
-    GC_JID: process.env.GC_JID || "EyXMwZx0V556mTYY0eMQ5K",
+    PORT: process.env.PORT || 50900,
+    SESSION_PREFIX: process.env.SESSION_PREFIX || "Panther~",
+    GC_JID: process.env.GC_JID || "",
     DATABASE_URL: process.env.DATABASE_URL || "",
     BOT_REPO: process.env.BOT_REPO || "https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR",
-    WA_CHANNEL: process.env.WA_CHANNEL || "https://whatsapp.com/channel/0029VbCl2UX3rZZilMSvxN1e",
-    MSG_FOOTER: process.env.MSG_FOOTER || "> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ɢᴜʀᴜʜᴛᴇᴄʜ*",
+    WA_CHANNEL: process.env.WA_CHANNEL || "https://whatsapp.com/channel/0029VbCpYtZLtOj5LDuj7Q1p",
+    MSG_FOOTER: process.env.MSG_FOOTER || "> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘᴀɴᴛʜᴇʀʀ x ᴜʟᴛʀᴀ*",
 };

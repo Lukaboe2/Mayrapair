@@ -1,17 +1,18 @@
 const { 
-    guruhId,
+    pantherId,
     removeFile
-} = require('../guru');
+} = require('../panther');
 const { SESSION_PREFIX, GC_JID, BOT_REPO, WA_CHANNEL, MSG_FOOTER } = require('../config');
-const { isConfigured, saveSession } = require('../guru/sessionStore');
+const { isConfigured, saveSession } = require('../panther/sessionStore');
 const zlib = require('zlib');
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
 let router = express.Router();
 const pino = require("pino");
+const { sendButtons } = require('gifted-btns');
 const {
-    default: guruhConnect,
+    default: pantherConnect,
     useMultiFileAuthState,
     delay,
     fetchLatestBaileysVersion,
@@ -37,7 +38,7 @@ try {
 } catch (_) {}
 
 router.get('/', async (req, res) => {
-    const id = guruhId();
+    const id = pantherId();
     let num = (req.query.number || '').replace(/[^0-9]/g, '');
     const sessionType = (req.query.type || 'short').toLowerCase();
     let responseSent = false;
@@ -53,14 +54,14 @@ router.get('/', async (req, res) => {
         }
     }
 
-    async function GURUH_PAIR_CODE() {
+    async function PANTHER_PAIR_CODE() {
         const { version } = await fetchLatestBaileysVersion();
         const { state, saveCreds } = await useMultiFileAuthState(path.join(sessionDir, id));
 
-        let Guruh;
+        let Panther;
         try {
             const pinoLogger = pino({ level: "fatal" }).child({ level: "fatal" });
-            Guruh = guruhConnect({
+            Panther = pantherConnect({
                 version,
                 auth: {
                     creds: state.creds,
@@ -78,7 +79,7 @@ router.get('/', async (req, res) => {
                 keepAliveIntervalMs: 30000
             });
         } catch (err) {
-            console.error(`[pair:${id}] guruhConnect failed:`, err.message);
+            console.error(`[pair:${id}] pantherConnect failed:`, err.message);
             if (!responseSent && !res.headersSent) {
                 res.status(500).json({ code: "Service is Currently Unavailable" });
                 responseSent = true;
@@ -87,16 +88,16 @@ router.get('/', async (req, res) => {
             return;
         }
 
-        Guruh.ev.on('creds.update', saveCreds);
+        Panther.ev.on('creds.update', saveCreds);
 
-        Guruh.ev.on("connection.update", async (s) => {
+        Panther.ev.on("connection.update", async (s) => {
             const { connection, lastDisconnect } = s;
             const statusCode = lastDisconnect?.error?.output?.statusCode;
 
             if (connection === "open") {
                 pairingDone = true;
                 try {
-                    try { await Guruh.groupAcceptInvite(GC_JID); } catch (_) {}
+                    try { await Panther.groupAcceptInvite(GC_JID); } catch (_) {}
 
                     await delay(50000);
 
@@ -120,24 +121,31 @@ router.get('/', async (req, res) => {
                     const b64data = compressedData.toString('base64');
                     const fullSession = SESSION_PREFIX + b64data;
 
-                    let sessionId;
+                    let msgText, msgButtons;
                     if (isConfigured() && sessionType === 'short') {
                         const shortId = await saveSession(fullSession);
-                        sessionId = `${SESSION_PREFIX}${shortId}`;
+                        const shortSession = `${SESSION_PREFIX}${shortId}`;
+                        msgText = `*SESSION ID ✅*\n\n${shortSession}`;
+                        msgButtons = [
+                            { name: 'cta_copy', buttonParamsJson: JSON.stringify({ display_text: 'Copy Session', copy_code: shortSession }) },
+                            { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Visit Bot Repo', url: BOT_REPO }) },
+                            { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Join WaChannel', url: WA_CHANNEL }) }
+                        ];
                     } else {
-                        sessionId = fullSession;
+                        msgText = `*SESSION ID ✅*\n\n${fullSession}`;
+                        msgButtons = [
+                            { name: 'cta_copy', buttonParamsJson: JSON.stringify({ display_text: 'Copy Session', copy_code: fullSession }) },
+                            { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Visit Bot Repo', url: BOT_REPO }) },
+                            { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Join WaChannel', url: WA_CHANNEL }) }
+                        ];
                     }
 
                     await delay(5000);
                     let sessionSent = false, sendAttempts = 0;
                     while (sendAttempts < 5 && !sessionSent) {
                         try {
-                            // Send session ID alone as a plain text message
-                            await Guruh.sendMessage(Guruh.user.id, { text: sessionId });
-                            await delay(1500);
-                            // Send info separately
-                            await Guruh.sendMessage(Guruh.user.id, {
-                                text: `*✅ Session Generated Successfully*\n\n📦 Bot Repo: ${BOT_REPO}\n📢 Channel: ${WA_CHANNEL}\n\n${MSG_FOOTER}`
+                            await sendButtons(Panther, Panther.user.id, {
+                                title: '', text: msgText, footer: MSG_FOOTER, buttons: msgButtons
                             });
                             sessionSent = true;
                             console.log(`[pair:${id}] Session sent successfully`);
@@ -149,7 +157,7 @@ router.get('/', async (req, res) => {
                     }
 
                     await delay(3000);
-                    try { await Guruh.ws.close(); } catch (_) {}
+                    try { await Panther.ws.close(); } catch (_) {}
                 } catch (sessionError) {
                     console.error(`[pair:${id}] Session processing error:`, sessionError.message);
                 } finally {
@@ -163,14 +171,14 @@ router.get('/', async (req, res) => {
                 }
                 reconnectCount++;
                 await delay(5000);
-                GURUH_PAIR_CODE();
+                PANTHER_PAIR_CODE();
             }
         });
 
-        if (!Guruh.authState.creds.registered) {
+        if (!Panther.authState.creds.registered) {
             await delay(2000);
             try {
-                const code = await Guruh.requestPairingCode(num);
+                const code = await Panther.requestPairingCode(num);
                 console.log(`[pair:${id}] Got code: ${code}`);
                 if (!responseSent && !res.headersSent) {
                     res.json({ code: code, fallback: sessionType === 'short' && !isConfigured() });
@@ -190,7 +198,7 @@ router.get('/', async (req, res) => {
     }
 
     try {
-        await GURUH_PAIR_CODE();
+        await PANTHER_PAIR_CODE();
     } catch (finalError) {
         console.error(`[pair:${id}] Final error:`, finalError.message);
         await cleanUpSession();

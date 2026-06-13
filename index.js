@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const config = require("./config");
 const { PORT } = config;
 const { qrRoute, pairRoute } = require("./routes");
-const { init, isConfigured, getSession } = require("./guru/sessionStore");
+const { init, isConfigured, getSession } = require("./panther/sessionStore");
 const app = express();
 app.set("json spaces", 2);
 
@@ -54,7 +54,7 @@ app.get("/health", (req, res) => {
     res.json({
         status: 200,
         success: true,
-        service: "Pantherr-X-Ultra Session",
+        service: "PANTHERR X ULTRA Session",
         storage: isConfigured() ? "database" : "inline-zlib",
         timestamp: new Date().toISOString(),
     });
@@ -62,7 +62,7 @@ app.get("/health", (req, res) => {
 
 app.listen(PORT, () => {
     console.log(
-        `\nDeployment Successful!\n\n Pantherr-X-Ultra-Session-Server Running on http://localhost:${PORT}`,
+        `\nPANTHERR X ULTRA Session Server Running on http://localhost:${PORT}`,
     );
     init(config);
 });

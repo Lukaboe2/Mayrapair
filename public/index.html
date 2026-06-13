@@ -3,424 +3,312 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>PANTHERR-X-ULTRA | WhatsApp Session Generator</title>
-  <meta name="description" content="PANTHERR-X-ULTRA — WhatsApp session generator by GuruTech Lab.">
-  <meta name="theme-color" content="#00b8ff">
-  <meta property="og:image" content="https://i.ibb.co/k6SxWhdr/84bb97a4a575.jpg">
+  <title>PANTHERR X ULTRA | WhatsApp Bot Session Generator</title>
+  <meta name="description" content="PANTHERR X ULTRA — powerful WhatsApp bot session generator with pair code and QR code login. Fast, secure, and easy to use.">
+  <meta name="theme-color" content="#f97316">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PANTHERR X ULTRA | WhatsApp Bot">
+  <meta property="og:description" content="Generate your WhatsApp session with PANTHERR X ULTRA. Supports pair code and QR code login methods.">
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    :root {
-      --black:  #000000;
-      --dark:   #0a0a0a;
-      --dark2:  #111111;
-      --white:  #ffffff;
-      --offwhite: #e8e8e8;
-      --blue:   #00b8ff;
-      --blue2:  #0080cc;
-      --yellow: #ffd700;
-      --yellow2:#e6b800;
-      --gray:   #888888;
-      --border-b: rgba(0,184,255,0.2);
-      --border-y: rgba(255,215,0,0.2);
-    }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--black);
-      color: var(--white);
+      background: #07070e;
+      color: #f1f1f1;
       min-height: 100vh;
       overflow-x: hidden;
       scrollbar-width: none;
     }
     body::-webkit-scrollbar { display: none; }
 
-    .text-blue { color: var(--blue); }
-    .text-yellow { color: var(--yellow); }
-    .text-white { color: var(--white); }
-    .text-gray { color: var(--gray); }
-
-    .grad-blue {
-      background: linear-gradient(135deg, var(--blue), var(--blue2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    .gradient-text {
+      background: linear-gradient(135deg, #fb923c 0%, #f97316 50%, #ef4444 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
-    .grad-yellow {
-      background: linear-gradient(135deg, var(--yellow), var(--yellow2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    .gradient-bg { background: linear-gradient(135deg, #f97316, #ef4444); }
+
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: 0;
+      will-change: transform;
     }
-    .grad-mixed {
-      background: linear-gradient(135deg, var(--blue) 0%, var(--white) 50%, var(--yellow) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    @keyframes blobFloat {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%      { transform: translate(20px, -20px) scale(1.05); }
     }
 
-    .blob { position:fixed; border-radius:50%; filter:blur(100px); pointer-events:none; z-index:0; }
-    @keyframes blobFloat { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(20px,-20px) scale(1.05);} }
-
-    /* NAV */
-    nav {
-      background: rgba(0,0,0,0.92);
+    .nav-glass {
+      background: rgba(7,7,14,0.85);
       border-bottom: 1px solid rgba(255,255,255,0.06);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 0 0 22px 22px;
     }
-    .nav-inner { max-width:1100px; margin:0 auto; padding:0 20px; height:54px; display:flex; align-items:center; justify-content:space-between; }
-
-    .nav-link { position:relative; transition:color 0.2s; }
-    .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:2px; background:var(--yellow); transition:width 0.22s; border-radius:2px; }
-    .nav-link:hover { color:var(--yellow) !important; }
-    .nav-link:hover::after { width:100%; }
+    .nav-link { position: relative; transition: color 0.2s ease; }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 2px;
+      background: linear-gradient(90deg, #fb923c, #ef4444);
+      transition: width 0.22s ease;
+      border-radius: 2px;
+    }
+    .nav-link:hover { color: #fb923c; }
+    .nav-link:hover::after { width: 100%; }
 
     .sidebar-link {
-      display:flex; align-items:center; gap:12px;
-      padding:10px 12px; border-radius:10px;
-      color:var(--gray); text-decoration:none;
-      font-size:0.875rem; font-weight:500;
-      transition:background 0.18s, color 0.18s, transform 0.18s;
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 12px; border-radius: 10px;
+      color: #9ca3af; text-decoration: none;
+      font-size: 0.875rem; font-weight: 500;
+      transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
     }
-    .sidebar-link:hover { background:rgba(255,215,0,0.08); color:var(--yellow); transform:translateX(4px); }
-    .sidebar-link i { width:18px; text-align:center; }
+    .sidebar-link:hover { background: rgba(249,115,22,0.12); color: #fb923c; transform: translateX(4px); }
+    .sidebar-link i { width: 18px; text-align: center; font-size: 0.9rem; }
 
-    /* BUTTONS */
+    #sidebar { transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); }
+    #sidebarOverlay { transition: opacity 0.3s ease; }
+
     .btn {
-      display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      padding:12px 28px; border-radius:10px;
-      font-weight:700; font-size:0.9rem; font-family:inherit;
-      text-decoration:none; cursor:pointer; border:none;
-      transition:transform 0.18s, box-shadow 0.18s, opacity 0.18s;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 11px 28px; border-radius: 12px;
+      font-weight: 600; font-size: 0.875rem;
+      text-decoration: none; cursor: pointer; border: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      will-change: transform;
     }
-    .btn:active { transform:scale(0.97) !important; }
-    .btn-blue { background:linear-gradient(135deg,var(--blue),var(--blue2)); color:#000; }
-    .btn-blue:hover { transform:translateY(-3px); box-shadow:0 12px 32px rgba(0,184,255,0.4); }
-    .btn-yellow { background:linear-gradient(135deg,var(--yellow),var(--yellow2)); color:#000; }
-    .btn-yellow:hover { transform:translateY(-3px); box-shadow:0 12px 32px rgba(255,215,0,0.35); }
-    .btn-outline { background:transparent; border:1.5px solid rgba(255,255,255,0.15); color:var(--white); }
-    .btn-outline:hover { transform:translateY(-2px); border-color:rgba(255,255,255,0.35); background:rgba(255,255,255,0.05); }
-    .icon-anim { display:inline-flex; transition:transform 0.28s cubic-bezier(0.34,1.56,0.64,1); }
-    .btn:hover .icon-anim { transform:scale(1.3) rotate(-8deg); }
+    .btn:active { transform: scale(0.97) !important; }
+    .btn-primary { background: linear-gradient(135deg, #f97316, #ef4444); color: #fff; }
+    .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 30px rgba(249,115,22,0.45); }
+    .btn-ghost { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #fff; }
+    .btn-ghost:hover { transform: translateY(-3px) scale(1.02); background: rgba(255,255,255,0.1); box-shadow: 0 10px 24px rgba(0,0,0,0.3); }
 
-    /* CARDS */
+    .icon-animated {
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .btn:hover .icon-animated { transform: scale(1.25) rotate(-8deg); }
+
     .feature-card {
-      background: var(--dark2);
+      background: rgba(255,255,255,0.025);
       border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 16px; padding: 26px;
+      border-radius: 18px; padding: 28px;
       text-decoration: none; color: inherit; display: block;
-      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
     }
-    .feature-card:hover { transform:translateY(-6px); box-shadow:0 20px 48px rgba(0,0,0,0.5); border-color:rgba(255,215,0,0.25); }
-    .card-icon {
-      width:46px; height:46px; border-radius:12px;
-      display:flex; align-items:center; justify-content:center;
-      margin-bottom:16px;
-      transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 22px 48px rgba(249,115,22,0.15);
+      border-color: rgba(251,146,60,0.25);
+      background: rgba(255,255,255,0.04);
     }
-    .feature-card:hover .card-icon { transform:scale(1.15) rotate(-5deg); }
-    .icon-blue { background:rgba(0,184,255,0.12); border:1px solid rgba(0,184,255,0.2); }
-    .icon-blue i { color:var(--blue); }
-    .icon-yellow { background:rgba(255,215,0,0.1); border:1px solid rgba(255,215,0,0.2); }
-    .icon-yellow i { color:var(--yellow); }
+    .feature-card .card-icon {
+      width: 48px; height: 48px;
+      background: rgba(249,115,22,0.12);
+      border: 1px solid rgba(251,146,60,0.15);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), background 0.25s ease;
+    }
+    .feature-card:hover .card-icon { transform: scale(1.15) rotate(-6deg); background: rgba(249,115,22,0.22); }
+    .feature-card .card-icon i { color: #fb923c; font-size: 1.1rem; }
 
     .social-icon {
-      width:36px; height:36px; border-radius:8px;
-      background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
-      display:flex; align-items:center; justify-content:center;
-      color:var(--gray); font-size:0.9rem; text-decoration:none;
-      transition:background 0.2s, color 0.2s, transform 0.2s;
+      width: 36px; height: 36px; border-radius: 9px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: center;
+      color: #6b7280; font-size: 0.9rem; text-decoration: none;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
     }
-    .social-icon:hover { background:rgba(255,215,0,0.12); color:var(--yellow); transform:translateY(-3px); }
+    .social-icon:hover { background: rgba(249,115,22,0.2); color: #fb923c; transform: translateY(-3px); }
 
-    .footer-link {
-      color:var(--gray); text-decoration:none; font-size:0.85rem;
-      display:flex; align-items:center; gap:8px;
-      transition:color 0.18s, transform 0.18s;
-    }
-    .footer-link:hover { color:var(--yellow); transform:translateX(4px); }
+    .footer-link { color: #6b7280; text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; transition: color 0.18s, transform 0.18s; }
+    .footer-link:hover { color: #fb923c; transform: translateX(4px); }
 
     .badge-pill {
-      display:inline-flex; align-items:center; gap:8px;
-      background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.25);
-      border-radius:999px; padding:5px 16px;
-      font-size:0.75rem; font-weight:700; color:var(--yellow); letter-spacing:0.3px;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(249,115,22,0.1); border: 1px solid rgba(251,146,60,0.2);
+      border-radius: 999px; padding: 5px 14px;
+      font-size: 0.75rem; font-weight: 500; color: #fb923c;
     }
-    .status-dot { width:7px; height:7px; border-radius:50%; background:#00ff88; box-shadow:0 0 6px #00ff88; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 6px #4ade80; }
+    .divider-line { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent); }
 
-    .stat-card { background:var(--dark2); border:1px solid rgba(255,255,255,0.07); border-radius:14px; padding:16px; text-align:center; }
-
-    .divider { height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent); }
-
-    /* Stripe accent bars */
-    .accent-bar-top { height:3px; background:linear-gradient(90deg,var(--blue),var(--yellow),var(--blue)); }
-
-    [data-anim] { will-change:transform,opacity; transition:opacity 0.65s cubic-bezier(0.4,0,0.2,1),transform 0.65s cubic-bezier(0.4,0,0.2,1); }
-    [data-anim="fade-up"]    { opacity:0; transform:translateY(32px); }
-    [data-anim="zoom-in"]    { opacity:0; transform:scale(0.88); }
-    [data-anim="slide-left"] { opacity:0; transform:translateX(-32px); }
-    [data-anim="slide-right"]{ opacity:0; transform:translateX(32px); }
-    [data-anim].in-view { opacity:1; transform:translateY(0) scale(1) translateX(0); }
-    [data-delay="1"]{transition-delay:0.08s;} [data-delay="2"]{transition-delay:0.16s;} [data-delay="3"]{transition-delay:0.24s;} [data-delay="4"]{transition-delay:0.32s;} [data-delay="5"]{transition-delay:0.40s;}
-
-    @media(max-width:768px){
-      .hide-mobile{display:none!important;}
-      .show-mobile{display:flex!important;}
-      .grid-3{grid-template-columns:1fr!important;}
-      .grid-2{grid-template-columns:1fr!important;}
+    [data-anim] {
+      will-change: transform, opacity;
+      transition: opacity 0.65s cubic-bezier(0.4,0,0.2,1), transform 0.65s cubic-bezier(0.4,0,0.2,1);
     }
+    [data-anim="fade-up"]    { opacity: 0; transform: translateY(32px); }
+    [data-anim="zoom-in"]    { opacity: 0; transform: scale(0.88); }
+    [data-anim="slide-left"] { opacity: 0; transform: translateX(-32px); }
+    [data-anim="slide-right"]{ opacity: 0; transform: translateX(32px); }
+    [data-anim].in-view { opacity: 1; transform: translateY(0) scale(1) translateX(0); }
+    [data-delay="1"] { transition-delay: 0.08s; }
+    [data-delay="2"] { transition-delay: 0.16s; }
+    [data-delay="3"] { transition-delay: 0.24s; }
+    [data-delay="4"] { transition-delay: 0.32s; }
+    [data-delay="5"] { transition-delay: 0.40s; }
   </style>
 </head>
 <body>
-  <div class="accent-bar-top"></div>
+  <div class="blob w-[420px] h-[420px] top-[-100px] left-[-80px]" style="background:rgba(249,115,22,0.12);animation:blobFloat 12s ease-in-out infinite;"></div>
+  <div class="blob w-[360px] h-[360px] bottom-[5%] right-[-80px]" style="background:rgba(239,68,68,0.08);animation:blobFloat 16s ease-in-out 4s infinite;"></div>
+  <div class="blob w-[280px] h-[280px] top-[40%] left-[60%]" style="background:rgba(249,115,22,0.06);animation:blobFloat 20s ease-in-out 8s infinite;"></div>
 
-  <div class="blob" style="width:500px;height:500px;background:rgba(0,100,200,0.12);top:-150px;left:-120px;animation:blobFloat 16s ease-in-out infinite;"></div>
-  <div class="blob" style="width:350px;height:350px;background:rgba(255,215,0,0.06);bottom:10%;right:-100px;animation:blobFloat 20s ease-in-out 6s infinite;"></div>
-
-  <!-- NAV -->
-  <nav>
-    <div class="nav-inner">
-      <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-        <img src="https://i.ibb.co/k6SxWhdr/84bb97a4a575.jpg" alt="logo" style="width:32px;height:32px;border-radius:50%;border:2px solid var(--yellow);object-fit:cover;">
-        <span style="font-weight:900;font-size:0.95rem;letter-spacing:0.5px;" class="grad-mixed">PANTHERR-X-ULTRA</span>
+  <nav class="nav-glass sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-5 h-12 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 no-underline group">
+        <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#f97316,#ef4444);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px rgba(249,115,22,0.3);">
+          <i class="fas fa-paw" style="color:#fff;font-size:0.75rem;"></i>
+        </div>
+        <span class="text-base font-bold gradient-text">PANTHERR X ULTRA</span>
       </a>
-      <div id="navLinks" class="hide-mobile" style="display:flex;align-items:center;gap:28px;">
-        <a href="https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR" target="_blank" class="nav-link" style="color:var(--gray);font-size:0.84rem;font-weight:500;text-decoration:none;display:flex;align-items:center;gap:6px;"><i class="fab fa-github"></i> Source</a>
-        <a href="/pair" class="nav-link" style="color:var(--gray);font-size:0.84rem;font-weight:500;text-decoration:none;display:flex;align-items:center;gap:6px;"><i class="fas fa-link"></i> Pair Code</a>
-        <a href="/qr" class="nav-link" style="color:var(--gray);font-size:0.84rem;font-weight:500;text-decoration:none;display:flex;align-items:center;gap:6px;"><i class="fas fa-qrcode"></i> QR Code</a>
-        <a href="https://whatsapp.com/channel/0029VbCl2UX3rZZilMSvxN1e" target="_blank" class="nav-link" style="color:var(--gray);font-size:0.84rem;font-weight:500;text-decoration:none;display:flex;align-items:center;gap:6px;"><i class="fab fa-whatsapp"></i> Channel</a>
+      <div class="hidden md:flex items-center gap-7">
+        <a href="https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR" target="_blank" class="nav-link text-gray-400 text-sm font-medium no-underline flex items-center gap-1.5"><i class="fab fa-github text-xs"></i> Source Code</a>
+        <a href="/pair" class="nav-link text-gray-400 text-sm font-medium no-underline flex items-center gap-1.5"><i class="fas fa-link text-xs"></i> Pair Code</a>
+        <a href="/qr" class="nav-link text-gray-400 text-sm font-medium no-underline flex items-center gap-1.5"><i class="fas fa-qrcode text-xs"></i> QR Code</a>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <a href="/pair" class="btn btn-yellow hide-mobile" style="padding:8px 18px;font-size:0.8rem;">
-          <span class="icon-anim"><i class="fas fa-bolt"></i></span> Get Session
+      <div class="flex items-center gap-3">
+        <a href="/pair" class="hidden md:inline-flex btn btn-primary py-2 px-5 text-xs">
+          <span class="icon-animated"><i class="fas fa-link"></i></span> Get Session
         </a>
-        <button id="menuBtn" class="show-mobile" style="display:none;width:38px;height:38px;border-radius:9px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--gray);cursor:pointer;align-items:center;justify-content:center;">
+        <button id="menuBtn" class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 border border-white/8 text-gray-500 outline-none focus:outline-none">
           <i class="fas fa-bars" id="menuIcon"></i>
         </button>
       </div>
     </div>
   </nav>
 
-  <!-- SIDEBAR -->
-  <div id="sidebarOverlay" style="display:none;position:fixed;inset:0;z-index:40;background:rgba(0,0,0,0.8);opacity:0;transition:opacity 0.3s;"></div>
-  <aside id="sidebar" style="position:fixed;top:0;left:0;z-index:50;height:100%;width:270px;background:#080808;border-right:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;padding:20px 0 32px;transform:translateX(-100%);border-radius:0 20px 20px 0;">
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:0 16px;margin-bottom:24px;">
-      <a href="/" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
-        <img src="https://i.ibb.co/k6SxWhdr/84bb97a4a575.jpg" alt="logo" style="width:28px;height:28px;border-radius:50%;border:1.5px solid var(--yellow);object-fit:cover;">
-        <span style="font-size:0.82rem;font-weight:900;" class="grad-mixed">PANTHERR-X-ULTRA</span>
+  <div id="sidebarOverlay" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none"></div>
+  <aside id="sidebar" class="fixed top-0 left-0 z-50 h-full w-72 bg-[#0a0a14] border-r border-white/6 flex flex-col pt-5 pb-8 transform -translate-x-full rounded-r-3xl">
+    <div class="flex items-center justify-between px-5 mb-6">
+      <a href="/" class="flex items-center gap-2.5 no-underline">
+        <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#f97316,#ef4444);display:flex;align-items:center;justify-content:center;">
+          <i class="fas fa-paw" style="color:#fff;font-size:0.65rem;"></i>
+        </div>
+        <span class="text-sm font-bold gradient-text">PANTHERR X ULTRA</span>
       </a>
-      <button id="closeBtn" style="width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,0.05);border:none;color:var(--gray);cursor:pointer;display:flex;align-items:center;justify-content:center;"><i class="fas fa-times"></i></button>
+      <button id="closeBtn" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 text-gray-400">
+        <i class="fas fa-times text-sm"></i>
+      </button>
     </div>
-    <div style="padding:0 10px;flex:1;display:flex;flex-direction:column;gap:3px;">
+    <div class="px-3 flex-1 space-y-1">
       <a href="/" class="sidebar-link"><i class="fas fa-home"></i> Home</a>
       <a href="/pair" class="sidebar-link"><i class="fas fa-link"></i> Pair Code</a>
       <a href="/qr" class="sidebar-link"><i class="fas fa-qrcode"></i> QR Code</a>
       <a href="https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR" target="_blank" class="sidebar-link"><i class="fab fa-github"></i> Source Code</a>
-      <a href="https://youtube.com/@GuruTech" target="_blank" class="sidebar-link"><i class="fab fa-youtube"></i> YouTube</a>
-      <a href="https://whatsapp.com/channel/0029VbCl2UX3rZZilMSvxN1e" target="_blank" class="sidebar-link"><i class="fab fa-whatsapp"></i> WA Channel</a>
     </div>
-    <div style="padding:12px 16px 0;border-top:1px solid rgba(255,255,255,0.05);margin-top:12px;">
-      <p style="color:#444;font-size:0.73rem;">Powered by GuruTech Lab 🇰🇪</p>
+    <div class="px-5 pt-5 border-t border-white/6">
+      <p class="text-gray-600 text-xs">Powered by GuruhTech</p>
     </div>
   </aside>
 
-  <main style="position:relative;z-index:10;">
-
-    <!-- HERO -->
-    <section style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 20px 60px;">
-      <div style="max-width:760px;width:100%;">
-        <!-- Avatar with yellow ring -->
-        <div style="display:flex;justify-content:center;margin-bottom:28px;" data-anim="zoom-in">
-          <div style="position:relative;">
-            <div style="width:110px;height:110px;border-radius:50%;border:3px solid var(--yellow);padding:3px;box-shadow:0 0 0 6px rgba(255,215,0,0.08),0 0 50px rgba(255,215,0,0.15);">
-              <img src="https://i.ibb.co/k6SxWhdr/84bb97a4a575.jpg" alt="logo" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
-            </div>
-            <span style="position:absolute;bottom:2px;right:2px;background:var(--blue);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:2px solid #000;">
-              <i class="fas fa-bolt" style="color:#000;font-size:0.75rem;"></i>
-            </span>
+  <main class="relative z-10">
+    <section class="min-h-screen flex flex-col items-center justify-center text-center px-5 pt-24 pb-16">
+      <div class="max-w-3xl mx-auto w-full">
+        <div class="flex justify-center mb-6" data-anim="zoom-in">
+          <div style="width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,#f97316,#ef4444);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 8px rgba(249,115,22,0.1),0 0 40px rgba(249,115,22,0.3);">
+            <i class="fas fa-paw" style="color:#fff;font-size:2rem;"></i>
           </div>
         </div>
-
-        <div style="display:flex;justify-content:center;margin-bottom:22px;" data-anim="fade-up" data-delay="1">
+        <div class="flex justify-center mb-5" data-anim="fade-up" data-delay="1">
           <span class="badge-pill"><span class="status-dot"></span> Session Server Active</span>
         </div>
-
-        <h1 style="font-size:clamp(2.2rem,7vw,4.2rem);font-weight:900;line-height:1.06;margin-bottom:10px;letter-spacing:-1px;" data-anim="fade-up" data-delay="2">
-          <span class="grad-blue">PANTHERR</span><span style="color:var(--white);">-X-</span><span class="grad-yellow">ULTRA</span>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.1] mb-5 gradient-text" data-anim="fade-up" data-delay="2">
+          PANTHERR X ULTRA<br>Session Generator
         </h1>
-        <p style="font-size:clamp(1rem,2.5vw,1.3rem);font-weight:600;color:var(--white);margin-bottom:18px;letter-spacing:0.5px;" data-anim="fade-up" data-delay="2">
-          WhatsApp Session Generator
+        <p class="text-gray-400 text-base sm:text-lg mb-10 max-w-xl mx-auto leading-relaxed" data-anim="fade-up" data-delay="3">
+          Powerful WhatsApp session generation with pair code and QR login — fast, secure, and built for reliability.
         </p>
-        <p style="color:var(--gray);font-size:0.95rem;margin-bottom:40px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.75;" data-anim="fade-up" data-delay="3">
-          Official session generator for <strong style="color:var(--blue);">BLACK-PANTHER-MD</strong> &amp; <strong style="color:var(--yellow);">ULTRA-GURU-MD</strong>. Connect via pair code or QR code in seconds.
-        </p>
-
-        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;" data-anim="fade-up" data-delay="4">
-          <a href="/pair" class="btn btn-blue">
-            <span class="icon-anim"><i class="fas fa-link"></i></span> Pair Code
+        <div class="flex flex-row items-center justify-center gap-3" data-anim="fade-up" data-delay="4">
+          <a href="/pair" class="btn btn-primary">
+            <span class="icon-animated"><i class="fas fa-link"></i></span> Pair Code
           </a>
-          <a href="/qr" class="btn btn-yellow">
-            <span class="icon-anim"><i class="fas fa-qrcode"></i></span> QR Code
+          <a href="/qr" class="btn btn-ghost">
+            <span class="icon-animated"><i class="fas fa-qrcode"></i></span> QR Code
           </a>
         </div>
       </div>
-
-      <!-- Stats -->
-      <div style="margin-top:64px;width:100%;max-width:560px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;" data-anim="fade-up" data-delay="5">
-        <div class="stat-card">
-          <p style="font-size:1.8rem;font-weight:900;color:var(--blue);">2</p>
-          <p style="color:var(--gray);font-size:0.72rem;margin-top:4px;">Login Methods</p>
+      <div class="mt-20 w-full max-w-3xl mx-auto grid grid-cols-3 gap-4" data-anim="fade-up" data-delay="5">
+        <div class="bg-white/[0.03] border border-white/6 rounded-2xl p-4 text-center">
+          <p class="text-2xl font-bold gradient-text">2</p>
+          <p class="text-gray-500 text-xs mt-1">Login Methods</p>
         </div>
-        <div class="stat-card">
-          <p style="font-size:1.8rem;font-weight:900;color:var(--yellow);">100%</p>
-          <p style="color:var(--gray);font-size:0.72rem;margin-top:4px;">Open Source</p>
+        <div class="bg-white/[0.03] border border-white/6 rounded-2xl p-4 text-center">
+          <p class="text-2xl font-bold gradient-text">100%</p>
+          <p class="text-gray-500 text-xs mt-1">Open Source</p>
         </div>
-        <div class="stat-card">
-          <p style="font-size:1.8rem;font-weight:900;color:var(--white);">24/7</p>
-          <p style="color:var(--gray);font-size:0.72rem;margin-top:4px;">Available</p>
+        <div class="bg-white/[0.03] border border-white/6 rounded-2xl p-4 text-center">
+          <p class="text-2xl font-bold gradient-text">24/7</p>
+          <p class="text-gray-500 text-xs mt-1">Available</p>
         </div>
       </div>
     </section>
 
-    <div class="divider"></div>
+    <div class="divider-line"></div>
 
-    <!-- REPO BANNERS -->
-    <section style="padding:70px 20px;">
-      <div style="max-width:900px;margin:0 auto;">
-        <div style="text-align:center;margin-bottom:40px;" data-anim="fade-up">
-          <span style="display:inline-block;background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.3);color:var(--yellow);font-size:0.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 14px;border-radius:999px;margin-bottom:14px;">GuruTech Lab</span>
-          <h2 style="font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:8px;">The Bots Behind This</h2>
-          <p style="color:var(--gray);font-size:0.9rem;">This session generator powers both flagship bots</p>
+    <section class="py-20 px-5">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-14">
+          <h2 class="text-3xl sm:text-4xl font-extrabold gradient-text mb-3" data-anim="fade-up">Key Features</h2>
+          <p class="text-gray-500 text-sm max-w-lg mx-auto" data-anim="fade-up" data-delay="1">Everything you need to connect and automate your WhatsApp.</p>
         </div>
-        <div class="grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" data-anim="zoom-in" data-delay="1">
-          <a href="https://github.com/koyoteh/BLACK-PANTHER" target="_blank" style="text-decoration:none;display:block;overflow:hidden;border-radius:16px;border:2px solid rgba(0,184,255,0.25);transition:border-color 0.25s,transform 0.25s;" onmouseover="this.style.borderColor='var(--blue)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(0,184,255,0.25)';this.style.transform='none'">
-            <div style="position:relative;">
-              <img src="https://i.ibb.co/k6SxWhdr/84bb97a4a575.jpg" alt="BLACK-PANTHER-MD" style="width:100%;height:210px;object-fit:cover;display:block;">
-              <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.95) 0%,rgba(0,0,0,0.3) 60%,transparent 100%);"></div>
-              <div style="position:absolute;top:12px;left:12px;background:var(--blue);color:#000;font-size:0.68rem;font-weight:800;padding:4px 10px;border-radius:6px;letter-spacing:0.5px;">BLACK-PANTHER-MD</div>
-              <div style="position:absolute;bottom:0;left:0;right:0;padding:18px;">
-                <p style="font-weight:800;font-size:1rem;color:var(--white);">🐾 BLACK-PANTHER-MD</p>
-                <p style="color:var(--blue);font-size:0.78rem;margin-top:3px;">by GuruTech Lab</p>
-              </div>
-            </div>
-          </a>
-          <a href="https://github.com/GuruhTech/ULTRA-GURU" target="_blank" style="text-decoration:none;display:block;overflow:hidden;border-radius:16px;border:2px solid rgba(255,215,0,0.25);transition:border-color 0.25s,transform 0.25s;" onmouseover="this.style.borderColor='var(--yellow)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(255,215,0,0.25)';this.style.transform='none'">
-            <div style="position:relative;">
-              <img src="https://res.cloudinary.com/dqxlb29uz/image/upload/v1780267810/bwm_uploads/media-1780267810008.jpg" alt="ULTRA-GURU-MD" style="width:100%;height:210px;object-fit:cover;display:block;">
-              <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.95) 0%,rgba(0,0,0,0.3) 60%,transparent 100%);"></div>
-              <div style="position:absolute;top:12px;left:12px;background:var(--yellow);color:#000;font-size:0.68rem;font-weight:800;padding:4px 10px;border-radius:6px;letter-spacing:0.5px;">ULTRA-GURU-MD</div>
-              <div style="position:absolute;bottom:0;left:0;right:0;padding:18px;">
-                <p style="font-weight:800;font-size:1rem;color:var(--white);">🎖️ ULTRA-GURU-MD</p>
-                <p style="color:var(--yellow);font-size:0.78rem;margin-top:3px;">by GuruTech Lab</p>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- FEATURES -->
-    <section style="padding:70px 20px;">
-      <div style="max-width:900px;margin:0 auto;">
-        <div style="text-align:center;margin-bottom:50px;">
-          <h2 style="font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:8px;" data-anim="fade-up">Key Features</h2>
-          <p style="color:var(--gray);font-size:0.9rem;" data-anim="fade-up" data-delay="1">Everything you need to connect your WhatsApp bot.</p>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:14px;">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <a href="/pair" class="feature-card" data-anim="fade-up" data-delay="1">
-            <div class="card-icon icon-blue"><i class="fas fa-link" style="font-size:1rem;"></i></div>
-            <h3 style="font-weight:700;margin-bottom:8px;color:var(--white);">Pair Code Login</h3>
-            <p style="color:var(--gray);font-size:0.83rem;line-height:1.65;">Enter your number, get a code, link on WhatsApp — no QR scan needed.</p>
+            <div class="card-icon"><i class="fas fa-link"></i></div>
+            <h3 class="text-white font-semibold mb-2">Pair Code Login</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Connect your WhatsApp account with a simple pairing code. No QR scan needed.</p>
           </a>
           <a href="/qr" class="feature-card" data-anim="fade-up" data-delay="2">
-            <div class="card-icon icon-yellow"><i class="fas fa-qrcode" style="font-size:1rem;"></i></div>
-            <h3 style="font-weight:700;margin-bottom:8px;color:var(--white);">QR Code Login</h3>
-            <p style="color:var(--gray);font-size:0.83rem;line-height:1.65;">Traditional QR scanning — fast and seamless connection to your account.</p>
+            <div class="card-icon"><i class="fas fa-qrcode"></i></div>
+            <h3 class="text-white font-semibold mb-2">QR Code Login</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Traditional QR scanning for a quick, seamless connection to your WhatsApp account.</p>
           </a>
           <a href="https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR" target="_blank" class="feature-card" data-anim="fade-up" data-delay="3">
-            <div class="card-icon icon-blue"><i class="fas fa-code" style="font-size:1rem;"></i></div>
-            <h3 style="font-weight:700;margin-bottom:8px;color:var(--white);">Open Source</h3>
-            <p style="color:var(--gray);font-size:0.83rem;line-height:1.65;">Fully open on GitHub. Fork, customize and deploy your own instance.</p>
+            <div class="card-icon"><i class="fas fa-code"></i></div>
+            <h3 class="text-white font-semibold mb-2">Open Source</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Fully available on GitHub. Customize and extend it for your exact needs.</p>
           </a>
-          <a href="https://whatsapp.com/channel/0029VbCl2UX3rZZilMSvxN1e" target="_blank" class="feature-card" data-anim="fade-up" data-delay="1">
-            <div class="card-icon icon-yellow"><i class="fab fa-whatsapp" style="font-size:1rem;"></i></div>
-            <h3 style="font-weight:700;margin-bottom:8px;color:var(--white);">WhatsApp Channel</h3>
-            <p style="color:var(--gray);font-size:0.83rem;line-height:1.65;">Latest releases and announcements on our official WhatsApp channel.</p>
-          </a>
-          <a href="https://youtube.com/@GuruTech" target="_blank" class="feature-card" data-anim="fade-up" data-delay="2">
-            <div class="card-icon icon-blue"><i class="fab fa-youtube" style="font-size:1rem;"></i></div>
-            <h3 style="font-weight:700;margin-bottom:8px;color:var(--white);">YouTube Tutorials</h3>
-            <p style="color:var(--gray);font-size:0.83rem;line-height:1.65;">Step-by-step video guides for setup and deployment on all platforms.</p>
-          </a>
-          <div class="feature-card" style="cursor:default;" data-anim="fade-up" data-delay="3">
-            <div class="card-icon icon-yellow"><i class="fas fa-shield-alt" style="font-size:1rem;"></i></div>
-            <h3 style="font-weight:700;margin-bottom:8px;color:var(--white);">Secure Sessions</h3>
-            <p style="color:var(--gray);font-size:0.83rem;line-height:1.65;">Zlib-compressed and base64-encoded sessions for maximum security.</p>
+          <div class="feature-card cursor-default" data-anim="fade-up" data-delay="4">
+            <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+            <h3 class="text-white font-semibold mb-2">Secure Sessions</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">End-to-end encrypted session handling keeps your WhatsApp credentials safe.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <div class="divider"></div>
+    <div class="divider-line"></div>
 
-    <!-- CTA -->
-    <section style="padding:80px 20px;text-align:center;">
-      <div style="max-width:600px;margin:0 auto;" data-anim="zoom-in">
-        <div style="width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,var(--blue),var(--yellow));display:flex;align-items:center;justify-content:center;margin:0 auto 24px;box-shadow:0 10px 32px rgba(255,215,0,0.25);">
-          <i class="fas fa-bolt" style="color:#000;font-size:1.3rem;"></i>
-        </div>
-        <h2 style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:16px;">Ready to Get Your<br><span class="grad-yellow">Session?</span></h2>
-        <p style="color:var(--gray);font-size:0.95rem;margin-bottom:36px;line-height:1.75;max-width:480px;margin-left:auto;margin-right:auto;">
-          Works with BLACK-PANTHER-MD, ULTRA-GURU-MD, and any Baileys-based WhatsApp bot.
-        </p>
-        <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:center;">
-          <a href="/pair" class="btn btn-blue"><span class="icon-anim"><i class="fas fa-link"></i></span> Pair Code</a>
-          <a href="/qr" class="btn btn-yellow"><span class="icon-anim"><i class="fas fa-qrcode"></i></span> QR Code</a>
-        </div>
-      </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- FOOTER -->
-    <footer style="padding:52px 20px 36px;background:#050505;">
-      <div style="max-width:900px;margin:0 auto;">
-        <div class="grid-3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:36px;margin-bottom:42px;">
-          <div>
-            <a href="/" style="display:flex;align-items:center;gap:8px;text-decoration:none;margin-bottom:12px;">
-              <img src="https://i.ibb.co/k6SxWhdr/84bb97a4a575.jpg" alt="logo" style="width:28px;height:28px;border-radius:50%;border:1.5px solid var(--yellow);object-fit:cover;">
-              <span style="font-size:0.85rem;font-weight:900;" class="grad-mixed">PANTHERR-X-ULTRA</span>
-            </a>
-            <p style="color:#444;font-size:0.78rem;line-height:1.65;margin-bottom:16px;">WhatsApp session generator by GuruTech Lab 🇰🇪</p>
-            <div style="display:flex;gap:8px;">
-              <a href="https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
-              <a href="https://youtube.com/@GuruTech" target="_blank" class="social-icon"><i class="fab fa-youtube"></i></a>
-              <a href="https://whatsapp.com/channel/0029VbCl2UX3rZZilMSvxN1e" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+    <footer class="py-12 px-5 bg-[#040408]">
+      <div class="max-w-6xl mx-auto">
+        <div class="mb-8">
+          <a href="/" class="flex items-center gap-2.5 no-underline mb-3">
+            <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#f97316,#ef4444);display:flex;align-items:center;justify-content:center;">
+              <i class="fas fa-paw" style="color:#fff;font-size:0.55rem;"></i>
             </div>
-          </div>
-          <div>
-            <h3 style="color:var(--white);font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:16px;">Quick Links</h3>
-            <div style="display:flex;flex-direction:column;gap:10px;">
-              <a href="/pair" class="footer-link"><i class="fas fa-chevron-right" style="color:var(--blue);font-size:0.68rem;"></i> Pair Code</a>
-              <a href="/qr" class="footer-link"><i class="fas fa-chevron-right" style="color:var(--blue);font-size:0.68rem;"></i> QR Code</a>
-              <a href="https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR" target="_blank" class="footer-link"><i class="fas fa-chevron-right" style="color:var(--blue);font-size:0.68rem;"></i> Source Code</a>
-              <a href="/health" class="footer-link"><i class="fas fa-chevron-right" style="color:var(--blue);font-size:0.68rem;"></i> Health Check</a>
-            </div>
-          </div>
-          <div>
-            <h3 style="color:var(--white);font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:16px;">Related Bots</h3>
-            <div style="display:flex;flex-direction:column;gap:10px;">
-              <a href="https://github.com/koyoteh/BLACK-PANTHER" target="_blank" class="footer-link"><i class="fas fa-paw" style="color:var(--yellow);font-size:0.68rem;"></i> BLACK-PANTHER-MD</a>
-              <a href="https://github.com/GuruhTech/ULTRA-GURU" target="_blank" class="footer-link"><i class="fas fa-star" style="color:var(--yellow);font-size:0.68rem;"></i> ULTRA-GURU-MD</a>
-              <a href="https://youtube.com/@GuruTech" target="_blank" class="footer-link"><i class="fab fa-youtube" style="color:var(--yellow);font-size:0.68rem;"></i> YouTube</a>
-              <a href="https://whatsapp.com/channel/0029VbCl2UX3rZZilMSvxN1e" target="_blank" class="footer-link"><i class="fab fa-whatsapp" style="color:var(--yellow);font-size:0.68rem;"></i> WA Channel</a>
-            </div>
+            <span class="text-sm font-bold gradient-text">PANTHERR X ULTRA</span>
+          </a>
+          <p class="text-gray-600 text-xs leading-relaxed mb-4">Advanced WhatsApp session generator with powerful automation capabilities.</p>
+          <div class="flex gap-2">
+            <a href="https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
           </div>
         </div>
-        <div class="divider" style="margin-bottom:20px;"></div>
-        <!-- Bottom bar with blue/yellow stripe -->
-        <div style="height:2px;background:linear-gradient(90deg,var(--blue),var(--yellow),var(--blue));border-radius:2px;margin-bottom:16px;opacity:0.4;"></div>
-        <p style="color:#333;font-size:0.75rem;text-align:center;">
-          &copy; <span id="yr"></span> PANTHERR-X-ULTRA &mdash; Built by <a href="https://github.com/GuruhTech" target="_blank" style="color:var(--yellow);text-decoration:none;font-weight:700;">GuruTech Lab</a>
+        <div class="divider-line mb-5"></div>
+        <p class="text-gray-700 text-xs text-center">
+          &copy; <span id="yr"></span> PANTHERR X ULTRA &mdash; Built by <a href="https://github.com/GuruhTech" target="_blank" class="text-orange-400 no-underline font-medium">GuruhTech</a>
         </p>
       </div>
     </footer>
@@ -437,40 +325,26 @@
 
     function openSidebar() {
       sidebar.style.transform = 'translateX(0)';
-      overlay.style.display = 'block';
-      setTimeout(() => overlay.style.opacity = '1', 10);
+      overlay.style.opacity = '1';
+      overlay.style.pointerEvents = 'auto';
       menuIcon.className = 'fas fa-times';
       document.body.style.overflow = 'hidden';
     }
     function closeSidebar() {
       sidebar.style.transform = 'translateX(-100%)';
       overlay.style.opacity = '0';
-      setTimeout(() => overlay.style.display = 'none', 300);
+      overlay.style.pointerEvents = 'none';
       menuIcon.className = 'fas fa-bars';
       document.body.style.overflow = '';
     }
-    sidebar.style.transition = 'transform 0.3s cubic-bezier(0.4,0,0.2,1)';
-    menuBtn.addEventListener('click', () => { sidebar.style.transform === 'translateX(0)' ? closeSidebar() : openSidebar(); });
+    menuBtn.addEventListener('click', () => { sidebar.style.transform === 'translateX(0)' ? closeSidebar() : openSidebar(); menuBtn.blur(); });
     closeBtn.addEventListener('click', closeSidebar);
     overlay.addEventListener('click', closeSidebar);
 
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => e.isIntersecting ? e.target.classList.add('in-view') : e.target.classList.remove('in-view'));
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('[data-anim]').forEach(el => obs.observe(el));
-
-    (function setFavicon(src) {
-      const c = document.createElement('canvas'); c.width = c.height = 64;
-      const ctx = c.getContext('2d'), img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.onload = () => {
-        ctx.beginPath(); ctx.arc(32,32,32,0,Math.PI*2); ctx.closePath(); ctx.clip();
-        ctx.drawImage(img,0,0,64,64);
-        const l = document.createElement('link'); l.type='image/png'; l.rel='shortcut icon';
-        l.href = c.toDataURL(); document.head.appendChild(l);
-      };
-      img.src = src;
-    })('https://i.ibb.co/k6SxWhdr/84bb97a4a575.jpg');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => entry.isIntersecting ? entry.target.classList.add('in-view') : entry.target.classList.remove('in-view'));
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
   </script>
 </body>
 </html>

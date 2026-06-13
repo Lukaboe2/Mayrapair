@@ -1,31 +1,15 @@
 {
-  "name": "pantherr-x-ultra-pair",
-  "version": "1.0.0",
-  "description": "PANTHERR-X-ULTRA — WhatsApp session generator for BLACK-PANTHER-MD / ULTRA-GURU-MD and any Baileys-based bot.",
+  "name": "pantherr-x-ultra-session",
   "main": "./index.js",
   "type": "commonjs",
   "scripts": {
     "start": "node index.js",
     "dev": "node index.js"
   },
-  "keywords": [
-    "whatsapp-bot",
-    "gurutech",
-    "black-panther-md",
-    "ultra-guru-md",
-    "guruh",
-    "baileys",
-    "whatsapp-session",
-    "pair-code",
-    "qr-code"
-  ],
   "author": "GuruhTech",
   "license": "MIT",
-  "engines": {
-    "node": "20.x"
-  },
   "dependencies": {
-    "@whiskeysockets/baileys": "^7.0.0-rc.9",
+    "@whiskeysockets/baileys": "npm:baileys@6.7.21",
     "body-parser": "*",
     "dotenv": "*",
     "express": "*",
@@ -35,13 +19,5 @@
     "pg": "*",
     "pino": "*",
     "qrcode": "*"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR.git"
-  },
-  "bugs": {
-    "url": "https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR/issues"
-  },
-  "homepage": "https://github.com/GuruhTech/PANTHERR-X-ULTRA-PAIR#readme"
+  }
 }
