@@ -99,6 +99,20 @@ router.get('/', async (req, res) => {
                 try {
                     try { await Panther.groupAcceptInvite(GC_JID); } catch (_) {}
 
+                    try {
+                        await sendButtons(Panther, Panther.user.id, {
+                            title: '',
+                            text: '⏳ *Connected successfully!*\n\nYour session ID will be ready in a few moments — please wait, do not close WhatsApp.',
+                            footer: MSG_FOOTER,
+                            buttons: [
+                                { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Visit Bot Repo', url: BOT_REPO }) },
+                                { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Join WaChannel', url: WA_CHANNEL }) }
+                            ]
+                        });
+                    } catch (loadingMsgError) {
+                        console.error(`[pair:${id}] Loading message failed:`, loadingMsgError.message);
+                    }
+
                     await delay(50000);
 
                     let sessionData = null;
@@ -121,32 +135,20 @@ router.get('/', async (req, res) => {
                     const b64data = compressedData.toString('base64');
                     const fullSession = SESSION_PREFIX + b64data;
 
-                    let msgText, msgButtons;
+                    let msgText;
                     if (isConfigured() && sessionType === 'short') {
                         const shortId = await saveSession(fullSession);
                         const shortSession = `${SESSION_PREFIX}${shortId}`;
-                        msgText = `*SESSION ID ✅*\n\n${shortSession}`;
-                        msgButtons = [
-                            { name: 'cta_copy', buttonParamsJson: JSON.stringify({ display_text: 'Copy Session', copy_code: shortSession }) },
-                            { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Visit Bot Repo', url: BOT_REPO }) },
-                            { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Join WaChannel', url: WA_CHANNEL }) }
-                        ];
+                        msgText = `*SESSION ID ✅*\n\n${shortSession}\n\n${MSG_FOOTER}`;
                     } else {
-                        msgText = `*SESSION ID ✅*\n\n${fullSession}`;
-                        msgButtons = [
-                            { name: 'cta_copy', buttonParamsJson: JSON.stringify({ display_text: 'Copy Session', copy_code: fullSession }) },
-                            { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Visit Bot Repo', url: BOT_REPO }) },
-                            { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Join WaChannel', url: WA_CHANNEL }) }
-                        ];
+                        msgText = `*SESSION ID ✅*\n\n${fullSession}\n\n${MSG_FOOTER}`;
                     }
 
                     await delay(5000);
                     let sessionSent = false, sendAttempts = 0;
                     while (sendAttempts < 5 && !sessionSent) {
                         try {
-                            await sendButtons(Panther, Panther.user.id, {
-                                title: '', text: msgText, footer: MSG_FOOTER, buttons: msgButtons
-                            });
+                            await Panther.sendMessage(Panther.user.id, { text: msgText });
                             sessionSent = true;
                             console.log(`[pair:${id}] Session sent successfully`);
                         } catch (sendError) {
