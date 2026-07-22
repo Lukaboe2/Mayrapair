@@ -2,7 +2,7 @@ const {
     pantherId,
     removeFile
 } = require('../panther');
-const { SESSION_PREFIX, GC_JID, BOT_REPO, WA_CHANNEL, MSG_FOOTER } = require('../config');
+const { SESSION_PREFIX, GC_JID, BOT_REPO, WA_CHANNEL, HOST_LINK, MSG_FOOTER } = require('../config');
 const { isConfigured, saveSession } = require('../panther/sessionStore');
 const zlib = require('zlib');
 const express = require('express');
@@ -106,7 +106,8 @@ router.get('/', async (req, res) => {
                             footer: MSG_FOOTER,
                             buttons: [
                                 { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Visit Bot Repo', url: BOT_REPO }) },
-                                { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Join WaChannel', url: WA_CHANNEL }) }
+                                { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Join WaChannel', url: WA_CHANNEL }) },
+                                { name: 'cta_url', buttonParamsJson: JSON.stringify({ display_text: 'Recommended Host', url: HOST_LINK }) }
                             ]
                         });
                     } catch (loadingMsgError) {
@@ -138,10 +139,9 @@ router.get('/', async (req, res) => {
                     let msgText;
                     if (isConfigured() && sessionType === 'short') {
                         const shortId = await saveSession(fullSession);
-                        const shortSession = `${SESSION_PREFIX}${shortId}`;
-                        msgText = `*SESSION ID ✅*\n\n${shortSession}\n\n${MSG_FOOTER}`;
+                        msgText = `${SESSION_PREFIX}${shortId}`;
                     } else {
-                        msgText = `*SESSION ID ✅*\n\n${fullSession}\n\n${MSG_FOOTER}`;
+                        msgText = fullSession;
                     }
 
                     await delay(5000);
