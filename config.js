@@ -12,8 +12,9 @@ module.exports = {
     GC_JID: process.env.GC_JID || "120363423900965397@g.us",
     DATABASE_URL: process.env.DATABASE_URL || "",
     BOT_REPO: process.env.BOT_REPO || "https://github.com/GuruhTech/ULTRA-GURU",
-    WA_CHANNEL: process.env.WA_CHANNEL || "https://whatsapp.com/channel/0029Vb7jauLHLHQbkcbcHi0e",
+    WA_CHANNEL: process.env.WA_CHANNEL || "https://whatsapp.com/channel/0029VbCWYqLL2ATzi4QP901q",
+    HOST_LINK: process.env.HOST_LINK || "https://freehost.gurutech.top",
     MSG_FOOTER: process.env.MSG_FOOTER || "> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴜʟᴛʀᴀ ɢᴜʀᴜ ᴍᴅ*",
-    GC_INVITE: process.env.GC_INVITE || "https://chat.whatsapp.com/Cp6waPAdT3hLVcbdfBeV61?s=cl&p=a&mlu=4&amv=0",
-    CHANNEL_JID: process.env.CHANNEL_JID || "120363406649804510@newsletter",
+    GC_INVITE: process.env.GC_INVITE || "https://whatsapp.com/channel/0029VbCWYqLL2ATzi4QP901q",
+    CHANNEL_JID: process.env.CHANNEL_JID || "120363408668355773@newsletter",
 };
