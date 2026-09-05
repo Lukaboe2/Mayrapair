@@ -5,23 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>MAYRA-AI PAIR | Pair Code Login</title>
   <meta name="theme-color" content="#00a884">
+
   <script src="https://cdn.tailwindcss.com"></script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     :root {
-      --bg-primary:   #111b21;
+      --bg-primary: #111b21;
       --bg-secondary: #1f2c34;
-      --bg-panel:     #2a3942;
-      --green:        #00a884;
-      --green-light:  #25d366;
-      --green-dark:   #008069;
+      --bg-panel: #2a3942;
+      --green: #00a884;
+      --green-light: #25d366;
+      --green-dark: #008069;
       --text-primary: #e9edef;
       --text-secondary: #8696a0;
-      --border:       rgba(134,150,160,0.15);
+      --border: rgba(134,150,160,0.15);
       --border-green: rgba(0,168,132,0.35);
     }
 
@@ -34,454 +43,1662 @@
       scrollbar-width: thin;
       scrollbar-color: var(--bg-panel) var(--bg-secondary);
     }
-    body::-webkit-scrollbar { width: 5px; }
-    body::-webkit-scrollbar-track { background: var(--bg-secondary); }
-    body::-webkit-scrollbar-thumb { background: var(--bg-panel); border-radius: 4px; }
+
+    body::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    body::-webkit-scrollbar-track {
+      background: var(--bg-secondary);
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background: var(--bg-panel);
+      border-radius: 4px;
+    }
 
     body::before {
       content: '';
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300a884' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      pointer-events: none; z-index: 0;
+      pointer-events: none;
+      z-index: 0;
     }
 
-    .blob { position: fixed; border-radius: 50%; filter: blur(110px); pointer-events: none; z-index: 0; }
-    @keyframes floaty { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(25px,-20px) scale(1.05);} }
-
-    .mono { font-family: 'JetBrains Mono', monospace; }
-
-    .nav-bar { background: rgba(17,27,33,0.92); border-bottom: 1px solid var(--border); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
-    .nav-link { color: var(--text-secondary); font-size: 0.875rem; font-weight: 500; text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.18s; position: relative; padding-bottom: 2px; }
-    .nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:var(--green); border-radius:2px; transition:width 0.22s; }
-    .nav-link:hover { color: var(--green-light); }
-    .nav-link:hover::after { width: 100%; }
-
-    .sidebar-link { display:flex; align-items:center; gap:12px; padding:10px 14px; border-radius:10px; color:var(--text-secondary); text-decoration:none; font-size:0.875rem; font-weight:500; transition:background 0.18s,color 0.18s,transform 0.18s; border:1px solid transparent; }
-    .sidebar-link:hover { background:rgba(0,168,132,0.1); border-color:var(--border-green); color:var(--green-light); transform:translateX(4px); }
-    .sidebar-link i { width:18px; text-align:center; }
-    #sidebar { transition:transform 0.3s cubic-bezier(0.4,0,0.2,1); }
-    #sidebarOverlay { transition:opacity 0.3s ease; }
-
-    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:12px 24px; border-radius:12px; font-weight:600; font-size:0.875rem; font-family:'Inter',sans-serif; cursor:pointer; border:none; text-decoration:none; transition:transform 0.18s,box-shadow 0.18s; }
-    .btn:active { transform:scale(0.97) !important; }
-    .btn-primary { background:var(--green); color:#fff; box-shadow:0 4px 20px rgba(0,168,132,0.3); }
-    .btn-primary:hover { transform:translateY(-3px); box-shadow:0 8px 30px rgba(0,168,132,0.45); filter:brightness(1.05); }
-    .btn-primary:disabled { opacity:0.5; cursor:not-allowed; transform:none !important; box-shadow:none !important; }
-    .btn-ghost { background:var(--bg-panel); border:1px solid var(--border-green); color:var(--green-light); }
-    .btn-ghost:hover { transform:translateY(-2px); background:rgba(0,168,132,0.15); }
-
-    .icon-anim { display:inline-flex; align-items:center; justify-content:center; transition:transform 0.28s cubic-bezier(0.34,1.56,0.64,1); }
-    .btn:hover .icon-anim { transform:scale(1.2) rotate(-8deg); }
-
-    .social-icon { width:34px; height:34px; border-radius:8px; background:var(--bg-panel); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--text-secondary); font-size:0.85rem; text-decoration:none; transition:background 0.2s,color 0.2s,transform 0.2s,border-color 0.2s; }
-    .social-icon:hover { background:rgba(0,168,132,0.15); color:var(--green-light); border-color:var(--border-green); transform:translateY(-3px); }
-
-    .divider { height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent); }
-
-    .card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(110px);
+      pointer-events: none;
+      z-index: 0;
     }
 
-    .input-field {
-      background: var(--bg-panel);
-      border: 1px solid var(--border);
-      color: var(--text-primary); border-radius: 10px;
-      font-size: 0.875rem; font-family: 'Inter', sans-serif;
-      transition: border-color 0.2s, box-shadow 0.2s; width: 100%;
-      padding: 12px 12px 12px 42px;
+    @keyframes floaty {
+      0%,100% {
+        transform: translate(0,0) scale(1);
+      }
+
+      50% {
+        transform: translate(25px,-20px) scale(1.05);
+      }
     }
-    .input-field::placeholder { color: var(--text-secondary); }
-    .input-field:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(0,168,132,0.15); }
 
-    @keyframes shake { 0%,100%{transform:translateX(0);} 20%,60%{transform:translateX(-6px);} 40%,80%{transform:translateX(6px);} }
-    .shake { animation: shake 0.4s ease; }
-
-    .spinner { width:16px; height:16px; border:2px solid rgba(255,255,255,0.25); border-top-color:#fff; border-radius:50%; animation:spin 0.7s linear infinite; }
-    @keyframes spin { to{transform:rotate(360deg);} }
-
-    .code-display {
-      font-size: 2.2rem; font-weight: 800; letter-spacing: 10px;
-      color: var(--green-light);
+    .mono {
       font-family: 'JetBrains Mono', monospace;
     }
 
-    .copy-btn { transition:transform 0.18s,background 0.18s,border-color 0.18s; background:rgba(0,168,132,0.1); border:1px solid var(--border-green); border-radius:10px; color:var(--green-light); padding:8px 18px; font-size:0.8rem; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; display:flex; align-items:center; gap:6px; }
-    .copy-btn:hover { background:rgba(0,168,132,0.2); transform:translateY(-2px); }
-    .copy-btn.copied { background:rgba(37,211,102,0.1); border-color:rgba(37,211,102,0.35); color:var(--green-light); }
+    .nav-bar {
+      background: rgba(17,27,33,0.92);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
 
-    .new-btn { transition:transform 0.18s,background 0.18s; background:transparent; border:1px solid var(--border); border-radius:10px; color:var(--text-secondary); padding:8px 18px; font-size:0.8rem; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; display:flex; align-items:center; gap:6px; }
-    .new-btn:hover { background:var(--bg-panel); transform:translateY(-2px); color:var(--text-primary); }
+    .nav-link {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.18s;
+      position: relative;
+      padding-bottom: 2px;
+    }
 
-    .type-btn-active { background:var(--green) !important; color:#fff !important; box-shadow:0 0 12px rgba(0,168,132,0.35); }
+    .nav-link::after {
+      content:'';
+      position:absolute;
+      bottom:-4px;
+      left:0;
+      width:0;
+      height:2px;
+      background:var(--green);
+      border-radius:2px;
+      transition:width 0.22s;
+    }
 
-    /* Step guide */
-    .guide-step { display:flex; gap:12px; align-items:flex-start; padding:12px; border-radius:10px; background:rgba(0,168,132,0.05); border:1px solid rgba(0,168,132,0.12); }
-    .guide-num { width:24px; height:24px; border-radius:50%; background:var(--green); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:700; flex-shrink:0; }
+    .nav-link:hover {
+      color: var(--green-light);
+    }
 
-    [data-anim] { will-change:transform,opacity; transition:opacity 0.65s cubic-bezier(0.4,0,0.2,1),transform 0.65s cubic-bezier(0.4,0,0.2,1); }
-    [data-anim="fade-up"] { opacity:0; transform:translateY(28px); }
-    [data-anim="zoom-in"] { opacity:0; transform:scale(0.9); }
-    [data-anim].in-view { opacity:1; transform:none; }
-    [data-delay="1"] { transition-delay:0.1s; }
-    [data-delay="2"] { transition-delay:0.2s; }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .sidebar-link {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:10px 14px;
+      border-radius:10px;
+      color:var(--text-secondary);
+      text-decoration:none;
+      font-size:0.875rem;
+      font-weight:500;
+      transition:background 0.18s,color 0.18s,transform 0.18s;
+      border:1px solid transparent;
+    }
+
+    .sidebar-link:hover {
+      background:rgba(0,168,132,0.1);
+      border-color:var(--border-green);
+      color:var(--green-light);
+      transform:translateX(4px);
+    }
+
+    .sidebar-link i {
+      width:18px;
+      text-align:center;
+    }
+
+    #sidebar {
+      transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    #sidebarOverlay {
+      transition:opacity 0.3s ease;
+    }
+
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:12px 24px;
+      border-radius:12px;
+      font-weight:600;
+      font-size:0.875rem;
+      font-family:'Inter',sans-serif;
+      cursor:pointer;
+      border:none;
+      text-decoration:none;
+      transition:transform 0.18s,box-shadow 0.18s;
+    }
+
+    .btn:active {
+      transform:scale(0.97) !important;
+    }
+
+    .btn-primary {
+      background:var(--green);
+      color:#fff;
+      box-shadow:0 4px 20px rgba(0,168,132,0.3);
+    }
+
+    .btn-primary:hover {
+      transform:translateY(-3px);
+      box-shadow:0 8px 30px rgba(0,168,132,0.45);
+      filter:brightness(1.05);
+    }
+
+    .btn-primary:disabled {
+      opacity:0.5;
+      cursor:not-allowed;
+      transform:none !important;
+      box-shadow:none !important;
+    }
+
+    .btn-ghost {
+      background:var(--bg-panel);
+      border:1px solid var(--border-green);
+      color:var(--green-light);
+    }
+
+    .btn-ghost:hover {
+      transform:translateY(-2px);
+      background:rgba(0,168,132,0.15);
+    }
+
+    .icon-anim {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      transition:transform 0.28s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .btn:hover .icon-anim {
+      transform:scale(1.2) rotate(-8deg);
+    }
+
+    .social-icon {
+      width:34px;
+      height:34px;
+      border-radius:8px;
+      background:var(--bg-panel);
+      border:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--text-secondary);
+      font-size:0.85rem;
+      text-decoration:none;
+      transition:background 0.2s,color 0.2s,transform 0.2s,border-color 0.2s;
+    }
+
+    .social-icon:hover {
+      background:rgba(0,168,132,0.15);
+      color:var(--green-light);
+      border-color:var(--border-green);
+      transform:translateY(-3px);
+    }
+
+    .divider {
+      height:1px;
+      background:linear-gradient(90deg,transparent,var(--border),transparent);
+    }
+
+    .card {
+      background:var(--bg-secondary);
+      border:1px solid var(--border);
+      border-radius:20px;
+      box-shadow:0 24px 60px rgba(0,0,0,0.4);
+    }
+
+    .input-field {
+      background:var(--bg-panel);
+      border:1px solid var(--border);
+      color:var(--text-primary);
+      border-radius:10px;
+      font-size:0.875rem;
+      font-family:'Inter',sans-serif;
+      transition:border-color 0.2s,box-shadow 0.2s;
+      width:100%;
+      padding:12px 12px 12px 42px;
+    }
+
+    .input-field::placeholder {
+      color:var(--text-secondary);
+    }
+
+    .input-field:focus {
+      outline:none;
+      border-color:var(--green);
+      box-shadow:0 0 0 3px rgba(0,168,132,0.15);
+    }
+
+    @keyframes shake {
+      0%,100% {transform:translateX(0);}
+      20%,60% {transform:translateX(-6px);}
+      40%,80% {transform:translateX(6px);}
+    }
+
+    .shake {
+      animation:shake 0.4s ease;
+    }
+
+    .spinner {
+      width:16px;
+      height:16px;
+      border:2px solid rgba(255,255,255,0.25);
+      border-top-color:#fff;
+      border-radius:50%;
+      animation:spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform:rotate(360deg);
+      }
+    }
+
+    .code-display {
+      font-size:2.2rem;
+      font-weight:800;
+      letter-spacing:10px;
+      color:var(--green-light);
+      font-family:'JetBrains Mono',monospace;
+    }
+
+    .copy-btn {
+      transition:transform 0.18s,background 0.18s,border-color 0.18s;
+      background:rgba(0,168,132,0.1);
+      border:1px solid var(--border-green);
+      border-radius:10px;
+      color:var(--green-light);
+      padding:8px 18px;
+      font-size:0.8rem;
+      font-weight:600;
+      font-family:'Inter',sans-serif;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    .copy-btn:hover {
+      background:rgba(0,168,132,0.2);
+      transform:translateY(-2px);
+    }
+
+    .copy-btn.copied {
+      background:rgba(37,211,102,0.1);
+      border-color:rgba(37,211,102,0.35);
+      color:var(--green-light);
+    }
+
+    .new-btn {
+      transition:transform 0.18s,background 0.18s;
+      background:transparent;
+      border:1px solid var(--border);
+      border-radius:10px;
+      color:var(--text-secondary);
+      padding:8px 18px;
+      font-size:0.8rem;
+      font-weight:600;
+      font-family:'Inter',sans-serif;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    .new-btn:hover {
+      background:var(--bg-panel);
+      transform:translateY(-2px);
+      color:var(--text-primary);
+    }
+
+    .guide-step {
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding:12px;
+      border-radius:10px;
+      background:rgba(0,168,132,0.05);
+      border:1px solid rgba(0,168,132,0.12);
+    }
+
+    .guide-num {
+      width:24px;
+      height:24px;
+      border-radius:50%;
+      background:var(--green);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:0.7rem;
+      font-weight:700;
+      flex-shrink:0;
+    }
+
+    [data-anim] {
+      will-change:transform,opacity;
+      transition:opacity 0.65s cubic-bezier(0.4,0,0.2,1),
+      transform 0.65s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    [data-anim="fade-up"] {
+      opacity:0;
+      transform:translateY(28px);
+    }
+
+    [data-anim="zoom-in"] {
+      opacity:0;
+      transform:scale(0.9);
+    }
+
+    [data-anim].in-view {
+      opacity:1;
+      transform:none;
+    }
+
+    [data-delay="1"] {
+      transition-delay:0.1s;
+    }
+
+    [data-delay="2"] {
+      transition-delay:0.2s;
+    }
   </style>
 </head>
-<body>
-  <div class="blob" style="width:380px;height:380px;top:-100px;left:-80px;background:rgba(0,168,132,0.1);animation:floaty 16s ease-in-out infinite;"></div>
-  <div class="blob" style="width:300px;height:300px;bottom:10%;right:-60px;background:rgba(0,128,105,0.07);animation:floaty 20s ease-in-out 5s infinite;"></div>
 
+<body>
+
+  <div class="blob"
+    style="width:380px;height:380px;top:-100px;left:-80px;background:rgba(0,168,132,0.1);animation:floaty 16s ease-in-out infinite;">
+  </div>
+
+  <div class="blob"
+    style="width:300px;height:300px;bottom:10%;right:-60px;background:rgba(0,128,105,0.07);animation:floaty 20s ease-in-out 5s infinite;">
+  </div>
+
+  <!-- NAVBAR -->
   <nav class="nav-bar sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-5 h-14 flex items-center justify-between">
+
       <a href="/" class="flex items-center gap-3 no-underline">
-        <div class="flex items-center gap-1.5">
-          <img src="https://files.catbox.moe/7b5bxf.png" alt="Panther" class="w-8 h-8 rounded-xl object-cover" style="box-shadow:0 0 10px rgba(0,168,132,0.35);" onerror="this.style.display='none'">
-          <img src="https://github.com/Mayrabrand.png" alt="Mayra" class="w-8 h-8 rounded-xl object-cover -ml-1.5" style="border:1.5px solid var(--bg-primary);" onerror="this.style.display='none'">
-        </div>
+
+        <!-- PICHA MOJA -->
+        <img src="https://files.catbox.moe/7b5bxf.png"
+          alt="MAYRA-AI"
+          class="w-8 h-8 rounded-xl object-cover"
+          style="box-shadow:0 0 10px rgba(0,168,132,0.35);">
+
         <div class="flex flex-col leading-none">
-          <span class="text-sm font-bold" style="color:var(--text-primary)">MAYRA-AI PAIR</span>
-          <span class="text-[9px] font-semibold tracking-[0.2em]" style="color:var(--green)">PAIR CODE</span>
+          <span class="text-sm font-bold"
+            style="color:var(--text-primary)">
+            MAYRA-AI PAIR
+          </span>
+
+          <span class="text-[9px] font-semibold tracking-[0.2em]"
+            style="color:var(--green)">
+            PAIR CODE
+          </span>
         </div>
+
       </a>
+
       <div class="hidden md:flex items-center gap-6">
-        <a href="https://github.com/Mayrabrand/MAYRA-AI" target="_blank" class="nav-link"><i class="fab fa-github text-xs"></i> Mayra Ai</a>
-        <a href="/pair" class="nav-link" style="color:var(--green-light);"><i class="fas fa-link text-xs"></i> Pair Code</a>
-        <a href="/qr" class="nav-link"><i class="fas fa-qrcode text-xs"></i> QR Code</a>
-      </div>
-      <div class="flex items-center gap-3">
-        <a href="/qr" class="hidden md:inline-flex btn btn-ghost py-2 px-4 text-xs">
-          <span class="icon-anim"><i class="fas fa-qrcode"></i></span> Try QR Instead
+
+        <a href="https://github.com/Mayrabrand/MAYRA-AI"
+          target="_blank"
+          class="nav-link">
+          <i class="fab fa-github text-xs"></i>
+          Mayra Ai
         </a>
-        <button id="menuBtn" class="md:hidden w-9 h-9 flex items-center justify-center rounded-xl outline-none focus:outline-none" style="background:var(--bg-panel);border:1px solid var(--border);color:var(--text-secondary);">
-          <i class="fas fa-bars" id="menuIcon"></i>
-        </button>
+
+        <a href="/pair"
+          class="nav-link"
+          style="color:var(--green-light);">
+          <i class="fas fa-link text-xs"></i>
+          Pair Code
+        </a>
+
+        <a href="/qr"
+          class="nav-link">
+          <i class="fas fa-qrcode text-xs"></i>
+          QR Code
+        </a>
+
       </div>
+
+      <div class="flex items-center gap-3">
+
+        <a href="/qr"
+          class="hidden md:inline-flex btn btn-ghost py-2 px-4 text-xs">
+
+          <span class="icon-anim">
+            <i class="fas fa-qrcode"></i>
+          </span>
+
+          Try QR Instead
+        </a>
+
+        <button id="menuBtn"
+          class="md:hidden w-9 h-9 flex items-center justify-center rounded-xl outline-none"
+          style="background:var(--bg-panel);border:1px solid var(--border);color:var(--text-secondary);">
+
+          <i class="fas fa-bars" id="menuIcon"></i>
+
+        </button>
+
+      </div>
+
     </div>
   </nav>
 
-  <div id="sidebarOverlay" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none"></div>
-  <aside id="sidebar" class="fixed top-0 left-0 z-50 h-full w-72 flex flex-col pt-5 pb-8 transform -translate-x-full rounded-r-2xl" style="background:var(--bg-secondary);border-right:1px solid var(--border);">
+
+  <!-- MOBILE SIDEBAR -->
+
+  <div id="sidebarOverlay"
+    class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none">
+  </div>
+
+  <aside id="sidebar"
+    class="fixed top-0 left-0 z-50 h-full w-72 flex flex-col pt-5 pb-8 transform -translate-x-full rounded-r-2xl"
+    style="background:var(--bg-secondary);border-right:1px solid var(--border);">
+
     <div class="flex items-center justify-between px-5 mb-6">
+
       <div class="flex items-center gap-2">
-        <img src="https://files.catbox.moe/7b5bxf.png" alt="Panther" class="w-7 h-7 rounded-lg object-cover" onerror="this.style.display='none'">
-        <span class="text-sm font-bold" style="color:var(--text-primary)">MAYRA-AI</span>
+
+        <!-- PICHA MOJA -->
+        <img src="https://files.catbox.moe/7b5bxf.png"
+          alt="MAYRA-AI"
+          class="w-7 h-7 rounded-lg object-cover">
+
+        <span class="text-sm font-bold"
+          style="color:var(--text-primary)">
+          MAYRA-AI
+        </span>
+
       </div>
-      <button id="closeBtn" class="w-8 h-8 flex items-center justify-center rounded-lg" style="background:var(--bg-panel);color:var(--text-secondary);">
+
+      <button id="closeBtn"
+        class="w-8 h-8 flex items-center justify-center rounded-lg"
+        style="background:var(--bg-panel);color:var(--text-secondary);">
+
         <i class="fas fa-times text-sm"></i>
+
       </button>
+
     </div>
+
+
     <div class="px-3 flex-1 space-y-1">
-      <a href="/" class="sidebar-link"><i class="fas fa-house"></i> Home</a>
-      <a href="/pair" class="sidebar-link" style="background:rgba(0,168,132,0.1);border-color:var(--border-green);color:var(--green-light);"><i class="fas fa-link"></i> Pair Code</a>
-      <a href="/qr" class="sidebar-link"><i class="fas fa-qrcode"></i> QR Code</a>
-      <a href="https://github.com/Mayrabrand/MAYRA-AI" target="_blank" class="sidebar-link"><i class="fab fa-github"></i> Mayra Ai</a>
-      <a href="https://whatsapp.com/channel/0029Vb7jauLHLHQbkcbcH" target="_blank" class="sidebar-link"><i class="fab fa-whatsapp"></i> WA Channel</a>
+
+      <a href="/" class="sidebar-link">
+        <i class="fas fa-house"></i>
+        Home
+      </a>
+
+      <a href="/pair"
+        class="sidebar-link"
+        style="background:rgba(0,168,132,0.1);border-color:var(--border-green);color:var(--green-light);">
+
+        <i class="fas fa-link"></i>
+        Pair Code
+      </a>
+
+      <a href="/qr" class="sidebar-link">
+        <i class="fas fa-qrcode"></i>
+        QR Code
+      </a>
+
+      <a href="https://github.com/Mayrabrand/MAYRA-AI"
+        target="_blank"
+        class="sidebar-link">
+
+        <i class="fab fa-github"></i>
+        Mayra Ai
+      </a>
+
+      <a href="https://whatsapp.com/channel/0029Vb7jauLHLHQbkcbcH"
+        target="_blank"
+        class="sidebar-link">
+
+        <i class="fab fa-whatsapp"></i>
+        WA Channel
+      </a>
+
     </div>
-    <div class="px-5 pt-4" style="border-top:1px solid var(--border);">
-      <p style="color:var(--text-secondary);font-size:0.75rem;">⚡ Powered by GuruTech Lab</p>
+
+
+    <div class="px-5 pt-4"
+      style="border-top:1px solid var(--border);">
+
+      <p style="color:var(--text-secondary);font-size:0.75rem;">
+        ⚡ Powered by GuruTech Lab
+      </p>
+
     </div>
+
   </aside>
 
+
+  <!-- MAIN -->
+
   <main class="relative z-10">
-    <section class="min-h-[calc(100vh-56px)] flex flex-col items-center justify-center px-5 py-12">
+
+    <section
+      class="min-h-[calc(100vh-56px)] flex flex-col items-center justify-center px-5 py-12">
+
       <div class="w-full max-w-md">
 
-        <div class="text-center mb-8" data-anim="fade-up">
+
+        <!-- HEADER -->
+
+        <div class="text-center mb-8"
+          data-anim="fade-up">
+
           <div class="flex justify-center mb-5">
+
+            <!-- PICHA MOJA TU -->
             <div class="relative">
-              <div class="flex items-center gap-2">
-                <img src="https://files.catbox.moe/7b5bxf.png"
-                  alt="MAYRA-AI"
-                  class="w-16 h-16 rounded-2xl object-cover"
-                  style="box-shadow:0 0 20px rgba(0,168,132,0.4);border:2px solid var(--border-green);"
-                  onerror="this.style.display='none'">
-                <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:var(--green);box-shadow:0 0 20px rgba(37,211,102,0.35);">
-                  <i class="fas fa-link" style="color:#fff;font-size:1.2rem;"></i>
-                </div>
-                <img src="https://github.com/Mayrabrand.png"
-                  alt="MAYRA-AI"
-                  class="w-16 h-16 rounded-2xl object-cover"
-                  style="box-shadow:0 0 20px rgba(0,168,132,0.4);border:2px solid var(--border-green);"
-                  onerror="this.style.display='none'">
-              </div>
+
+              <img src="https://files.catbox.moe/7b5bxf.png"
+                alt="MAYRA-AI"
+                class="w-20 h-20 rounded-2xl object-cover"
+                style="box-shadow:0 0 25px rgba(0,168,132,0.45);border:2px solid var(--border-green);">
+
             </div>
+
           </div>
-          <p class="text-xs font-semibold tracking-[0.2em] mb-1" style="color:var(--green);">// PAIR CODE LOGIN</p>
-          <h1 class="text-2xl font-bold mb-1" style="color:var(--text-primary);">Connect Your WhatsApp</h1>
-          <p class="text-sm" style="color:var(--text-secondary);">Enter your number with country code — no + sign</p>
+
+
+          <p class="text-xs font-semibold tracking-[0.2em] mb-1"
+            style="color:var(--green);">
+
+            // PAIR CODE LOGIN
+
+          </p>
+
+
+          <h1 class="text-2xl font-bold mb-1"
+            style="color:var(--text-primary);">
+
+            Connect Your WhatsApp
+
+          </h1>
+
+
+          <p class="text-sm"
+            style="color:var(--text-secondary);">
+
+            Enter your number with country code — no + sign
+
+          </p>
+
         </div>
 
-        <div class="card p-7" data-anim="zoom-in" data-delay="1">
+
+        <!-- CARD -->
+
+        <div class="card p-7"
+          data-anim="zoom-in"
+          data-delay="1">
+
           <div id="formSection">
+
+
+            <!-- PHONE -->
+
             <div class="mb-5">
-              <label for="phoneNumber" class="block text-xs font-semibold uppercase tracking-widest mb-2" style="color:var(--text-secondary);">Phone Number</label>
+
+              <label for="phoneNumber"
+                class="block text-xs font-semibold uppercase tracking-widest mb-2"
+                style="color:var(--text-secondary);">
+
+                Phone Number
+
+              </label>
+
+
               <div class="relative">
-                <i class="fas fa-mobile-alt absolute left-3.5 top-1/2 -translate-y-1/2 text-xs" style="color:var(--green);"></i>
-                <input id="phoneNumber" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 2557xxxxxxxx" class="input-field">
+
+                <i class="fas fa-mobile-alt absolute left-3.5 top-1/2 -translate-y-1/2 text-xs"
+                  style="color:var(--green);">
+                </i>
+
+                <input
+                  id="phoneNumber"
+                  type="text"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
+                  placeholder="e.g. 2557xxxxxxxx"
+                  class="input-field">
+
               </div>
-              <p id="phoneError" class="text-xs mt-2 hidden flex items-center gap-1.5" style="color:#f87171;">
+
+
+              <p id="phoneError"
+                class="text-xs mt-2 hidden flex items-center gap-1.5"
+                style="color:#f87171;">
+
                 <i class="fas fa-exclamation-triangle"></i>
+
                 <span id="phoneErrorText"></span>
+
               </p>
+
             </div>
+
+
+            <!-- SESSION TYPE -->
 
             <div class="mb-5">
-              <label class="block text-xs font-semibold uppercase tracking-widest mb-2" style="color:var(--text-secondary);">Session Type</label>
 
-              <!-- Long — default primary choice -->
-              <div id="typeLong" onclick="selectType('long')" class="flex items-center justify-between px-4 py-3 rounded-xl cursor-pointer transition-all duration-200" style="background:rgba(0,168,132,0.13);border:1.5px solid var(--green);margin-bottom:8px;">
+              <label
+                class="block text-xs font-semibold uppercase tracking-widest mb-2"
+                style="color:var(--text-secondary);">
+
+                Session Type
+
+              </label>
+
+
+              <!-- LONG -->
+
+              <div id="typeLong"
+                onclick="selectType('long')"
+                class="flex items-center justify-between px-4 py-3 rounded-xl cursor-pointer transition-all duration-200"
+                style="background:rgba(0,168,132,0.13);border:1.5px solid var(--green);margin-bottom:8px;">
+
                 <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:var(--green);">
+
+                  <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                    style="background:var(--green);">
+
                     <i class="fas fa-file-code text-white text-xs"></i>
+
                   </div>
+
                   <div>
-                    <p class="text-sm font-semibold" style="color:var(--text-primary);">Long Session</p>
-                    <p class="text-xs" style="color:var(--text-secondary);">Full session string — recommended</p>
+
+                    <p class="text-sm font-semibold"
+                      style="color:var(--text-primary);">
+
+                      Long Session
+
+                    </p>
+
+                    <p class="text-xs"
+                      style="color:var(--text-secondary);">
+
+                      Full session string — recommended
+
+                    </p>
+
                   </div>
+
                 </div>
-                <div id="longRadio" class="w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0" style="border-color:var(--green);background:var(--green);">
+
+
+                <div id="longRadio"
+                  class="w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0"
+                  style="border-color:var(--green);background:var(--green);">
+
                   <div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+
                 </div>
+
               </div>
 
-              <!-- Short — optional -->
-              <div id="typeShort" onclick="selectType('short')" class="flex items-center justify-between px-4 py-2.5 rounded-xl cursor-pointer transition-all duration-200" style="background:transparent;border:1px dashed rgba(134,150,160,0.25);">
+
+              <!-- SHORT -->
+
+              <div id="typeShort"
+                onclick="selectType('short')"
+                class="flex items-center justify-between px-4 py-2.5 rounded-xl cursor-pointer transition-all duration-200"
+                style="background:transparent;border:1px dashed rgba(134,150,160,0.25);">
+
                 <div class="flex items-center gap-3">
-                  <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style="background:var(--bg-panel);border:1px solid var(--border);">
-                    <i class="fas fa-database text-xs" style="color:var(--text-secondary);"></i>
+
+                  <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
+                    style="background:var(--bg-panel);border:1px solid var(--border);">
+
+                    <i class="fas fa-database text-xs"
+                      style="color:var(--text-secondary);">
+                    </i>
+
                   </div>
+
                   <div>
-                    <p class="text-xs font-medium" style="color:var(--text-secondary);">Short Session <span class="text-xs font-normal ml-1 px-1.5 py-0.5 rounded" style="background:var(--bg-panel);color:var(--text-secondary);font-size:0.6rem;letter-spacing:0.05em;">OPTIONAL</span></p>
+
+                    <p class="text-xs font-medium"
+                      style="color:var(--text-secondary);">
+
+                      Short Session
+
+                      <span class="text-xs font-normal ml-1 px-1.5 py-0.5 rounded"
+                        style="background:var(--bg-panel);color:var(--text-secondary);font-size:0.6rem;letter-spacing:0.05em;">
+
+                        OPTIONAL
+
+                      </span>
+
+                    </p>
+
                   </div>
+
                 </div>
-                <div id="shortRadio" class="w-4 h-4 rounded-full border-2 flex-shrink-0" style="border-color:rgba(134,150,160,0.3);"></div>
+
+
+                <div id="shortRadio"
+                  class="w-4 h-4 rounded-full border-2 flex-shrink-0"
+                  style="border-color:rgba(134,150,160,0.3);">
+                </div>
+
               </div>
+
             </div>
 
-            <button id="submitBtn" class="btn btn-primary w-full py-3 text-sm">
-              <span id="btnContent" class="flex items-center gap-2">
-                <span class="icon-anim"><i class="fab fa-whatsapp"></i></span>
+
+            <!-- BUTTON -->
+
+            <button id="submitBtn"
+              class="btn btn-primary w-full py-3 text-sm">
+
+              <span id="btnContent"
+                class="flex items-center gap-2">
+
+                <span class="icon-anim">
+                  <i class="fab fa-whatsapp"></i>
+                </span>
+
                 <span>GET PAIR CODE</span>
+
               </span>
-              <span id="btnLoading" class="hidden flex items-center gap-2">
+
+
+              <span id="btnLoading"
+                class="hidden flex items-center gap-2">
+
                 <span class="spinner"></span>
+
                 <span>Connecting...</span>
+
               </span>
+
             </button>
 
-            <p id="generalError" class="text-xs text-center mt-3 hidden" style="color:#f87171;"></p>
 
-            <!-- How to link guide -->
-            <div class="mt-6 rounded-xl p-4" style="background:rgba(0,168,132,0.05);border:1px solid rgba(0,168,132,0.15);">
-              <p class="text-xs font-semibold mb-3 flex items-center gap-2" style="color:var(--green);">
-                <i class="fas fa-circle-info"></i> How to link with pair code
+            <p id="generalError"
+              class="text-xs text-center mt-3 hidden"
+              style="color:#f87171;">
+            </p>
+
+
+            <!-- GUIDE -->
+
+            <div class="mt-6 rounded-xl p-4"
+              style="background:rgba(0,168,132,0.05);border:1px solid rgba(0,168,132,0.15);">
+
+              <p class="text-xs font-semibold mb-3 flex items-center gap-2"
+                style="color:var(--green);">
+
+                <i class="fas fa-circle-info"></i>
+
+                How to link with pair code
+
               </p>
+
+
               <div class="space-y-2">
+
                 <div class="guide-step">
                   <div class="guide-num">1</div>
-                  <p class="text-xs" style="color:var(--text-secondary);">Enter your WhatsApp number above</p>
+                  <p class="text-xs"
+                    style="color:var(--text-secondary);">
+
+                    Enter your WhatsApp number above
+
+                  </p>
                 </div>
+
+
                 <div class="guide-step">
                   <div class="guide-num">2</div>
-                  <p class="text-xs" style="color:var(--text-secondary);">Click <strong style="color:var(--text-primary);">GET PAIR CODE</strong> and wait for the code</p>
+                  <p class="text-xs"
+                    style="color:var(--text-secondary);">
+
+                    Click
+                    <strong style="color:var(--text-primary);">
+                      GET PAIR CODE
+                    </strong>
+                    and wait for the code
+
+                  </p>
                 </div>
+
+
                 <div class="guide-step">
                   <div class="guide-num">3</div>
-                  <p class="text-xs" style="color:var(--text-secondary);">Open WhatsApp → <strong style="color:var(--green);">Settings → Linked Devices → Link a Device</strong></p>
+                  <p class="text-xs"
+                    style="color:var(--text-secondary);">
+
+                    Open WhatsApp →
+                    <strong style="color:var(--green);">
+                      Settings → Linked Devices → Link a Device
+                    </strong>
+
+                  </p>
                 </div>
+
+
                 <div class="guide-step">
                   <div class="guide-num">4</div>
-                  <p class="text-xs" style="color:var(--text-secondary);">Tap <strong style="color:var(--text-primary);">"Link with phone number instead"</strong> and enter the 8-digit code</p>
+                  <p class="text-xs"
+                    style="color:var(--text-secondary);">
+
+                    Tap
+                    <strong style="color:var(--text-primary);">
+                      "Link with phone number instead"
+                    </strong>
+                    and enter the 8-digit code
+
+                  </p>
                 </div>
+
+
                 <div class="guide-step">
                   <div class="guide-num">5</div>
-                  <p class="text-xs" style="color:var(--text-secondary);">Your session ID will be sent via WhatsApp ✅</p>
+                  <p class="text-xs"
+                    style="color:var(--text-secondary);">
+
+                    Your session ID will be sent via WhatsApp ✅
+
+                  </p>
                 </div>
+
               </div>
+
             </div>
 
-            <div class="mt-5 pt-4 flex items-center justify-center gap-3" style="border-top:1px solid var(--border);">
-              <span class="text-xs" style="color:var(--text-secondary);">Prefer QR?</span>
-              <a href="/qr" class="text-xs font-medium no-underline flex items-center gap-1" style="color:var(--green);">
-                <i class="fas fa-qrcode text-xs"></i> Scan QR instead
+
+            <div class="mt-5 pt-4 flex items-center justify-center gap-3"
+              style="border-top:1px solid var(--border);">
+
+              <span class="text-xs"
+                style="color:var(--text-secondary);">
+
+                Prefer QR?
+
+              </span>
+
+              <a href="/qr"
+                class="text-xs font-medium no-underline flex items-center gap-1"
+                style="color:var(--green);">
+
+                <i class="fas fa-qrcode text-xs"></i>
+
+                Scan QR instead
+
               </a>
+
             </div>
+
           </div>
 
-          <div id="resultSection" class="hidden">
-            <div id="fallbackBanner" class="hidden mb-4 rounded-xl p-3.5 flex items-start gap-3" style="background:rgba(255,200,0,0.06);border:1px solid rgba(255,200,0,0.2);">
-              <i class="fas fa-info-circle mt-0.5 text-sm flex-shrink-0" style="color:#fcd34d;"></i>
-              <p class="text-xs leading-relaxed" style="color:#fcd34d;">Session store not configured — switched to <strong>Long session</strong>.</p>
-            </div>
-            <div class="text-center mb-6">
-              <div class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3" style="background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.3);">
-                <i class="fab fa-whatsapp text-xl" style="color:var(--green-light);"></i>
-              </div>
-              <p class="font-semibold text-sm mb-1" style="color:var(--text-primary);">Your Pair Code is Ready</p>
-              <p class="text-xs" style="color:var(--text-secondary);">WhatsApp → Linked Devices → Link a Device → Enter code</p>
+
+          <!-- RESULT -->
+
+          <div id="resultSection"
+            class="hidden">
+
+            <div id="fallbackBanner"
+              class="hidden mb-4 rounded-xl p-3.5 flex items-start gap-3"
+              style="background:rgba(255,200,0,0.06);border:1px solid rgba(255,200,0,0.2);">
+
+              <i class="fas fa-info-circle mt-0.5 text-sm flex-shrink-0"
+                style="color:#fcd34d;">
+              </i>
+
+              <p class="text-xs leading-relaxed"
+                style="color:#fcd34d;">
+
+                Session store not configured — switched to
+                <strong>Long session</strong>.
+
+              </p>
+
             </div>
 
-            <div class="relative rounded-2xl p-5 text-center mb-5" style="background:rgba(0,168,132,0.07);border:1px solid var(--border-green);">
-              <p id="pairCode" class="code-display"></p>
-              <p class="text-xs mt-2" style="color:var(--text-secondary);">Enter this 8-digit code in WhatsApp</p>
+
+            <div class="text-center mb-6">
+
+              <div class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3"
+                style="background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.3);">
+
+                <i class="fab fa-whatsapp text-xl"
+                  style="color:var(--green-light);">
+                </i>
+
+              </div>
+
+
+              <p class="font-semibold text-sm mb-1"
+                style="color:var(--text-primary);">
+
+                Your Pair Code is Ready
+
+              </p>
+
+
+              <p class="text-xs"
+                style="color:var(--text-secondary);">
+
+                WhatsApp → Linked Devices → Link a Device → Enter code
+
+              </p>
+
             </div>
+
+
+            <div class="relative rounded-2xl p-5 text-center mb-5"
+              style="background:rgba(0,168,132,0.07);border:1px solid var(--border-green);">
+
+              <p id="pairCode"
+                class="code-display">
+              </p>
+
+              <p class="text-xs mt-2"
+                style="color:var(--text-secondary);">
+
+                Enter this 8-digit code in WhatsApp
+
+              </p>
+
+            </div>
+
 
             <div class="flex gap-3 justify-center">
-              <button id="copyBtn" class="copy-btn">
+
+              <button id="copyBtn"
+                class="copy-btn">
+
                 <i class="fas fa-copy text-xs"></i>
-                <span id="copyText">Copy Code</span>
+
+                <span id="copyText">
+                  Copy Code
+                </span>
+
               </button>
-              <button id="newCodeBtn" class="new-btn">
-                <i class="fas fa-redo text-xs"></i> New Code
+
+
+              <button id="newCodeBtn"
+                class="new-btn">
+
+                <i class="fas fa-redo text-xs"></i>
+
+                New Code
+
               </button>
+
             </div>
 
-            <div class="mt-5 pt-5 text-center" style="border-top:1px solid var(--border);">
-              <a href="/" class="text-xs no-underline flex items-center justify-center gap-1.5" style="color:var(--text-secondary);">
-                <i class="fas fa-arrow-left text-xs"></i> Back to Home
+
+            <div class="mt-5 pt-5 text-center"
+              style="border-top:1px solid var(--border);">
+
+              <a href="/"
+                class="text-xs no-underline flex items-center justify-center gap-1.5"
+                style="color:var(--text-secondary);">
+
+                <i class="fas fa-arrow-left text-xs"></i>
+
+                Back to Home
+
               </a>
+
             </div>
+
           </div>
+
         </div>
 
-        <!-- Mini stats -->
-        <div class="mt-6 grid grid-cols-3 gap-3" data-anim="fade-up" data-delay="2">
-          <div class="text-center p-3 rounded-xl" style="background:var(--bg-secondary);border:1px solid var(--border);">
-            <i class="fas fa-shield-halved text-sm mb-1.5 block" style="color:var(--green);"></i>
-            <p class="text-xs" style="color:var(--text-secondary);">Encrypted</p>
+
+        <!-- STATS -->
+
+        <div class="mt-6 grid grid-cols-3 gap-3"
+          data-anim="fade-up"
+          data-delay="2">
+
+          <div class="text-center p-3 rounded-xl"
+            style="background:var(--bg-secondary);border:1px solid var(--border);">
+
+            <i class="fas fa-shield-halved text-sm mb-1.5 block"
+              style="color:var(--green);">
+            </i>
+
+            <p class="text-xs"
+              style="color:var(--text-secondary);">
+
+              Encrypted
+
+            </p>
+
           </div>
-          <div class="text-center p-3 rounded-xl" style="background:var(--bg-secondary);border:1px solid var(--border);">
-            <i class="fas fa-bolt text-sm mb-1.5 block" style="color:var(--green-light);"></i>
-            <p class="text-xs" style="color:var(--text-secondary);">Instant</p>
+
+
+          <div class="text-center p-3 rounded-xl"
+            style="background:var(--bg-secondary);border:1px solid var(--border);">
+
+            <i class="fas fa-bolt text-sm mb-1.5 block"
+              style="color:var(--green-light);">
+            </i>
+
+            <p class="text-xs"
+              style="color:var(--text-secondary);">
+
+              Instant
+
+            </p>
+
           </div>
-          <div class="text-center p-3 rounded-xl" style="background:var(--bg-secondary);border:1px solid var(--border);">
-            <i class="fas fa-mobile-screen text-sm mb-1.5 block" style="color:var(--green);"></i>
-            <p class="text-xs" style="color:var(--text-secondary);">Secure</p>
+
+
+          <div class="text-center p-3 rounded-xl"
+            style="background:var(--bg-secondary);border:1px solid var(--border);">
+
+            <i class="fas fa-mobile-screen text-sm mb-1.5 block"
+              style="color:var(--green);">
+            </i>
+
+            <p class="text-xs"
+              style="color:var(--text-secondary);">
+
+              Secure
+
+            </p>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
+
     <div class="divider"></div>
-    <footer class="py-8 px-5" style="background:var(--bg-secondary);">
+
+
+    <!-- FOOTER -->
+
+    <footer class="py-8 px-5"
+      style="background:var(--bg-secondary);">
+
       <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+
         <div class="flex items-center gap-2">
-          <img src="https://files.catbox.moe/7b5bxf.png" class="w-6 h-6 rounded-lg object-cover" onerror="this.style.display='none'">
-          <span class="text-xs font-bold" style="color:var(--text-primary);">MAYRA-AI PAIR</span>
+
+          <!-- PICHA MOJA -->
+          <img src="https://files.catbox.moe/7b5bxf.png"
+            class="w-6 h-6 rounded-lg object-cover">
+
+          <span class="text-xs font-bold"
+            style="color:var(--text-primary);">
+
+            MAYRA-AI PAIR
+
+          </span>
+
         </div>
-        <p class="text-xs text-center mono" style="color:var(--text-secondary);">&copy; <span id="yr"></span> MAYRA-AI PAIR &mdash; <a href="https://github.com/Mayrabrand" target="_blank" style="color:var(--green);text-decoration:none;">LukaTech Lab</a></p>
+
+
+        <p class="text-xs text-center mono"
+          style="color:var(--text-secondary);">
+
+          &copy;
+          <span id="yr"></span>
+          MAYRA-AI PAIR &mdash;
+
+          <a href="https://github.com/Mayrabrand"
+            target="_blank"
+            style="color:var(--green);text-decoration:none;">
+
+            LukaTech Lab
+
+          </a>
+
+        </p>
+
+
         <div class="flex gap-2">
-          <a href="https://github.com/Mayrabrand/MAYRA-AI" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
-          <a href="https://whatsapp.com/channel/0029Vb7jauLHLHQbkcbcH" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+
+          <a href="https://github.com/Mayrabrand/MAYRA-AI"
+            target="_blank"
+            class="social-icon">
+
+            <i class="fab fa-github"></i>
+
+          </a>
+
+
+          <a href="https://whatsapp.com/channel/0029Vb7jauLHLHQbkcbcH"
+            target="_blank"
+            class="social-icon">
+
+            <i class="fab fa-whatsapp"></i>
+
+          </a>
+
         </div>
+
       </div>
+
     </footer>
+
   </main>
 
+
   <script>
-    document.getElementById('yr').textContent = new Date().getFullYear();
 
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebarOverlay');
-    const menuBtn = document.getElementById('menuBtn');
-    const closeBtn = document.getElementById('closeBtn');
-    const menuIcon = document.getElementById('menuIcon');
-    function openSidebar() { sidebar.style.transform='translateX(0)'; overlay.style.opacity='1'; overlay.style.pointerEvents='auto'; menuIcon.className='fas fa-times'; document.body.style.overflow='hidden'; }
-    function closeSidebar() { sidebar.style.transform='translateX(-100%)'; overlay.style.opacity='0'; overlay.style.pointerEvents='none'; menuIcon.className='fas fa-bars'; document.body.style.overflow=''; }
-    menuBtn.addEventListener('click', () => { sidebar.style.transform==='translateX(0)' ? closeSidebar() : openSidebar(); });
-    closeBtn.addEventListener('click', closeSidebar);
-    overlay.addEventListener('click', closeSidebar);
+    document.getElementById('yr').textContent =
+      new Date().getFullYear();
 
-    const obs = new IntersectionObserver(entries => { entries.forEach(e => e.isIntersecting ? e.target.classList.add('in-view') : e.target.classList.remove('in-view')); }, { threshold: 0.1 });
-    document.querySelectorAll('[data-anim]').forEach(el => obs.observe(el));
+
+    /* SIDEBAR */
+
+    const sidebar =
+      document.getElementById('sidebar');
+
+    const overlay =
+      document.getElementById('sidebarOverlay');
+
+    const menuBtn =
+      document.getElementById('menuBtn');
+
+    const closeBtn =
+      document.getElementById('closeBtn');
+
+    const menuIcon =
+      document.getElementById('menuIcon');
+
+
+    function openSidebar() {
+
+      sidebar.style.transform =
+        'translateX(0)';
+
+      overlay.style.opacity = '1';
+
+      overlay.style.pointerEvents =
+        'auto';
+
+      menuIcon.className =
+        'fas fa-times';
+
+      document.body.style.overflow =
+        'hidden';
+
+    }
+
+
+    function closeSidebar() {
+
+      sidebar.style.transform =
+        'translateX(-100%)';
+
+      overlay.style.opacity =
+        '0';
+
+      overlay.style.pointerEvents =
+        'none';
+
+      menuIcon.className =
+        'fas fa-bars';
+
+      document.body.style.overflow =
+        '';
+
+    }
+
+
+    menuBtn.addEventListener(
+      'click',
+      () => {
+
+        sidebar.style.transform ===
+        'translateX(0)'
+          ? closeSidebar()
+          : openSidebar();
+
+      }
+    );
+
+
+    closeBtn.addEventListener(
+      'click',
+      closeSidebar
+    );
+
+    overlay.addEventListener(
+      'click',
+      closeSidebar
+    );
+
+
+    /* ANIMATION */
+
+    const obs =
+      new IntersectionObserver(
+        entries => {
+
+          entries.forEach(e => {
+
+            e.isIntersecting
+              ? e.target.classList.add('in-view')
+              : e.target.classList.remove('in-view');
+
+          });
+
+        },
+        { threshold: 0.1 }
+      );
+
+
+    document
+      .querySelectorAll('[data-anim]')
+      .forEach(el => obs.observe(el));
+
+
+    /* SESSION TYPE */
 
     let selectedType = 'long';
+
+
     function selectType(type) {
+
       selectedType = type;
-      const longCard  = document.getElementById('typeLong');
-      const shortCard = document.getElementById('typeShort');
-      const longRadio  = document.getElementById('longRadio');
-      const shortRadio = document.getElementById('shortRadio');
+
+      const longCard =
+        document.getElementById('typeLong');
+
+      const shortCard =
+        document.getElementById('typeShort');
+
+      const longRadio =
+        document.getElementById('longRadio');
+
+      const shortRadio =
+        document.getElementById('shortRadio');
+
+
       if (type === 'long') {
-        longCard.style.background = 'rgba(0,168,132,0.13)';
-        longCard.style.border     = '1.5px solid var(--green)';
-        longRadio.style.background    = 'var(--green)';
-        longRadio.style.borderColor   = 'var(--green)';
-        longRadio.innerHTML = '<div class="w-1.5 h-1.5 rounded-full bg-white"></div>';
-        shortCard.style.background = 'transparent';
-        shortCard.style.border     = '1px dashed rgba(134,150,160,0.25)';
-        shortRadio.style.background  = 'transparent';
-        shortRadio.style.borderColor = 'rgba(134,150,160,0.3)';
+
+        longCard.style.background =
+          'rgba(0,168,132,0.13)';
+
+        longCard.style.border =
+          '1.5px solid var(--green)';
+
+        longRadio.style.background =
+          'var(--green)';
+
+        longRadio.style.borderColor =
+          'var(--green)';
+
+        longRadio.innerHTML =
+          '<div class="w-1.5 h-1.5 rounded-full bg-white"></div>';
+
+
+        shortCard.style.background =
+          'transparent';
+
+        shortCard.style.border =
+          '1px dashed rgba(134,150,160,0.25)';
+
+        shortRadio.style.background =
+          'transparent';
+
+        shortRadio.style.borderColor =
+          'rgba(134,150,160,0.3)';
+
         shortRadio.innerHTML = '';
+
       } else {
-        shortCard.style.background = 'rgba(0,168,132,0.08)';
-        shortCard.style.border     = '1.5px solid var(--green)';
-        shortRadio.style.background  = 'var(--green)';
-        shortRadio.style.borderColor = 'var(--green)';
-        shortRadio.innerHTML = '<div class="w-1.5 h-1.5 rounded-full bg-white"></div>';
-        longCard.style.background = 'transparent';
-        longCard.style.border     = '1px dashed rgba(134,150,160,0.25)';
-        longRadio.style.background   = 'transparent';
-        longRadio.style.borderColor  = 'rgba(134,150,160,0.3)';
+
+        shortCard.style.background =
+          'rgba(0,168,132,0.08)';
+
+        shortCard.style.border =
+          '1.5px solid var(--green)';
+
+        shortRadio.style.background =
+          'var(--green)';
+
+        shortRadio.style.borderColor =
+          'var(--green)';
+
+        shortRadio.innerHTML =
+          '<div class="w-1.5 h-1.5 rounded-full bg-white"></div>';
+
+
+        longCard.style.background =
+          'transparent';
+
+        longCard.style.border =
+          '1px dashed rgba(134,150,160,0.25)';
+
+        longRadio.style.background =
+          'transparent';
+
+        longRadio.style.borderColor =
+          'rgba(134,150,160,0.3)';
+
         longRadio.innerHTML = '';
+
       }
+
     }
 
-    const phoneInput = document.getElementById('phoneNumber');
-    const submitBtn = document.getElementById('submitBtn');
-    const btnContent = document.getElementById('btnContent');
-    const btnLoading = document.getElementById('btnLoading');
-    const phoneError = document.getElementById('phoneError');
-    const phoneErrTxt = document.getElementById('phoneErrorText');
-    const generalError = document.getElementById('generalError');
-    const formSection = document.getElementById('formSection');
-    const resultSection = document.getElementById('resultSection');
-    const pairCode = document.getElementById('pairCode');
-    const copyBtn = document.getElementById('copyBtn');
-    const copyText = document.getElementById('copyText');
-    const newCodeBtn = document.getElementById('newCodeBtn');
 
-    phoneInput.addEventListener('input', () => { phoneInput.value = phoneInput.value.replace(/\D/g, ''); phoneError.classList.add('hidden'); generalError.classList.add('hidden'); });
-    phoneInput.addEventListener('keydown', e => { if (e.key === 'Enter') submitBtn.click(); });
+    /* ELEMENTS */
+
+    const phoneInput =
+      document.getElementById('phoneNumber');
+
+    const submitBtn =
+      document.getElementById('submitBtn');
+
+    const btnContent =
+      document.getElementById('btnContent');
+
+    const btnLoading =
+      document.getElementById('btnLoading');
+
+    const phoneError =
+      document.getElementById('phoneError');
+
+    const phoneErrTxt =
+      document.getElementById('phoneErrorText');
+
+    const generalError =
+      document.getElementById('generalError');
+
+    const formSection =
+      document.getElementById('formSection');
+
+    const resultSection =
+      document.getElementById('resultSection');
+
+    const pairCode =
+      document.getElementById('pairCode');
+
+    const copyBtn =
+      document.getElementById('copyBtn');
+
+    const copyText =
+      document.getElementById('copyText');
+
+    const newCodeBtn =
+      document.getElementById('newCodeBtn');
+
+
+    /* PHONE */
+
+    phoneInput.addEventListener(
+      'input',
+      () => {
+
+        phoneInput.value =
+          phoneInput.value.replace(/\D/g,'');
+
+        phoneError.classList.add('hidden');
+
+        generalError.classList.add('hidden');
+
+      }
+    );
+
+
+    phoneInput.addEventListener(
+      'keydown',
+      e => {
+
+        if (e.key === 'Enter')
+          submitBtn.click();
+
+      }
+    );
+
 
     function showPhoneError(msg) {
-      phoneErrTxt.textContent = msg; phoneError.classList.remove('hidden');
-      phoneInput.classList.add('shake'); setTimeout(() => phoneInput.classList.remove('shake'), 450);
+
+      phoneErrTxt.textContent =
+        msg;
+
+      phoneError.classList.remove(
+        'hidden'
+      );
+
+      phoneInput.classList.add(
+        'shake'
+      );
+
+      setTimeout(
+        () =>
+          phoneInput.classList.remove(
+            'shake'
+          ),
+        450
+      );
+
     }
 
-    submitBtn.addEventListener('click', async () => {
-      const num = phoneInput.value.trim();
-      if (!num || num.length < 10 || num.length > 15) { showPhoneError('Enter a valid number (10–15 digits, no + sign)'); return; }
-      phoneError.classList.add('hidden'); generalError.classList.add('hidden');
-      btnContent.classList.add('hidden'); btnLoading.classList.remove('hidden'); submitBtn.disabled = true;
-      try {
-        const res = await fetch(`/code?number=${encodeURIComponent(num)}&type=${selectedType}`);
-        const data = await res.json();
-        const code = data.code || '';
-        if (!code) { generalError.textContent = data.message || 'Failed to get code. Try again.'; generalError.classList.remove('hidden'); return; }
-        pairCode.textContent = code;
-        if (data.fallback) document.getElementById('fallbackBanner').classList.remove('hidden');
-        formSection.classList.add('hidden'); resultSection.classList.remove('hidden');
-      } catch (e) {
-        generalError.textContent = 'Connection error. Please try again.'; generalError.classList.remove('hidden');
-      } finally {
-        btnContent.classList.remove('hidden'); btnLoading.classList.add('hidden'); submitBtn.disabled = false;
+
+    /* GET CODE */
+
+    submitBtn.addEventListener(
+      'click',
+      async () => {
+
+        const num =
+          phoneInput.value.trim();
+
+
+        if (
+          !num ||
+          num.length < 10 ||
+          num.length > 15
+        ) {
+
+          showPhoneError(
+            'Enter a valid number (10–15 digits, no + sign)'
+          );
+
+          return;
+
+        }
+
+
+        phoneError.classList.add(
+          'hidden'
+        );
+
+        generalError.classList.add(
+          'hidden'
+        );
+
+
+        btnContent.classList.add(
+          'hidden'
+        );
+
+        btnLoading.classList.remove(
+          'hidden'
+        );
+
+        submitBtn.disabled =
+          true;
+
+
+        try {
+
+          const res =
+            await fetch(
+              `/code?number=${encodeURIComponent(num)}&type=${selectedType}`
+            );
+
+
+          const data =
+            await res.json();
+
+
+          const code =
+            data.code || '';
+
+
+          if (!code) {
+
+            generalError.textContent =
+              data.message ||
+              'Failed to get code. Try again.';
+
+            generalError.classList.remove(
+              'hidden'
+            );
+
+            return;
+
+          }
+
+
+          pairCode.textContent =
+            code;
+
+
+          if (data.fallback) {
+
+            document
+              .getElementById(
+                'fallbackBanner'
+              )
+              .classList.remove(
+                'hidden'
+              );
+
+          }
+
+
+          formSection.classList.add(
+            'hidden'
+          );
+
+          resultSection.classList.remove(
+            'hidden'
+          );
+
+
+        } catch (e) {
+
+          generalError.textContent =
+            'Connection error. Please try again.';
+
+          generalError.classList.remove(
+            'hidden'
+          );
+
+        } finally {
+
+          btnContent.classList.remove(
+            'hidden'
+          );
+
+          btnLoading.classList.add(
+            'hidden'
+          );
+
+          submitBtn.disabled =
+            false;
+
+        }
+
       }
-    });
+    );
 
-    copyBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText(pairCode.textContent).then(() => {
-        copyText.textContent = 'Copied!'; copyBtn.classList.add('copied');
-        setTimeout(() => { copyText.textContent = 'Copy Code'; copyBtn.classList.remove('copied'); }, 2000);
-      });
-    });
 
-    newCodeBtn.addEventListener('click', () => {
-      resultSection.classList.add('hidden'); formSection.classList.remove('hidden');
-      document.getElementById('fallbackBanner').classList.add('hidden');
-    });
+    /* COPY */
+
+    copyBtn.addEventListener(
+      'click',
+      () => {
+
+        navigator.clipboard
+          .writeText(
+            pairCode.textContent
+          )
+          .then(() => {
+
+            copyText.textContent =
+              'Copied!';
+
+            copyBtn.classList.add(
+              'copied'
+            );
+
+            setTimeout(
+              () => {
+
+                copyText.textContent =
+                  'Copy Code';
+
+                copyBtn.classList.remove(
+                  'copied'
+                );
+
+              },
+              2000
+            );
+
+          });
+
+      }
+    );
+
+
+    /* NEW CODE */
+
+    newCodeBtn.addEventListener(
+      'click',
+      () => {
+
+        resultSection.classList.add(
+          'hidden'
+        );
+
+        formSection.classList.remove(
+          'hidden'
+        );
+
+        document
+          .getElementById(
+            'fallbackBanner'
+          )
+          .classList.add(
+            'hidden'
+          );
+
+      }
+    );
+
   </script>
+
 </body>
-</html>
+                    </html>
