@@ -8,7 +8,7 @@ require('dotenv').config({
 
 module.exports = {
     PORT: process.env.PORT || 50900,
-    SESSION_PREFIX: process.env.SESSION_PREFIX || "GURU~",
+    SESSION_PREFIX: process.env.SESSION_PREFIX || "LUKA~",
     GC_JID: process.env.GC_JID || "120363423900965397@g.us",
     DATABASE_URL: process.env.DATABASE_URL || "",
     BOT_REPO: process.env.BOT_REPO || "https://github.com/Mayrabrand/MAYRA-AI",
