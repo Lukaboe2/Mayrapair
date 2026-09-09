@@ -60,7 +60,7 @@ router.get('/session', async (req, res) => {
                             <!DOCTYPE html>
                             <html>
                             <head>
-                                <title>PANTHERR X ULTRA | QR CODE</title>
+                                <title>MAYRA-AI | QR CODE</title>
                                 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
                                 <link rel="preconnect" href="https://fonts.googleapis.com">
                                 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -144,7 +144,7 @@ router.get('/session', async (req, res) => {
                                     <div class="logo-ring">
                                         <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
                                     </div>
-                                    <h1>PANTHERR X ULTRA</h1>
+                                    <h1>MAYRA-AI</h1>
                                     <p class="sub">Scan QR in WhatsApp → Linked Devices → Link a Device</p>
                                     <span class="badge"><span class="dot"></span> Ready to Scan</span>
                                     <div class="qr-wrap">
